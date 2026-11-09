@@ -145,17 +145,16 @@ export const DailyMatchesPage: React.FC = () => {
           }}
         >
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
               <span
                 style={{
-                  fontSize: '11px',
-                  fontWeight: 800,
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.1em',
-                  color: 'var(--rs-blue)',
+                  fontSize: '12px',
+                  fontWeight: 500,
+                  letterSpacing: '-0.01em',
+                  color: 'var(--rs-blue-strong)',
                 }}
               >
-                DAILY DIGEST CAMPAIGN
+                Daily digest campaign
               </span>
               <StatusBadge
                 status={isCampaignActive ? 'success' : 'neutral'}
@@ -165,15 +164,17 @@ export const DailyMatchesPage: React.FC = () => {
             <h1
               style={{
                 margin: 0,
-                fontFamily: 'var(--font-display)',
-                fontSize: '22px',
-                fontWeight: 700,
+                fontFamily: 'var(--font-serif)',
+                fontSize: '26px',
+                fontWeight: 600,
                 color: 'var(--rs-ink)',
+                letterSpacing: '-0.025em',
+                lineHeight: 1.15,
               }}
             >
               Curated Opportunities for Master Profile (v3.2)
             </h1>
-            <p style={{ margin: '4px 0 0', fontSize: '12.5px', color: 'var(--rs-muted)' }}>
+            <p style={{ margin: '6px 0 0', fontSize: '13px', color: 'var(--rs-muted)' }}>
               Calibrated against Staff/Principal titles in United States & Remote markets.
             </p>
           </div>
