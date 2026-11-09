@@ -1,104 +1,130 @@
 # RoleSharp 2.0 — Design System Specification
 
-## 1. Design Tokens & Color Palettes
-
-### Dark Theme (Default)
-| Token Name | CSS Custom Property | Value | Usage |
-|---|---|---|---|
-| Canvas Background | `--rs-bg` | `#061426` | Root page background |
-| Primary Surface | `--rs-surface` | `#0C213A` | Cards, panels, headers |
-| Secondary Surface | `--rs-surface-2` | `#112943` | Active tabs, nested wells, inputs |
-| Raised Surface | `--rs-surface-3` | `#193653` | Popovers, modals, dropdowns |
-| Paper Canvas | `--rs-paper` | `#F7F6F0` | Resume document preview sheet |
-| Paper Ink | `--rs-paper-ink` | `#172B48` | Resume document text |
-| Primary Ink | `--rs-ink` | `#EFF5FF` | Highest emphasis headlines & labels |
-| Muted Ink | `--rs-muted` | `#A9BAD1` | Supporting copy, descriptions |
-| Hairline Border | `--rs-line` | `#26415F` | Clean separation borders |
-| Action Blue | `--rs-blue` | `#9FC3F2` | Interactive links, badges, highlights |
-| Strong Blue | `--rs-blue-strong` | `#5B9BFF` | Active borders, focus rings |
-| Blue Ink | `--rs-blue-ink` | `#071A33` | Text on blue buttons |
-| Amber Accent | `--rs-amber` | `#F2C96D` | Brand accents, key focus indicators |
-| Emerald Success | `--rs-green` | `#34D399` | Success badges, verification marks |
-| Crimson Danger | `--rs-red` | `#F87171` | Error alerts, destructive actions |
-| Elevation Shadow | `--rs-shadow` | `0 24px 60px rgba(0,0,0,0.32)` | Modals, floating sheets |
-
-### Light Theme
-| Token Name | CSS Custom Property | Value | Usage |
-|---|---|---|---|
-| Canvas Background | `--rs-bg` | `#F3F2EE` | Warm ivory root page background |
-| Primary Surface | `--rs-surface` | `#FAF9F6` | Cards, panels, headers |
-| Secondary Surface | `--rs-surface-2` | `#ECEBE6` | Active tabs, wells, inputs |
-| Raised Surface | `--rs-surface-3` | `#E3E5E8` | Modals, dropdowns |
-| Paper Canvas | `--rs-paper` | `#FFFFFF` | Crisp white resume document preview |
-| Paper Ink | `--rs-paper-ink` | `#172B48` | Resume document text |
-| Primary Ink | `--rs-ink` | `#10243E` | Deep navy headings & primary text |
-| Muted Ink | `--rs-muted` | `#52647A` | Slate body copy |
-| Hairline Border | `--rs-line` | `#D5DFEA` | Soft separation borders |
-| Action Blue | `--rs-blue` | `#123B7A` | Deep blue interactive controls |
-| Strong Blue | `--rs-blue-strong` | `#2458A6` | Active borders, focus rings |
-| Blue Ink | `--rs-blue-ink` | `#FFFFFF` | Text on blue buttons |
-| Amber Accent | `--rs-amber` | `#A96A0B` | Warm golden accents |
-| Emerald Success | `--rs-green` | `#047857` | Verified checkmarks, success tags |
-| Crimson Danger | `--rs-red` | `#DC2626` | Error alerts |
-| Elevation Shadow | `--rs-shadow` | `0 24px 60px rgba(14,33,58,0.12)` | Subtle depth shadows |
+**Version**: 2.0.0  
+**Status**: Authoritative Reference  
+**Date**: November 10, 2026
 
 ---
 
-## 2. Typography System
+## 1. Design Philosophy: The Editorial Career Workbench
 
-### Type Families
-- **Display**: `"Space Grotesk", system-ui, sans-serif`
-  - Used for: Brand mark, page headlines (`h1`, `h2`), large metric callouts, card headers.
-  - Tracking: `-0.055em` to `-0.065em` on large sizes.
-- **Body & Interface**: `"DM Sans", system-ui, sans-serif`
-  - Used for: Primary paragraphs, navigation links, buttons, form controls, table data.
-  - Weights: `400` (Regular), `500` (Medium), `600` (SemiBold), `700` (Bold).
-- **Editorial Accent**: `"Playfair Display", Georgia, serif`
-  - Used for: Selected brand statements, featured quotes, reflective callouts.
-  - Style: Italic 500.
-- **Data & Micro-Metadata**: `"Geist Mono", "SF Mono", monospace`
-  - Used for: ATS scores, numeric IDs, file hashes, timestamps, keyboard shortcuts.
+RoleSharp 2.0 is designed around a single core conviction: **Career applications are high-stakes legal-grade documents, not social media posts.**
 
-### Scale & Hierarchy
-| Level | Font Size | Line Height | Weight | Font Role |
-|---|---|---|---|---|
-| Display Hero | `clamp(2.5rem, 4.5vw, 4.25rem)` | 1.02 | 650–700 | Space Grotesk |
-| H1 Page Title | `clamp(1.85rem, 3.2vw, 2.75rem)` | 1.1 | 650 | Space Grotesk |
-| H2 Section Heading | `clamp(1.35rem, 2.2vw, 1.85rem)` | 1.2 | 650 | Space Grotesk |
-| H3 Card Title | `1.05rem`–`1.2rem` | 1.3 | 600 | Space Grotesk |
-| Body Large (Lede) | `clamp(1rem, 1.25vw, 1.15rem)` | 1.65 | 400 | DM Sans |
-| Body Base | `0.9rem`–`0.95rem` (14px–15px) | 1.55 | 400–500 | DM Sans |
-| Small / Helper | `0.8rem`–`0.85rem` (12px–13px) | 1.45 | 500 | DM Sans |
-| Caption / Eyebrow | `0.7rem` (11px) | 1.2 | 700–800 | DM Sans (uppercase, tracked) |
-| Score Callout | `2.25rem`–`3rem` | 1.0 | 700 | Space Grotesk / Geist Mono |
+The visual identity combines the **literary authority of an editorial publishing house** with the **precision and speed of a modern developer tool**. Every surface, typeface, and micro-interaction communicates evidence, integrity, and verified competence.
+
+### Core Tenets
+1. **Quiet Chrome, Rich Content**: Navigation, sidebars, and toolbars recede into calm neutrals. The candidate's work and real career evidence carry the color and focus.
+2. **Document Invariance**: Executive resumes, cover letters, and diagnostic dockets are rendered on physical white paper (`#FFFFFF`) with crisp typography across both light and dark themes.
+3. **No Decorative AI Clichés**: Zero purple/blue neon glows, zero floating glass blobs, zero tracked uppercase eyebrows, and zero gamified vanity bars.
+4. **Authentic Evidence Anchoring**: Every diagnostic finding, metric, and interview talking point is anchored to an exact excerpt from the candidate's verified history.
 
 ---
 
-## 3. Layout Grid & Spacing
-- **Base Grid**: 4px increment scale (4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96px).
-- **Containers**:
-  - Marketing: `width: min(1240px, calc(100% - 48px)); margin: 0 auto;`
-  - Workspace Shell: 240px persistent sidebar + fluid 12-column content area (`max-width: 1400px`).
-  - Mobile: `calc(100% - 32px)` with full-bleed bottom navigation.
-- **Border Radii**:
-  - Buttons / Controls: `8px`–`10px`
-  - Cards & Content Wells: `12px`–`14px`
-  - Modals & Floating Stages: `16px`–`18px`
-  - Badges / Pills: `9999px`
+## 2. Color System & Surface Hierarchy
+
+The color architecture uses a 3-layer token model: **Primitives** → **Semantics** → **Components**.
+
+### 2.1 Dark Theme (Primary Operating Mode)
+- **Base Background (`--rs-bg`)**: `#0A0F1A` (Deep Midnight Slate, 0% purple, neutral slate tint)
+- **Primary Surface (`--rs-surface`)**: `#111827` (Structural panel background)
+- **Elevated Surface (`--rs-surface-2`)**: `#1F2937` (Dropdowns, modals, hover states)
+- **Subtle Surface (`--rs-surface-3`)**: `#374151` (Active pills, subtle card insets)
+- **Primary Ink (`--rs-ink`)**: `#F9FAFB` (High-contrast pure reading text)
+- **Secondary / Muted Ink (`--rs-muted`)**: `#9CA3AF` (Supporting metadata, captions)
+- **Hairline Border (`--rs-line`)**: `rgba(255, 255, 255, 0.08)` (Subtle separation)
+- **Active Border (`--rs-line-strong`)**: `rgba(255, 255, 255, 0.16)` (Hovered or focused borders)
+- **Brand Accent (`--rs-blue`)**: `#3B82F6` (Precision Cobalt Blue, 4.5:1+ contrast on dark)
+- **Paper Canvas (`--rs-paper`)**: `#FFFFFF` (Invariant crisp sheet)
+- **Paper Ink (`--rs-paper-ink`)**: `#111827` (Deep charcoal ink on paper)
+
+### 2.2 Light Theme (Warm Editorial Mode)
+- **Base Background (`--rs-bg`)**: `#F8F7F4` (Warm Archival Linen)
+- **Primary Surface (`--rs-surface`)**: `#FFFFFF` (Crisp paper panels)
+- **Elevated Surface (`--rs-surface-2`)**: `#F3F2EE` (Controls, input backgrounds)
+- **Subtle Surface (`--rs-surface-3`)**: `#E5E3DD` (Active pills, borders)
+- **Primary Ink (`--rs-ink`)**: `#0F172A` (Rich midnight charcoal)
+- **Secondary / Muted Ink (`--rs-muted`)**: `#64748B` (Cool slate metadata)
+- **Hairline Border (`--rs-line`)**: `#E2E8F0` (Quiet separation)
+- **Active Border (`--rs-line-strong`)**: `#CBD5E1` (Hovered or focused borders)
+- **Brand Accent (`--rs-blue`)**: `#1D4ED8` (Deep Royal Blue, 7:1+ contrast on light)
+- **Paper Canvas (`--rs-paper`)**: `#FFFFFF`
+- **Paper Ink (`--rs-paper-ink`)**: `#0F172A`
+
+### 2.3 Semantic Status Roles (Universal)
+- **Success / Grounded**: `#059669` (Emerald) / Tint: `rgba(5, 150, 105, 0.12)`
+- **Warning / Notice**: `#D97706` (Warm Ochre) / Tint: `rgba(217, 119, 6, 0.12)`
+- **Error / Missing**: `#DC2626` (Crimson) / Tint: `rgba(220, 38, 38, 0.12)`
+- **Info / Mode**: `#475569` (Slate) / Tint: `rgba(71, 85, 105, 0.12)`
 
 ---
 
-## 4. Component Primitives
-- **Button**: Variants: `primary`, `secondary` (ghost/bordered), `subtle`, `danger`. States: Default, Hover, Active, Focus-Visible, Disabled, Loading (animated ring). Minimum touch target: 44px × 44px.
-- **TextField / TextArea**: Bordered with `--rs-line`, transitioning to `--rs-blue-strong` on focus. Error state triggers `--rs-red` border with accessible `aria-invalid` and `aria-describedby`.
-- **StatusBadge**: Semantic color pairs (Success: green/tint; Warning: amber/tint; Info: blue/tint; Neutral: muted/surface).
-- **ScoreRing**: SVG circle progress ring showing calibrated score (0–100) with honest dimension breakdown (Parseability, Structure, Keywords, Evidence).
-- **EvidenceCard**: Interactive card with source citation badge, recommendation explanation, and grounded diff comparison.
+## 3. Typographic System & Font Roles
+
+RoleSharp pairs an **authoritative editorial serif** with an **ergonomic geometric sans** and **tabular monospace**.
+
+### 3.1 Type Families
+- **Display & Editorial (`--font-display`)**: `"Newsreader"`, `"Playfair Display"`, Georgia, serif  
+  *Role*: Macro page titles, editorial quotes, brand statements, landing hero headlines.
+- **Interface & Body (`--font-body`)**: `"Inter"`, `-apple-system`, `BlinkMacSystemFont`, `"Segoe UI"`, sans-serif  
+  *Role*: Navigation, buttons, form inputs, table content, documentation, standard interface prose.
+- **Code & Tabular Numbers (`--font-mono`)**: `"JetBrains Mono"`, `"Geist Mono"`, monospace  
+  *Role*: ATS percentages, latency scores, line citations, credit counters, date stamps (`tabular-nums`).
+
+### 3.2 Type Scale
+| Token | Font Size | Line Height | Letter Spacing | Weight | Typical Usage |
+|---|---|---|---|---|---|
+| `text-display-2xl` | `44px` (2.75rem) | `1.1` | `-0.03em` | 600 | Marketing Hero headline |
+| `text-display-xl` | `36px` (2.25rem) | `1.15` | `-0.025em` | 600 | Workspace Section titles |
+| `text-heading-lg` | `26px` (1.625rem) | `1.2` | `-0.02em` | 600 | Major Card and Studio titles |
+| `text-heading-md` | `20px` (1.25rem) | `1.3` | `-0.015em` | 600 | Subsections, Modal headers |
+| `text-body-lg` | `16px` (1.0rem) | `1.55` | `0` | 400 | Lead paragraphs, instructions |
+| `text-body-md` | `14px` (0.875rem) | `1.5` | `0` | 400/500 | Standard UI text, list rows |
+| `text-caption` | `12.5px` (0.78rem) | `1.4` | `0` | 500/600 | Metadata, helper labels, table heads |
+| `text-micro` | `11px` (0.6875rem) | `1.3` | `0.02em` | 600 | Status dots, concise badges (sentence-case) |
 
 ---
 
-## 5. Motion Language & Reduced-Motion Contracts
-- **Easing Standard**: `cubic-bezier(0.16, 1, 0.3, 1)` (snappy spring deceleration).
-- **Theme Reveal**: Circular clip-path originating from clicked button coordinates via View Transitions API (480ms duration).
-- **Word-by-Word Sequence**: Staggered rise and fade with strict static fallback when `prefers-reduced-motion: reduce` is detected.
-- **Document Writing Animation**: Smooth line-by-line reveal tracking an animated vector nib during real backend generation; instant static layout when reduced motion is preferred.
+## 4. Spatial Rhythm & Geometry
+
+- **Base Grid Unit**: `4px`
+- **Component Padding Scale**:
+  - `p-xs`: `4px`
+  - `p-sm`: `8px`
+  - `p-md`: `12px` – `16px`
+  - `p-lg`: `20px` – `24px`
+  - `p-xl`: `32px` – `40px`
+- **Corner Radii**:
+  - Inputs & Controls: `8px`
+  - Cards & Workspace Panels: `12px`
+  - Modals & Floating Drawers: `16px`
+  - Badges & Pills: `9999px` (Full circle ends)
+- **Elevation & Shadows**:
+  - Light mode: `0 4px 12px rgba(15, 23, 42, 0.05), 0 1px 2px rgba(15, 23, 42, 0.08)`
+  - Dark mode: `0 12px 36px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.08)`
+  - Floating Paper: `0 16px 40px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.04)`
+
+---
+
+## 5. Motion & Interaction Architecture
+
+- **Timing Curves**:
+  - Standard ease: `cubic-bezier(0.16, 1, 0.3, 1)`
+  - Spring pop: `cubic-bezier(0.34, 1.56, 0.64, 1)`
+- **Durations**:
+  - Interactive hover/tap: `120ms`
+  - Expansions, dropdowns, tabs: `200ms`
+  - Page/Modal entrances: `280ms`
+- **Strict Reduced Motion**: `@media (prefers-reduced-motion: reduce)` immediately turns off all transitions and keyframe motion across all components.
+
+---
+
+## 6. Responsive Breakpoints
+
+| Breakpoint | Width | Layout Behavior |
+|---|---|---|
+| **Desktop Ultra** | `>= 1440px` | Max-width capped at 1380px, expanded gutters, dual-column editors |
+| **Desktop Standard** | `1024px – 1439px` | Sticky 240px sidebar, full feature density |
+| **Tablet Landscape** | `768px – 1023px` | Collapsible sidebar, adaptive 2-column or stacked layout |
+| **Tablet Portrait** | `640px – 767px` | Mobile drawer navigation, full-width cards, wrapped button bars |
+| **Mobile Standard** | `390px – 639px` | Single-column fluid layout, 16px gutters, bottom safe areas |
+| **Narrow Mobile** | `< 390px` | Compact button groups, stacked action bars |

@@ -10,6 +10,14 @@ export const Navbar: React.FC = () => {
   const { session } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  const navLinks = [
+    { path: '/tools', label: 'Tools & catalogue' },
+    { path: '/interview', label: 'Interview studio' },
+    { path: '/jobs', label: 'Job matches' },
+    { path: '/pricing', label: 'Pricing' },
+    { path: '/about', label: 'Methodology' },
+  ];
+
   return (
     <header
       style={{
@@ -17,15 +25,16 @@ export const Navbar: React.FC = () => {
         top: 0,
         zIndex: 50,
         borderBottom: '1px solid var(--rs-line)',
-        backgroundColor: 'color-mix(in srgb, var(--rs-bg) 92%, transparent)',
+        backgroundColor: 'color-mix(in srgb, var(--rs-bg) 90%, transparent)',
         backdropFilter: 'blur(16px)',
-        transition: 'background-color 0.36s ease, border-color 0.36s ease',
+        WebkitBackdropFilter: 'blur(16px)',
+        transition: 'background-color 0.2s ease, border-color 0.2s ease',
       }}
     >
       <div className="container">
         <nav
           style={{
-            height: '68px',
+            height: '64px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -40,27 +49,28 @@ export const Navbar: React.FC = () => {
               display: 'inline-flex',
               alignItems: 'center',
               gap: '10px',
-              fontFamily: 'var(--font-display)',
-              fontWeight: 700,
-              fontSize: '20px',
-              letterSpacing: '-0.055em',
+              fontFamily: 'var(--font-sans)',
+              fontWeight: 650,
+              fontSize: '18px',
+              letterSpacing: '-0.03em',
               color: 'var(--rs-ink)',
+              padding: '4px 0',
             }}
             aria-label="RoleSharp Home"
           >
             <span
               style={{
-                width: '30px',
-                height: '30px',
+                width: '28px',
+                height: '28px',
                 display: 'grid',
                 placeItems: 'center',
-                borderRadius: '8px',
+                borderRadius: '6px',
                 color: '#FFFFFF',
-                fontFamily: 'var(--font-display)',
-                fontWeight: 700,
-                fontSize: '18px',
-                background: 'linear-gradient(145deg, #527DBA, #102B53 65%, #D9B65E)',
-                boxShadow: '0 4px 14px rgba(91, 155, 255, 0.22)',
+                fontFamily: 'var(--font-serif)',
+                fontWeight: 600,
+                fontSize: '17px',
+                background: 'linear-gradient(135deg, #1E3A68 0%, #0F203C 100%)',
+                border: '1px solid rgba(255, 255, 255, 0.12)',
               }}
               aria-hidden="true"
             >
@@ -76,92 +86,54 @@ export const Navbar: React.FC = () => {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: 'clamp(14px, 2vw, 26px)',
+              gap: '4px',
             }}
             className="hidden-mobile"
           >
-            <button
-              onClick={() => navigate('/tools')}
-              style={{
-                color: currentPath === '/tools' ? 'var(--rs-ink)' : 'var(--rs-muted)',
-                fontSize: '13px',
-                fontWeight: 600,
-                transition: 'color 0.18s ease',
-              }}
-            >
-              Tools & Catalogue
-            </button>
-            <button
-              onClick={() => navigate('/interview')}
-              style={{
-                color: 'var(--rs-ink)',
-                fontSize: '13px',
-                fontWeight: 650,
-                padding: '6px 12px',
-                borderRadius: '8px',
-                border: '1px solid color-mix(in srgb, var(--rs-amber) 45%, var(--rs-line))',
-                backgroundColor: 'color-mix(in srgb, var(--rs-amber) 8%, transparent)',
-                transition: 'border-color 0.18s ease, background-color 0.18s ease',
-              }}
-            >
-              Interview Practice
-            </button>
-            <button
-              onClick={() => navigate('/jobs')}
-              style={{
-                color: currentPath === '/jobs' ? 'var(--rs-ink)' : 'var(--rs-muted)',
-                fontSize: '13px',
-                fontWeight: 600,
-                transition: 'color 0.18s ease',
-              }}
-            >
-              Jobs & Matches
-            </button>
-            <button
-              onClick={() => navigate('/pricing')}
-              style={{
-                color: currentPath === '/pricing' ? 'var(--rs-ink)' : 'var(--rs-muted)',
-                fontSize: '13px',
-                fontWeight: 600,
-                transition: 'color 0.18s ease',
-              }}
-            >
-              Pricing
-            </button>
-            <button
-              onClick={() => navigate('/about')}
-              style={{
-                color: currentPath === '/about' ? 'var(--rs-ink)' : 'var(--rs-muted)',
-                fontSize: '13px',
-                fontWeight: 600,
-                transition: 'color 0.18s ease',
-              }}
-            >
-              Methodology
-            </button>
+            {navLinks.map((link) => {
+              const isActive = currentPath === link.path;
+              return (
+                <button
+                  key={link.path}
+                  onClick={() => navigate(link.path)}
+                  style={{
+                    color: isActive ? 'var(--rs-ink)' : 'var(--rs-muted)',
+                    backgroundColor: isActive ? 'var(--rs-surface-2)' : 'transparent',
+                    fontSize: '13px',
+                    fontWeight: isActive ? 600 : 500,
+                    letterSpacing: '-0.01em',
+                    padding: '6px 12px',
+                    borderRadius: 'var(--radius-sm)',
+                    transition: 'color 0.15s ease, background-color 0.15s ease',
+                  }}
+                >
+                  {link.label}
+                </button>
+              );
+            })}
           </div>
 
           {/* Navigation Right Actions */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             {/* Theme Toggle Button */}
             <button
               onClick={toggleTheme}
               style={{
-                width: '40px',
-                height: '40px',
-                borderRadius: '50%',
+                width: '36px',
+                height: '36px',
+                borderRadius: 'var(--radius-sm)',
                 display: 'grid',
                 placeItems: 'center',
                 border: '1px solid var(--rs-line)',
                 backgroundColor: 'var(--rs-surface)',
                 color: 'var(--rs-ink)',
                 cursor: 'pointer',
-                transition: 'transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease',
+                transition: 'background-color 0.15s ease, border-color 0.15s ease',
               }}
               aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
               title="Change theme"
             >
-              {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
+              {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
             </button>
 
             {/* Auth Actions */}
@@ -172,18 +144,19 @@ export const Navbar: React.FC = () => {
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '6px',
-                  minHeight: '40px',
-                  padding: '0 16px',
-                  borderRadius: '9px',
+                  minHeight: '36px',
+                  padding: '0 14px',
+                  borderRadius: 'var(--radius-sm)',
                   backgroundColor: 'var(--rs-blue)',
                   color: 'var(--rs-blue-ink)',
                   fontSize: '13px',
-                  fontWeight: 700,
-                  transition: 'transform 0.18s ease',
+                  fontWeight: 600,
+                  letterSpacing: '-0.01em',
+                  transition: 'opacity 0.15s ease',
                 }}
               >
                 <span>Workspace</span>
-                <ArrowRight size={14} />
+                <ArrowRight size={13} />
               </button>
             ) : (
               <>
@@ -192,8 +165,10 @@ export const Navbar: React.FC = () => {
                   style={{
                     color: 'var(--rs-ink)',
                     fontSize: '13px',
-                    fontWeight: 700,
-                    padding: '8px 10px',
+                    fontWeight: 500,
+                    letterSpacing: '-0.01em',
+                    padding: '8px 12px',
+                    borderRadius: 'var(--radius-sm)',
                   }}
                   className="hidden-mobile"
                 >
@@ -205,19 +180,19 @@ export const Navbar: React.FC = () => {
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '6px',
-                    minHeight: '40px',
-                    padding: '0 16px',
-                    borderRadius: '9px',
+                    minHeight: '36px',
+                    padding: '0 14px',
+                    borderRadius: 'var(--radius-sm)',
                     backgroundColor: 'var(--rs-blue)',
                     color: 'var(--rs-blue-ink)',
                     fontSize: '13px',
-                    fontWeight: 700,
-                    boxShadow: '0 6px 18px rgba(62, 117, 190, 0.18)',
-                    transition: 'transform 0.18s ease',
+                    fontWeight: 600,
+                    letterSpacing: '-0.01em',
+                    transition: 'opacity 0.15s ease',
                   }}
                 >
                   <span>Start free</span>
-                  <ArrowRight size={14} />
+                  <ArrowRight size={13} />
                 </button>
               </>
             )}
@@ -226,11 +201,11 @@ export const Navbar: React.FC = () => {
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               style={{
-                width: '40px',
-                height: '40px',
+                width: '36px',
+                height: '36px',
                 display: 'none',
                 placeItems: 'center',
-                borderRadius: '8px',
+                borderRadius: 'var(--radius-sm)',
                 border: '1px solid var(--rs-line)',
                 backgroundColor: 'var(--rs-surface)',
                 color: 'var(--rs-ink)',
@@ -239,7 +214,7 @@ export const Navbar: React.FC = () => {
               aria-label={mobileMenuOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
               aria-expanded={mobileMenuOpen}
             >
-              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
           </div>
         </nav>
@@ -248,11 +223,11 @@ export const Navbar: React.FC = () => {
         {mobileMenuOpen && (
           <div
             style={{
-              padding: '16px 0 24px',
+              padding: '12px 0 20px',
               borderTop: '1px solid var(--rs-line)',
               display: 'grid',
               gridTemplateColumns: 'repeat(2, 1fr)',
-              gap: '10px',
+              gap: '8px',
             }}
           >
             <button
@@ -261,13 +236,14 @@ export const Navbar: React.FC = () => {
                 setMobileMenuOpen(false);
               }}
               style={{
-                padding: '12px 14px',
-                borderRadius: '8px',
+                minHeight: '44px',
+                padding: '10px 12px',
+                borderRadius: 'var(--radius-sm)',
                 border: '1px solid var(--rs-line)',
                 backgroundColor: 'var(--rs-surface)',
                 color: 'var(--rs-ink)',
                 fontSize: '13px',
-                fontWeight: 600,
+                fontWeight: 500,
                 textAlign: 'left',
               }}
             >
@@ -279,17 +255,18 @@ export const Navbar: React.FC = () => {
                 setMobileMenuOpen(false);
               }}
               style={{
-                padding: '12px 14px',
-                borderRadius: '8px',
+                minHeight: '44px',
+                padding: '10px 12px',
+                borderRadius: 'var(--radius-sm)',
                 border: '1px solid var(--rs-line)',
                 backgroundColor: 'var(--rs-surface)',
                 color: 'var(--rs-ink)',
                 fontSize: '13px',
-                fontWeight: 600,
+                fontWeight: 500,
                 textAlign: 'left',
               }}
             >
-              Tools Catalogue
+              Tools catalogue
             </button>
             <button
               onClick={() => {
@@ -297,17 +274,18 @@ export const Navbar: React.FC = () => {
                 setMobileMenuOpen(false);
               }}
               style={{
-                padding: '12px 14px',
-                borderRadius: '8px',
+                minHeight: '44px',
+                padding: '10px 12px',
+                borderRadius: 'var(--radius-sm)',
                 border: '1px solid var(--rs-line)',
                 backgroundColor: 'var(--rs-surface)',
                 color: 'var(--rs-ink)',
                 fontSize: '13px',
-                fontWeight: 600,
+                fontWeight: 500,
                 textAlign: 'left',
               }}
             >
-              ATS Checker
+              ATS checker
             </button>
             <button
               onClick={() => {
@@ -315,17 +293,18 @@ export const Navbar: React.FC = () => {
                 setMobileMenuOpen(false);
               }}
               style={{
-                padding: '12px 14px',
-                borderRadius: '8px',
+                minHeight: '44px',
+                padding: '10px 12px',
+                borderRadius: 'var(--radius-sm)',
                 border: '1px solid var(--rs-line)',
                 backgroundColor: 'var(--rs-surface)',
                 color: 'var(--rs-ink)',
                 fontSize: '13px',
-                fontWeight: 600,
+                fontWeight: 500,
                 textAlign: 'left',
               }}
             >
-              Resume Tailor
+              Resume tailor
             </button>
             <button
               onClick={() => {
@@ -333,17 +312,18 @@ export const Navbar: React.FC = () => {
                 setMobileMenuOpen(false);
               }}
               style={{
-                padding: '12px 14px',
-                borderRadius: '8px',
+                minHeight: '44px',
+                padding: '10px 12px',
+                borderRadius: 'var(--radius-sm)',
                 border: '1px solid var(--rs-line)',
                 backgroundColor: 'var(--rs-surface)',
                 color: 'var(--rs-ink)',
                 fontSize: '13px',
-                fontWeight: 600,
+                fontWeight: 500,
                 textAlign: 'left',
               }}
             >
-              Interview Prep
+              Interview studio
             </button>
             <button
               onClick={() => {
@@ -351,13 +331,14 @@ export const Navbar: React.FC = () => {
                 setMobileMenuOpen(false);
               }}
               style={{
-                padding: '12px 14px',
-                borderRadius: '8px',
+                minHeight: '44px',
+                padding: '10px 12px',
+                borderRadius: 'var(--radius-sm)',
                 border: '1px solid var(--rs-line)',
                 backgroundColor: 'var(--rs-surface)',
                 color: 'var(--rs-ink)',
                 fontSize: '13px',
-                fontWeight: 600,
+                fontWeight: 500,
                 textAlign: 'left',
               }}
             >
@@ -371,17 +352,18 @@ export const Navbar: React.FC = () => {
                 }}
                 style={{
                   gridColumn: '1 / -1',
-                  padding: '12px 14px',
-                  borderRadius: '8px',
+                  minHeight: '44px',
+                  padding: '10px 12px',
+                  borderRadius: 'var(--radius-sm)',
                   border: '1px solid var(--rs-line)',
                   backgroundColor: 'var(--rs-surface-2)',
                   color: 'var(--rs-ink)',
                   fontSize: '13px',
-                  fontWeight: 700,
+                  fontWeight: 600,
                   textAlign: 'center',
                 }}
               >
-                Log in to Account
+                Log in to account
               </button>
             )}
           </div>

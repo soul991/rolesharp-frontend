@@ -1,30 +1,37 @@
 :root {
   color-scheme: dark;
   
-  /* Reference Palette - Dark */
-  --rs-bg: #061426;
-  --rs-surface: #0C213A;
-  --rs-surface-2: #112943;
-  --rs-surface-3: #193653;
-  --rs-paper: #F7F6F0;
-  --rs-paper-ink: #172B48;
-  --rs-ink: #EFF5FF;
-  --rs-muted: #A9BAD1;
-  --rs-line: #26415F;
-  --rs-blue: #9FC3F2;
-  --rs-blue-strong: #5B9BFF;
-  --rs-blue-ink: #071A33;
-  --rs-amber: #F2C96D;
-  --rs-green: #34D399;
-  --rs-red: #F87171;
-  --rs-shadow: 0 24px 60px rgba(0, 0, 0, 0.32);
-  --rs-shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.22);
+  /* Tier 1: Primitives & Base Neutrals (Dark - Midnight Slate) */
+  --rs-bg: #0A0F1D;
+  --rs-surface: #111827;
+  --rs-surface-2: #1E293B;
+  --rs-surface-3: #334155;
+  --rs-paper: #FFFFFF;
+  --rs-paper-ink: #0F172A;
+  --rs-ink: #F8FAFC;
+  --rs-muted: #94A3B8;
+  --rs-line: rgba(255, 255, 255, 0.08);
+  --rs-line-strong: rgba(255, 255, 255, 0.16);
+
+  /* Tier 2: Semantics & Accents */
+  --rs-blue: #3B82F6;
+  --rs-blue-strong: #60A5FA;
+  --rs-blue-ink: #051329;
+  --rs-amber: #F59E0B;
+  --rs-green: #10B981;
+  --rs-emerald: #10B981;
+  --rs-red: #EF4444;
+
+  /* Tier 3: Shadows & Depth */
+  --rs-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  --rs-shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.2);
+  --rs-shadow-paper: 0 16px 48px rgba(0, 0, 0, 0.28);
 
   /* Typography Families */
-  --font-display: "Space Grotesk", system-ui, -apple-system, sans-serif;
-  --font-body: "DM Sans", system-ui, -apple-system, sans-serif;
-  --font-serif: "Playfair Display", Georgia, serif;
-  --font-mono: "Geist Mono", SFMono-Regular, Menlo, monospace;
+  --font-display: "Newsreader", "Playfair Display", Georgia, serif;
+  --font-body: "Inter", "DM Sans", system-ui, -apple-system, sans-serif;
+  --font-serif: "Newsreader", "Playfair Display", Georgia, serif;
+  --font-mono: "JetBrains Mono", "Geist Mono", SFMono-Regular, Menlo, monospace;
 
   /* Transitions & Animation Easing */
   --rs-ease: cubic-bezier(0.16, 1, 0.3, 1);
@@ -39,22 +46,29 @@
 html[data-theme="light"] {
   color-scheme: light;
   
-  /* Reference Palette - Light */
-  --rs-bg: #F3F2EE;
-  --rs-surface: #FAF9F6;
-  --rs-surface-2: #ECEBE6;
-  --rs-surface-3: #E3E5E8;
+  /* Tier 1: Primitives & Base Neutrals (Light - Warm Archival Linen) */
+  --rs-bg: #F8F7F4;
+  --rs-surface: #FFFFFF;
+  --rs-surface-2: #F1EFEA;
+  --rs-surface-3: #E5E3DD;
   --rs-paper: #FFFFFF;
-  --rs-paper-ink: #172B48;
-  --rs-ink: #10243E;
-  --rs-muted: #52647A;
-  --rs-line: #D5DFEA;
-  --rs-blue: #123B7A;
-  --rs-blue-strong: #2458A6;
+  --rs-paper-ink: #0F172A;
+  --rs-ink: #0F172A;
+  --rs-muted: #576579;
+  --rs-line: #E2E8F0;
+  --rs-line-strong: #CBD5E1;
+
+  /* Tier 2: Semantics & Accents */
+  --rs-blue: #1D4ED8;
+  --rs-blue-strong: #2563EB;
   --rs-blue-ink: #FFFFFF;
-  --rs-amber: #A96A0B;
-  --rs-green: #047857;
+  --rs-amber: #B45309;
+  --rs-green: #059669;
+  --rs-emerald: #059669;
   --rs-red: #DC2626;
-  --rs-shadow: 0 24px 60px rgba(14, 33, 58, 0.12);
-  --rs-shadow-sm: 0 4px 14px rgba(14, 33, 58, 0.08);
+
+  /* Tier 3: Shadows & Depth */
+  --rs-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
+  --rs-shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+  --rs-shadow-paper: 0 16px 40px rgba(15, 23, 42, 0.08);
 }

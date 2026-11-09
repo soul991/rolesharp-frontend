@@ -10,8 +10,8 @@ export interface ScoreRingProps {
 export const ScoreRing: React.FC<ScoreRingProps> = ({
   score,
   size = 110,
-  strokeWidth = 8,
-  label = 'ATS Score',
+  strokeWidth = 6,
+  label = 'ATS match score',
 }) => {
   const clampedScore = Math.min(100, Math.max(0, score));
   const radius = (size - strokeWidth) / 2;
@@ -38,7 +38,7 @@ export const ScoreRing: React.FC<ScoreRingProps> = ({
     >
       <div style={{ position: 'relative', width: size, height: size }}>
         <svg width={size} height={size} style={{ transform: 'rotate(-90deg)' }}>
-          {/* Background track */}
+          {/* Hairline background track */}
           <circle
             cx={size / 2}
             cy={size / 2}
@@ -59,7 +59,7 @@ export const ScoreRing: React.FC<ScoreRingProps> = ({
             strokeDashoffset={strokeDashoffset}
             strokeLinecap="round"
             style={{
-              transition: 'stroke-dashoffset 1s var(--rs-ease), stroke 0.3s ease',
+              transition: 'stroke-dashoffset 0.8s var(--rs-ease), stroke 0.3s ease',
             }}
           />
         </svg>
@@ -75,10 +75,12 @@ export const ScoreRing: React.FC<ScoreRingProps> = ({
         >
           <span
             style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: `${Math.round(size * 0.32)}px`,
-              fontWeight: 700,
+              fontFamily: 'var(--font-mono)',
+              fontVariantNumeric: 'tabular-nums',
+              fontSize: `${Math.round(size * 0.3)}px`,
+              fontWeight: 600,
               lineHeight: 1,
+              letterSpacing: '-0.03em',
               color: 'var(--rs-ink)',
             }}
           >
@@ -86,10 +88,11 @@ export const ScoreRing: React.FC<ScoreRingProps> = ({
           </span>
           <span
             style={{
-              fontSize: '10px',
-              fontWeight: 600,
+              fontFamily: 'var(--font-mono)',
+              fontSize: '11px',
+              fontWeight: 400,
               color: 'var(--rs-muted)',
-              marginTop: '2px',
+              marginTop: '3px',
             }}
           >
             / 100
@@ -100,10 +103,9 @@ export const ScoreRing: React.FC<ScoreRingProps> = ({
         <span
           style={{
             fontSize: '12px',
-            fontWeight: 700,
+            fontWeight: 500,
             color: 'var(--rs-muted)',
-            textTransform: 'uppercase',
-            letterSpacing: '0.08em',
+            letterSpacing: '-0.01em',
           }}
         >
           {label}

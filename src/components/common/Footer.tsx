@@ -9,7 +9,7 @@ export const Footer: React.FC = () => {
       style={{
         borderTop: '1px solid var(--rs-line)',
         backgroundColor: 'var(--rs-bg)',
-        padding: '48px 0 36px',
+        padding: '56px 0 40px',
         color: 'var(--rs-muted)',
         fontSize: '13px',
       }}
@@ -20,7 +20,7 @@ export const Footer: React.FC = () => {
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
             gap: '40px',
-            marginBottom: '40px',
+            marginBottom: '44px',
           }}
         >
           {/* Brand Col */}
@@ -30,31 +30,34 @@ export const Footer: React.FC = () => {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '8px',
-                fontFamily: 'var(--font-display)',
-                fontWeight: 700,
-                fontSize: '18px',
-                letterSpacing: '-0.04em',
+                fontFamily: 'var(--font-sans)',
+                fontWeight: 650,
+                fontSize: '17px',
+                letterSpacing: '-0.03em',
                 color: 'var(--rs-ink)',
                 marginBottom: '14px',
               }}
             >
               <span
                 style={{
-                  width: '26px',
-                  height: '26px',
+                  width: '24px',
+                  height: '24px',
                   display: 'grid',
                   placeItems: 'center',
-                  borderRadius: '6px',
+                  borderRadius: '5px',
                   color: '#FFFFFF',
+                  fontFamily: 'var(--font-serif)',
+                  fontWeight: 600,
                   fontSize: '15px',
-                  background: 'linear-gradient(145deg, #527DBA, #102B53 65%, #D9B65E)',
+                  background: 'linear-gradient(135deg, #1E3A68 0%, #0F203C 100%)',
+                  border: '1px solid rgba(255, 255, 255, 0.12)',
                 }}
               >
                 R
               </span>
               <span>Role<span style={{ color: 'var(--rs-blue-strong)' }}>Sharp</span></span>
             </div>
-            <p style={{ margin: 0, lineHeight: 1.6, maxWidth: '28ch', fontSize: '13px' }}>
+            <p style={{ margin: 0, lineHeight: 1.6, maxWidth: '30ch', fontSize: '13px' }}>
               Precision editorial career workspace. Evidence-grounded resumes, opportunity matching, and confident preparation.
             </p>
           </div>
@@ -63,36 +66,35 @@ export const Footer: React.FC = () => {
           <div>
             <h4
               style={{
-                fontFamily: 'var(--font-display)',
+                fontFamily: 'var(--font-sans)',
                 fontSize: '13px',
-                fontWeight: 700,
+                fontWeight: 600,
                 color: 'var(--rs-ink)',
-                letterSpacing: '0.06em',
-                textTransform: 'uppercase',
+                letterSpacing: '-0.01em',
                 margin: '0 0 14px',
               }}
             >
-              Application Workflow
+              Application workflow
             </h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '9px' }}>
               <li>
-                <button onClick={() => navigate('/checker')} style={{ color: 'var(--rs-muted)', transition: 'color 0.2s' }}>
-                  01 / ATS Check & Diagnostics
+                <button onClick={() => navigate('/checker')} style={{ color: 'var(--rs-muted)', fontSize: '13px', transition: 'color 0.15s' }}>
+                  ATS check & diagnostics
                 </button>
               </li>
               <li>
-                <button onClick={() => navigate('/tailor')} style={{ color: 'var(--rs-muted)', transition: 'color 0.2s' }}>
-                  02 / Role-Specific Tailoring
+                <button onClick={() => navigate('/tailor')} style={{ color: 'var(--rs-muted)', fontSize: '13px', transition: 'color 0.15s' }}>
+                  Role-specific tailoring
                 </button>
               </li>
               <li>
-                <button onClick={() => navigate('/interview')} style={{ color: 'var(--rs-muted)', transition: 'color 0.2s' }}>
-                  03 / Interview Practice Studio
+                <button onClick={() => navigate('/interview')} style={{ color: 'var(--rs-muted)', fontSize: '13px', transition: 'color 0.15s' }}>
+                  Interview practice studio
                 </button>
               </li>
               <li>
-                <button onClick={() => navigate('/tracker')} style={{ color: 'var(--rs-muted)', transition: 'color 0.2s' }}>
-                  04 / Application Tracker
+                <button onClick={() => navigate('/tracker')} style={{ color: 'var(--rs-muted)', fontSize: '13px', transition: 'color 0.15s' }}>
+                  Application tracker
                 </button>
               </li>
             </ul>
@@ -102,41 +104,40 @@ export const Footer: React.FC = () => {
           <div>
             <h4
               style={{
-                fontFamily: 'var(--font-display)',
+                fontFamily: 'var(--font-sans)',
                 fontSize: '13px',
-                fontWeight: 700,
+                fontWeight: 600,
                 color: 'var(--rs-ink)',
-                letterSpacing: '0.06em',
-                textTransform: 'uppercase',
+                letterSpacing: '-0.01em',
                 margin: '0 0 14px',
               }}
             >
-              Tools & Resources
+              Tools & resources
             </h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '9px' }}>
               <li>
-                <button onClick={() => navigate('/tools')} style={{ color: 'var(--rs-muted)', transition: 'color 0.2s' }}>
-                  Free Tools Directory
+                <button onClick={() => navigate('/tools')} style={{ color: 'var(--rs-muted)', fontSize: '13px', transition: 'color 0.15s' }}>
+                  Free tools directory
                 </button>
               </li>
               <li>
-                <button onClick={() => navigate('/cover-letter')} style={{ color: 'var(--rs-muted)', transition: 'color 0.2s' }}>
-                  Cover Letter Generator
+                <button onClick={() => navigate('/cover-letter')} style={{ color: 'var(--rs-muted)', fontSize: '13px', transition: 'color 0.15s' }}>
+                  Cover letter generator
                 </button>
               </li>
               <li>
-                <button onClick={() => navigate('/linkedin')} style={{ color: 'var(--rs-muted)', transition: 'color 0.2s' }}>
-                  LinkedIn Optimizer
+                <button onClick={() => navigate('/linkedin')} style={{ color: 'var(--rs-muted)', fontSize: '13px', transition: 'color 0.15s' }}>
+                  LinkedIn optimizer
                 </button>
               </li>
               <li>
-                <button onClick={() => navigate('/pricing')} style={{ color: 'var(--rs-muted)', transition: 'color 0.2s' }}>
-                  Pricing & Plans
+                <button onClick={() => navigate('/pricing')} style={{ color: 'var(--rs-muted)', fontSize: '13px', transition: 'color 0.15s' }}>
+                  Pricing & plans
                 </button>
               </li>
               <li>
-                <button onClick={() => navigate('/about')} style={{ color: 'var(--rs-muted)', transition: 'color 0.2s' }}>
-                  Methodology & Trust
+                <button onClick={() => navigate('/about')} style={{ color: 'var(--rs-muted)', fontSize: '13px', transition: 'color 0.15s' }}>
+                  Methodology & trust
                 </button>
               </li>
             </ul>
@@ -146,36 +147,35 @@ export const Footer: React.FC = () => {
           <div>
             <h4
               style={{
-                fontFamily: 'var(--font-display)',
+                fontFamily: 'var(--font-sans)',
                 fontSize: '13px',
-                fontWeight: 700,
+                fontWeight: 600,
                 color: 'var(--rs-ink)',
-                letterSpacing: '0.06em',
-                textTransform: 'uppercase',
+                letterSpacing: '-0.01em',
                 margin: '0 0 14px',
               }}
             >
-              Trust & Security
+              Trust & security
             </h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '9px' }}>
               <li>
-                <button onClick={() => navigate('/privacy')} style={{ color: 'var(--rs-muted)', transition: 'color 0.2s' }}>
-                  Privacy Policy & Retention
+                <button onClick={() => navigate('/privacy')} style={{ color: 'var(--rs-muted)', fontSize: '13px', transition: 'color 0.15s' }}>
+                  Privacy policy & retention
                 </button>
               </li>
               <li>
-                <button onClick={() => navigate('/terms')} style={{ color: 'var(--rs-muted)', transition: 'color 0.2s' }}>
-                  Terms of Service
+                <button onClick={() => navigate('/terms')} style={{ color: 'var(--rs-muted)', fontSize: '13px', transition: 'color 0.15s' }}>
+                  Terms of service
                 </button>
               </li>
               <li>
-                <button onClick={() => navigate('/help')} style={{ color: 'var(--rs-muted)', transition: 'color 0.2s' }}>
-                  Help Center & FAQs
+                <button onClick={() => navigate('/help')} style={{ color: 'var(--rs-muted)', fontSize: '13px', transition: 'color 0.15s' }}>
+                  Help center & FAQs
                 </button>
               </li>
               <li style={{ color: 'var(--rs-green)', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px' }}>
                 <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: 'var(--rs-green)' }} />
-                <span>Zero Data Scraping Policy</span>
+                <span>Zero data scraping policy</span>
               </li>
             </ul>
           </div>
@@ -195,8 +195,8 @@ export const Footer: React.FC = () => {
         >
           <span>© {new Date().getFullYear()} RoleSharp 2.0. Clean-room architecture. All rights reserved.</span>
           <div style={{ display: 'flex', gap: '20px' }}>
-            <span>WCAG 2.2 AA Validated</span>
-            <span>Zero Hallucination Guarantee</span>
+            <span>WCAG 2.2 AA validated</span>
+            <span>Zero hallucination guarantee</span>
           </div>
         </div>
       </div>

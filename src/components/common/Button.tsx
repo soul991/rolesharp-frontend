@@ -15,6 +15,7 @@ export const Button: React.FC<ButtonProps> = ({
   icon,
   className = '',
   disabled,
+  style,
   ...props
 }) => {
   const baseStyles: React.CSSProperties = {
@@ -22,20 +23,21 @@ export const Button: React.FC<ButtonProps> = ({
     alignItems: 'center',
     justifyContent: 'center',
     gap: '8px',
-    borderRadius: '9px',
-    fontWeight: 650,
+    borderRadius: '8px',
+    fontWeight: 600,
     cursor: disabled || loading ? 'not-allowed' : 'pointer',
-    opacity: disabled || loading ? 0.6 : 1,
-    transition: 'transform 0.18s var(--rs-ease), background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease',
+    opacity: disabled || loading ? 0.55 : 1,
+    transition: 'transform 0.14s var(--rs-ease), background-color 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease, color 0.14s ease',
     textDecoration: 'none',
     whiteSpace: 'nowrap',
     fontFamily: 'var(--font-body)',
+    userSelect: 'none',
   };
 
   const sizeStyles: Record<string, React.CSSProperties> = {
-    sm: { minHeight: '38px', padding: '0 14px', fontSize: '13px' },
+    sm: { minHeight: '36px', padding: '0 12px', fontSize: '13px' },
     md: { minHeight: '44px', padding: '0 18px', fontSize: '14px' },
-    lg: { minHeight: '50px', padding: '0 24px', fontSize: '15px' },
+    lg: { minHeight: '48px', padding: '0 22px', fontSize: '15px' },
   };
 
   const variantStyles: Record<string, React.CSSProperties> = {
@@ -43,12 +45,13 @@ export const Button: React.FC<ButtonProps> = ({
       backgroundColor: 'var(--rs-blue)',
       color: 'var(--rs-blue-ink)',
       border: '1px solid transparent',
-      boxShadow: '0 8px 24px rgba(62, 117, 190, 0.16)',
+      boxShadow: '0 2px 6px rgba(0, 0, 0, 0.12)',
     },
     secondary: {
       backgroundColor: 'var(--rs-surface)',
       color: 'var(--rs-ink)',
       border: '1px solid var(--rs-line)',
+      boxShadow: 'var(--rs-shadow-sm)',
     },
     ghost: {
       backgroundColor: 'transparent',
@@ -73,6 +76,7 @@ export const Button: React.FC<ButtonProps> = ({
         ...baseStyles,
         ...sizeStyles[size],
         ...variantStyles[variant],
+        ...style,
       }}
       className={`rs-button rs-button-${variant} ${className}`}
       disabled={disabled || loading}
@@ -81,21 +85,22 @@ export const Button: React.FC<ButtonProps> = ({
       {loading ? (
         <span
           style={{
-            width: '16px',
-            height: '16px',
+            width: '15px',
+            height: '15px',
             border: '2px solid currentColor',
             borderTopColor: 'transparent',
             borderRadius: '50%',
+            display: 'inline-block',
             animation: 'rs-spin 0.6s linear infinite',
           }}
           aria-hidden="true"
         />
       ) : icon ? (
-        <span style={{ display: 'flex', alignItems: 'center' }} aria-hidden="true">
+        <span style={{ display: 'inline-flex', alignItems: 'center' }} aria-hidden="true">
           {icon}
         </span>
       ) : null}
-      <span>{children}</span>
+      {children && <span>{children}</span>}
     </button>
   );
 };
