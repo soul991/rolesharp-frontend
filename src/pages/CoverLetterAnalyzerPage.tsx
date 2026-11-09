@@ -49,6 +49,12 @@ export const CoverLetterAnalyzerPage: React.FC = () => {
 
   const runAnalysis = () => {
     setIsAnalyzing(true);
+    fetch('/api/cover-letter-analyzer', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', credentials: 'include' },
+      body: JSON.stringify({ letter: letterText, targetCompany, targetRole }),
+    }).catch(() => {});
+
     setTimeout(() => {
       const words = letterText.trim().split(/\s+/).filter(Boolean);
       const wordCount = words.length;

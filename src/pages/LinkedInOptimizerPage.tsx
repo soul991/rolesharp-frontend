@@ -48,6 +48,18 @@ export const LinkedInOptimizerPage: React.FC = () => {
   const handleOptimize = (e: React.FormEvent) => {
     e.preventDefault();
     setIsOptimizing(true);
+    fetch('/api/linkedin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', credentials: 'include' },
+      body: JSON.stringify({ resumeId: selectedResumeId }),
+    })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data?.headline) setHeadline(data.headline);
+        if (data?.about) setAboutText(data.about);
+      })
+      .catch(() => {});
+
     setTimeout(() => {
       setIsOptimizing(false);
       setNotification('LinkedIn profile sections optimized and grounded in your verified Master Executive Profile.');

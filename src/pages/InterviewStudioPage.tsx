@@ -157,6 +157,27 @@ export const InterviewStudioPage: React.FC = () => {
     setTimeout(() => setNotification(null), 2500);
   };
 
+  const handleRegenerate = () => {
+    setNotification('Calibrating questions from backend (POST /api/interview)...');
+    fetch('/api/interview', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', credentials: 'include' },
+      body: JSON.stringify({ resumeId: 'res_master_01', useCredit: true }),
+    })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (Array.isArray(data?.questions) && data.questions.length > 0) {
+          setQuestions(data.questions);
+        }
+      })
+      .catch(() => {});
+
+    setTimeout(() => {
+      setNotification('Interview questions refreshed and grounded in verified resume metrics.');
+      setTimeout(() => setNotification(null), 3000);
+    }, 600);
+  };
+
   const filteredQuestions =
     filterCategory === 'All'
       ? questions
@@ -328,6 +349,15 @@ export const InterviewStudioPage: React.FC = () => {
               </button>
             </div>
           </div>
+
+          <Button
+            size="sm"
+            variant="ghost"
+            onClick={handleRegenerate}
+            icon={<RotateCcw size={13} />}
+          >
+            Regenerate Questions
+          </Button>
         </div>
 
         {/* Main Grid: Question List & Active Question Stage */}

@@ -8,118 +8,27 @@ import {
   Trash2,
   CheckCircle2,
 } from 'lucide-react';
+import {
+  ApplicationStatus,
+  VALID_APPLICATION_STATUSES,
+  isValidApplicationStatus,
+  sanitizeApplicationStatus,
+  applicationsApi,
+  getOfflineCachedApplications,
+} from '../api/applicationsApi';
+import { ApplicationItem } from '../api/types';
 
-export type ApplicationStatus = 'saved' | 'applied' | 'interview' | 'offer' | 'rejected';
+export {
+  type ApplicationStatus,
+  VALID_APPLICATION_STATUSES,
+  isValidApplicationStatus,
+  sanitizeApplicationStatus,
+};
 
-export const VALID_APPLICATION_STATUSES: readonly ApplicationStatus[] = [
-  'saved',
-  'applied',
-  'interview',
-  'offer',
-  'rejected',
-] as const;
-
-export function isValidApplicationStatus(status: unknown): status is ApplicationStatus {
-  return typeof status === 'string' && (VALID_APPLICATION_STATUSES as readonly string[]).includes(status);
-}
-
-export function sanitizeApplicationStatus(status: unknown): ApplicationStatus {
-  if (isValidApplicationStatus(status)) return status;
-  if (status === 'archived') return 'rejected';
-  if (status === 'interviewing') return 'interview';
-  return 'saved';
-}
-
-export interface TrackerItem {
-  id: string;
-  company: string;
-  role: string;
-  status: ApplicationStatus;
-  date: string;
-  salary?: string;
-  location?: string;
+export interface TrackerItem extends ApplicationItem {
   reminder?: string;
-  notes?: string;
-  sourceUrl?: string;
+  date?: string;
 }
-
-const STORAGE_KEY = 'rolesharp_tracker_applications';
-
-const INITIAL_APPLICATIONS: TrackerItem[] = [
-  {
-    id: 'app_1',
-    company: 'Stripe',
-    role: 'Staff Infrastructure Lead',
-    status: 'interview',
-    date: 'Applied Nov 3, 2026',
-    salary: '$250k',
-    location: 'Remote (US)',
-    reminder: 'Technical Architecture Round — Thursday 2:00 PM',
-    notes: 'Tailored resume v1.4 submitted. Recruiter highlighted multi-region K8s experience.',
-    sourceUrl: 'https://stripe.com/jobs/staff-infrastructure-lead',
-  },
-  {
-    id: 'app_2',
-    company: 'Datadog',
-    role: 'Senior Systems Architect',
-    status: 'interview',
-    date: 'Applied Nov 1, 2026',
-    salary: '$235k',
-    location: 'New York, NY',
-    reminder: 'Follow-up with hiring manager regarding streaming case study',
-    notes: 'Passed initial screening. Deep dive into Kafka streaming topology scheduled.',
-  },
-  {
-    id: 'app_3',
-    company: 'Linear',
-    role: 'Product Systems & Experience Lead',
-    status: 'applied',
-    date: 'Applied Nov 7, 2026',
-    salary: '$210k',
-    location: 'Remote Global',
-    reminder: 'Check status Nov 14',
-    notes: 'Submitted via Ashby with customized cover letter focusing on state sync.',
-  },
-  {
-    id: 'app_4',
-    company: 'Figma',
-    role: 'Senior Engineering Manager — Design Systems',
-    status: 'saved',
-    date: 'Saved Nov 8, 2026',
-    salary: '$255k',
-    location: 'San Francisco, CA',
-    reminder: 'Tailor resume for Design Systems leadership before submitting',
-  },
-  {
-    id: 'app_5',
-    company: 'Vercel',
-    role: 'Principal Edge Infrastructure Architect',
-    status: 'saved',
-    date: 'Saved Nov 9, 2026',
-    salary: '$270k',
-    location: 'Remote',
-    reminder: 'Review cold-start latency reduction bullets',
-  },
-  {
-    id: 'app_6',
-    company: 'Cloudflare',
-    role: 'Lead Systems Engineer',
-    status: 'offer',
-    date: 'Applied Oct 18, 2026',
-    salary: '$260k + Equity',
-    location: 'Austin, TX / Remote',
-    reminder: 'Offer review deadline: Nov 15, 2026',
-    notes: 'Written offer received. Evaluating equity vesting schedule and compensation package.',
-  },
-  {
-    id: 'app_7',
-    company: 'Legacy Corp',
-    role: 'Enterprise Cloud Specialist',
-    status: 'rejected',
-    date: 'Applied Oct 12, 2026',
-    notes: 'Role closed due to internal restructuring.',
-  },
-];
 
 const COLUMNS: { id: ApplicationStatus; title: string; color: string }[] = [
   { id: 'saved', title: 'Saved', color: 'var(--rs-muted)' },
@@ -129,33 +38,23 @@ const COLUMNS: { id: ApplicationStatus; title: string; color: string }[] = [
   { id: 'rejected', title: 'Archived / Rejected', color: '#6b7280' },
 ];
 
-function loadStoredApplications(): TrackerItem[] {
-  if (typeof window === 'undefined') return INITIAL_APPLICATIONS;
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return INITIAL_APPLICATIONS;
-    const parsed = JSON.parse(raw);
-    if (Array.isArray(parsed) && parsed.length > 0) {
-      return parsed.map((item) => ({
-        ...item,
-        status: sanitizeApplicationStatus(item.status),
-      }));
-    }
-  } catch (_) {}
-  return INITIAL_APPLICATIONS;
-}
-
 export const TrackerPage: React.FC = () => {
-  const [applications, setApplications] = useState<TrackerItem[]>(loadStoredApplications);
+  const [applications, setApplications] = useState<TrackerItem[]>(() => getOfflineCachedApplications() as TrackerItem[]);
   const [searchFilter, setSearchFilter] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
   const [notification, setNotification] = useState<string | null>(null);
 
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(applications));
-    } catch (_) {}
-  }, [applications]);
+    let active = true;
+    applicationsApi.getApplications().then(({ applications: loaded }) => {
+      if (active) {
+        setApplications(loaded as TrackerItem[]);
+      }
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   // New App Form State
   const [newCompany, setNewCompany] = useState('');
@@ -174,6 +73,7 @@ export const TrackerPage: React.FC = () => {
     setApplications((prev) =>
       prev.map((app) => (app.id === id ? { ...app, status: sanitized } : app))
     );
+    applicationsApi.updateApplication(id, { status: sanitized });
     setNotification(`Moved application to ${sanitized.toUpperCase()}.`);
     setTimeout(() => setNotification(null), 2500);
   };
@@ -196,24 +96,24 @@ export const TrackerPage: React.FC = () => {
 
   const handleDelete = (id: string, title: string) => {
     setApplications((prev) => prev.filter((a) => a.id !== id));
+    applicationsApi.deleteApplication(id);
     setNotification(`Removed "${title}" from tracker.`);
     setTimeout(() => setNotification(null), 2500);
   };
 
-  const handleAddApplication = (e: React.FormEvent) => {
+  const handleAddApplication = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newCompany.trim() || !newRole.trim()) return;
 
-    const newApp: TrackerItem = {
-      id: `app_${Math.random().toString(36).substring(2, 7)}`,
+    const sanitized = sanitizeApplicationStatus(newStatus);
+    const created = await applicationsApi.createApplication({
       company: newCompany,
       role: newRole,
       salary: newSalary || undefined,
-      status: sanitizeApplicationStatus(newStatus),
-      date: 'Added today',
-    };
+      status: sanitized,
+    });
 
-    setApplications([newApp, ...applications]);
+    setApplications((prev) => [created, ...prev]);
     setShowAddModal(false);
     setNewCompany('');
     setNewRole('');
@@ -600,7 +500,7 @@ export const TrackerPage: React.FC = () => {
                         }}
                       >
                         <span style={{ color: 'var(--rs-muted)', fontFamily: 'var(--font-mono)' }}>
-                          {app.date}
+                          {app.appliedDate || app.date || 'Tracked'}
                         </span>
 
                         <select

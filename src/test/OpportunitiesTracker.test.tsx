@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import { JobFinderPage } from '../pages/JobFinderPage';
 import { DailyMatchesPage } from '../pages/DailyMatchesPage';
 import {
@@ -8,6 +8,7 @@ import {
   sanitizeApplicationStatus,
   VALID_APPLICATION_STATUSES,
 } from '../pages/TrackerPage';
+import { applicationsApi, setOfflineCachedApplications } from '../api/applicationsApi';
 import { ThemeProvider } from '../context/ThemeContext';
 import { RouterProvider } from '../router/RouterContext';
 import { AuthProvider } from '../context/AuthContext';
@@ -15,6 +16,11 @@ import { AuthProvider } from '../context/AuthContext';
 describe('Opportunities & Application Tracker (Task 4)', () => {
   beforeEach(() => {
     localStorage.clear();
+    vi.restoreAllMocks();
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
   it('renders JobFinderPage with filters, search, and save actions', () => {
     render(
@@ -160,5 +166,90 @@ describe('Opportunities & Application Tracker (Task 4)', () => {
       const saved = JSON.parse(localStorage.getItem('rolesharp_tracker_applications') || '[]');
       expect(saved[0].status).toBe('rejected');
     });
+  });
+
+  it('serializes backend requests with strictly valid enums and handles API responses and network failures', async () => {
+    const fetchSpy = vi.spyOn(global, 'fetch');
+
+    // 1. Test successful backend GET
+    fetchSpy.mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        applications: [
+          {
+            id: 'app_backend_1',
+            company: 'Vercel',
+            role: 'Edge Architect',
+            status: 'interview',
+            lastUpdated: '2026-11-09T10:00:00Z',
+          },
+        ],
+      }),
+    } as Response);
+
+    const getResult = await applicationsApi.getApplications();
+    expect(getResult.source).toBe('backend');
+    expect(getResult.applications[0].company).toBe('Vercel');
+    expect(getResult.applications[0].status).toBe('interview');
+
+    // 2. Test POST /api/applications with UI label sanitization
+    let capturedPostUrl = '';
+    let capturedPostBody: any = null;
+    fetchSpy.mockImplementationOnce(async (url, init) => {
+      capturedPostUrl = url.toString();
+      capturedPostBody = JSON.parse(init?.body as string);
+      return {
+        ok: true,
+        json: async () => ({
+          id: 'app_backend_new',
+          company: capturedPostBody.company,
+          role: capturedPostBody.role,
+          status: capturedPostBody.status,
+          lastUpdated: '2026-11-10T00:00:00Z',
+        }),
+      } as Response;
+    });
+
+    // Pass display label 'Archived / Rejected' to test normalization
+    const created = await applicationsApi.createApplication({
+      company: 'OpenAI',
+      role: 'Research Engineer',
+      status: 'Archived / Rejected' as any,
+    });
+
+    expect(capturedPostUrl).toBe('/api/applications');
+    // Ensure display label was converted to strictly valid enum 'rejected'
+    expect(capturedPostBody.status).toBe('rejected');
+    expect(created.status).toBe('rejected');
+
+    // 3. Test PATCH /api/applications/{id}
+    let capturedPatchBody: any = null;
+    fetchSpy.mockImplementationOnce(async (_url, init) => {
+      capturedPatchBody = JSON.parse(init?.body as string);
+      return { ok: true, json: async () => ({}) } as Response;
+    });
+
+    // Pass 'Interviewing' display label to test normalization
+    await applicationsApi.updateApplication('app_backend_new', {
+      status: 'Interviewing' as any,
+    });
+    expect(capturedPatchBody.status).toBe('interview');
+
+    // 4. Test network failure fallback
+    fetchSpy.mockRejectedValueOnce(new Error('Network error / 503 Service Unavailable'));
+    setOfflineCachedApplications([
+      {
+        id: 'offline_app_1',
+        company: 'Stripe',
+        role: 'Infra Lead',
+        status: 'offer',
+        lastUpdated: '2026-11-10T00:00:00Z',
+      },
+    ]);
+
+    const fallbackResult = await applicationsApi.getApplications();
+    expect(fallbackResult.source).toBe('offline_fallback');
+    expect(fallbackResult.applications[0].company).toBe('Stripe');
+    expect(fallbackResult.applications[0].status).toBe('offer');
   });
 });

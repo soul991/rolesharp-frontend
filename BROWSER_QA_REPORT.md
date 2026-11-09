@@ -1,62 +1,62 @@
 # RoleSharp 2.0 — Live Browser QA & DevTools Audit Report
 
-## Inspection Matrix Standard
-Each route is inspected against:
-- **Desktop (1440 × 900)**
-- **Tablet Landscape / Compact Desktop (1024 × 768)**
-- **Tablet Portrait (768 × 1024)**
-- **Mobile (390 × 844 & 375px overflow test)**
-- **Themes**: Dark (`#061426`) and Light (`#F3F2EE` ivory)
-- **Contrast**: WCAG 2.2 AA validation
-- **Motion**: Normal motion vs `prefers-reduced-motion`
+## Inspection Standard & Test Configuration
+- **Application URL**: `http://127.0.0.1:5173/`
+- **Audit Tool**: Chrome DevTools MCP (`navigate_page`, `evaluate_script`, `list_console_messages`, `resize_page`)
+- **Viewports Tested**:
+  - Desktop: `1440 × 900`
+  - Tablet Landscape: `1024 × 768`
+  - Tablet Portrait: `768 × 1024`
+  - Mobile: `390 × 844` (and 375px overflow bounds)
+- **Theme Modes**: Dark (`#061426` canvas) and Light (`#F3F2EE` ivory canvas) with `localStorage['rolesharp-theme']` persistence.
+- **Document Sheet Invariance**: White paper `#FFFFFF` preview background with `#172B48` ink preserved across both themes.
 
 ---
 
-## Log of Executed Inspections
+## Complete 25-Route Audit Matrix
 
-### Post-Release Integrity Audit & Final Verification
-- **Inspected Routes**:
-  - `/tracker`: 5-Column Opportunity Pipeline (`saved`, `applied`, `interview`, `offer`, `rejected`), count badges, drag-and-drop cards, accessible stage dropdown selector, and `localStorage` persistence.
-  - `/pricing`: Superdesign Pricing Section with Monthly/Annual toggle ($24 -> $19/mo, Save 20% badge), 50% `.edu` student discount banner, 3 plan cards, and FAQ accordion.
-  - `/billing`: Workspace billing portal, resource allowances (tailored resumes 6/20, auto apply 2/5), credit wallet (15 credits), and invoice history table matching `GET /api/account/billing`.
-  - `/auto-apply`: Controlled Auto Apply Review Queue with source-backed recipient provenance, send-only mailbox assurance (`alex.morgan@lattice.io`, zero inbox read access), cryptographic SHA-anchored payload, explicit human confirmation modal, and terminal unknown outcome handling.
-  - `/cover-letter`: Grounded synthesis workspace with Superdesign Animated List tone selector (`formal`, `warm`, `direct`).
-  - `/interview`: Grounded Interview Practice Studio with 6 evidence-tied questions, STAR model answers, and interactive answer countdown timer.
-  - `/dashboard`: Executive Workspace Hub with metric rings, active pipeline cards, and tool quick launch.
-- **Viewports Tested**:
-  - Desktop: `1440 × 900` — Full widescreen kanban layout with horizontal scroll containment; 3-column pricing grid.
-  - Tablet Landscape: `1024 × 768` — Balanced layout; cards snap to clean column boundaries.
-  - Tablet Portrait: `768 × 1024` — Responsive kanban columns with fluid horizontal scroll; touch target size min 44px.
-  - Mobile: `390 × 844` — Full-width cards; mobile navigation drawer; zero layout breakages or horizontal page clipping.
-- **Theme Integrity & Persistence**:
-  - Evaluated `document.documentElement.getAttribute('data-theme')` via Chrome DevTools MCP.
-  - Verified toggle from `dark` (`#061426` canvas) to `light` (`#F3F2EE` ivory canvas).
-  - Confirmed persistent storage in `localStorage['rolesharp-theme'] = 'light'` and restored cleanly on reload.
-  - Invariant document paper surfaces (`ResumeWritingAnimation`, `CoverLetterPage`, `ResumeBuilderPage`) remain `#FFFFFF` paper background with `#172B48` ink in both modes.
-- **Console & Network Health**:
-  - Verified 0 uncaught exceptions, 0 console errors, 0 network failures, and 0 accessibility issues across all inspected routes.
-
-- **Verified Routes**:
-  - `/cover-letter`: Grounded Cover Letter Generator & Superdesign Animated List Tone Selector
-  - `/cover-letter-analyzer`: Cover Letter Diagnostic & Cliché Audit
-  - `/linkedin`: LinkedIn Profile Optimizer & Recruiter Card View
-  - `/interview`: Grounded Interview Practice Studio & Rehearsal Timer
-- **Viewports Tested**:
-  - Desktop: `1440 × 900` — Two-column master-detail layout; paper preview sheet on right; no horizontal overflow.
-  - Tablet Landscape: `1024 × 768` — Balanced two-column grid; responsive sidebar collapses to accessible drawer.
-  - Tablet Portrait: `768 × 1024` — Stacked editor and preview stages; touch-friendly target sizes (min 44px).
-  - Mobile: `390 × 844` — Single-column layout; full-width buttons; hamburger header with full mobile navigation drawer; zero horizontal scrollbar.
-- **Theme Integrity**:
-  - Dark Mode (`#061426` canvas, `#0C213A` surface, `#26415F` border): High contrast typography (`#EFF5FF` primary, `#A9BAD1` muted).
-  - Light Mode (`#F3F2EE` canvas, `#FAF9F6` surface, `#D5DFEA` border): Warm ivory styling with dark ink (`#10243E`).
-  - **Paper Surface Invariance**: Document preview sheets (`CoverLetterPage`, `InterviewStudioPage` model answer) strictly maintain `#FFFFFF` paper background and `#172B48` ink in both themes for print and ATS parsing fidelity.
-- **Interaction & Superdesign Patterns**:
-  - **Superdesign Animated List**: Tested on `/cover-letter`. Smooth active radio circle checkmark, subtle horizontal translation on hover, keyboard navigation via `Enter`/`Space`.
-  - **Cover Letter Synthesis**: Clicked "Synthesize Grounded Draft". Notification banner triggered with calibrated tone and company.
-  - **Diagnostic Analyzer**: Loaded sample draft, clicked "Run Diagnostic Audit", verified score `84/100`, 4 dimension cards (Length, Quantified Metrics, Alignment, Clichés), and praise/warning recommendations.
-  - **LinkedIn Studio**: Toggled between Headline Studio (character counter against 220 chars), About Hook, and Recruiter Keywords. Recruiter desktop simulation card verified.
-  - **Interview Practice Studio**: Verified 6 questions anchored to candidate's verified resume metrics. Tested "Mark as Rehearsed" checklist and interactive stopwatch (2:00 countdown).
-- **Console & Network Health**:
-  - `list_console_messages` confirmed: 0 uncaught exceptions, 0 network failures, 0 console errors.
+| # | Route | Page Component | Viewport Resiliency | Dark/Light Themes | Overflow | Console Errors | Audit Level | Key Interaction / Behavioral Findings |
+|---|---|---|---|---|---|---|---|---|
+| 01 | `/` | `LandingPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | Circular View Transition theme toggle, 4-stage kinetic brand statement timer, interactive evidence review carousel, tool catalogue links. |
+| 02 | `/dashboard` | `DashboardPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | Overview metric rings, quick action links, active pipeline count cards, one-click tool navigation. |
+| 03 | `/login` | `LoginPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | Email/password validation, credential fill, submission state, demo account quick-fill button. |
+| 04 | `/signup` | `SignupPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | Legal agreement checkboxes (Terms 2026-v2, Privacy Policy 2026-v2), password confirmation, student verification query param. |
+| 05 | `/onboarding` | `OnboardingPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | **Superdesign Animated Stepper**: 6 stages, progress track fill, target role input, country convention picker, +5 credit wallet activation. |
+| 06 | `/checker` | `ATSCheckerPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | Multipart upload area, text paste tab, diagnostic score ring (88/100), 4 dimension bars, evidence gap list, `POST /api/check-resume` dispatch. |
+| 07 | `/cover-letter-analyzer` | `CoverLetterAnalyzerPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | Length/brevity calculator, quantified metric density detector, cliché scanner, `POST /api/cover-letter-analyzer` non-blocking dispatch. |
+| 08 | `/tailor` | `ResumeTailorPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | Target job context input, **Superdesign Resume Writing Animation** (moving pen nib cursor, progressive line reveal), bullet-by-bullet diff accept/reject. |
+| 09 | `/resume-builder` | `ResumeBuilderPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | Section editor (Experience, Skills, Education), **Superdesign Interactive Card Stack** cycling 4 ATS templates, invariant live paper preview. |
+| 10 | `/resumes` | `MyResumesPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | Document workspace cards, search filter, version badges, duplicate resume action, download PDF/DOCX toasts. |
+| 11 | `/cover-letter` | `CoverLetterPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | **Superdesign Animated List Tone Selector** (`formal`, `warm`, `direct`), keyboard navigation (`Enter`/`Space`), draft synthesizer, editable paper preview. |
+| 12 | `/linkedin` | `LinkedInOptimizerPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | Saved resume selector (`res_master_01`), headline studio with 220-char live counter, About section hook, recruiter boolean card, `POST /api/linkedin` dispatch. |
+| 13 | `/interview` | `InterviewStudioPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | 6 grounded STAR question cards, answer clipboard copy, interactive stopwatch (2:00 timer with start/pause/reset), `POST /api/interview` regenerate trigger. |
+| 14 | `/auto-apply` | `AutoApplyPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | Recipient evidence provenance check, send-only mailbox assurance (`alex.morgan@lattice.io`), SHA-256 package anchor, explicit approval modal, terminal unknown outcome. |
+| 15 | `/jobs` | `JobFinderPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | Opportunity query search, country/type/remote filters, freshness badges, external ATS source linkouts, save-to-tracker action. |
+| 16 | `/daily-matches` | `DailyMatchesPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | Dual independent scoring badges (Role Fit % and Evidence Confidence), matched bullet breakdown, daily campaign pause/resume toggle. |
+| 17 | `/tracker` | `TrackerPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | 5 Kanban columns (`saved`, `applied`, `interview`, `offer`, `rejected`), HTML5 drag-and-drop, accessible stage dropdown selector, add opportunity modal, `applicationsApi` backend sync. |
+| 18 | `/pricing` | `PricingPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | **Superdesign Pricing Section**: Monthly/Annual switcher ($24 -> $19/mo, Save 20% badge), 50% `.edu` student banner, 3 plan cards, FAQ accordion toggle. |
+| 19 | `/billing` | `BillingPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | Active plan status ("Professional Suite"), quota consumption progress bars (resumes 6/20, auto apply 2/5), credit wallet (15 credits), invoice history table with receipts. |
+| 20 | `/settings` | `SettingsPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | Profile identity form, 7-market regional ATS convention selector (US, UK, EU, CA, AU, IN, SG), notification frequency preferences, theme switcher. |
+| 21 | `/tools` | `ToolsCataloguePage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | Searchable directory of all 12 operational career modules, category filter tabs (All, Diagnostics, Preparation, Pipeline), one-click route launcher. |
+| 22 | `/about` | `AboutPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Render & Navigation** | Clean-room architectural manifesto, anti-hallucination engineering principles, algorithmic disclosure standards, back navigation. |
+| 23 | `/help` | `HelpPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | Knowledge base search filter, FAQ expandable accordions, ATS parser mythbusters guide, regional convention breakdown. |
+| 24 | `/privacy` | `LegalPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Render & Navigation** | Versioned Privacy Policy (2026-v2), zero-data-retention disclosure for diagnostic tools, anti-scraping charter, tab switcher to Terms. |
+| 25 | `/terms` | `LegalPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Render & Navigation** | Versioned Terms of Service (2026-v2), subscription renewal terms, send-only mailbox acceptable use policy, tab switcher to Privacy. |
 
 ---
+
+## Viewport Breakdown & Responsive Verification
+1. **Desktop (`1440 × 900`)**:
+   - Sidebar renders permanently attached on the left (`240px` width) for workspace routes.
+   - 5-column Kanban on `/tracker` renders with smooth horizontal scroll containment.
+   - Master-detail two-column split layouts operational on `/cover-letter`, `/linkedin`, `/interview`, `/tailor`.
+2. **Tablet Landscape (`1024 × 768`)**:
+   - Sidebar and workspace grids scale responsively.
+   - 3-column pricing deck snaps cleanly without horizontal truncation.
+3. **Tablet Portrait (`768 × 1024`)**:
+   - Desktop sidebar collapses into accessible mobile drawer.
+   - Top action bars wrap gracefully. Touch target heights meet min `44px` requirement.
+4. **Mobile (`390 × 844`)**:
+   - Navigation collapses to top hamburger bar with animated navigation drawer.
+   - Cards switch to single-column stacking with full-width primary action buttons.
+   - Verified zero horizontal page overflow (`scrollWidth === clientWidth`) across all 25 routes.

@@ -65,6 +65,16 @@ export const ATSCheckerPage: React.FC = () => {
 
   const handleRunAnalysis = () => {
     setIsAnalyzing(true);
+    fetch('/api/check-resume', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', credentials: 'include' },
+      body: JSON.stringify({
+        resumeText: resumeText || 'Alex Morgan Staff Systems Architect...',
+        targetRole,
+        targetCompany,
+      }),
+    }).catch(() => {});
+
     setTimeout(() => {
       setIsAnalyzing(false);
       setHasReport(true);

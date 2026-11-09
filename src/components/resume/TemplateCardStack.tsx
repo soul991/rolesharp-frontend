@@ -126,9 +126,9 @@ export const TemplateCardStack: React.FC<TemplateCardStackProps> = ({
 
           // Compute 3D translation & stacking
           let translateY = offset * 18;
-          let scale = 1 - Math.abs(offset) * 0.04;
-          let zIndex = 10 - Math.abs(offset);
-          let opacity = isSelected ? 1 : Math.max(0.4, 1 - Math.abs(offset) * 0.25);
+          const scale = 1 - Math.abs(offset) * 0.04;
+          const zIndex = 10 - Math.abs(offset);
+          const opacity = isSelected ? 1 : Math.max(0.4, 1 - Math.abs(offset) * 0.25);
 
           if (hoveredIndex !== null) {
             // Fan out on hover
