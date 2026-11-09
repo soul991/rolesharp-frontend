@@ -16,6 +16,14 @@ import { CoverLetterPage } from './pages/CoverLetterPage';
 import { CoverLetterAnalyzerPage } from './pages/CoverLetterAnalyzerPage';
 import { LinkedInOptimizerPage } from './pages/LinkedInOptimizerPage';
 import { InterviewStudioPage } from './pages/InterviewStudioPage';
+import { PricingPage } from './pages/PricingPage';
+import { BillingPage } from './pages/BillingPage';
+import { AutoApplyPage } from './pages/AutoApplyPage';
+import { SettingsPage } from './pages/SettingsPage';
+import { ToolsCataloguePage } from './pages/ToolsCataloguePage';
+import { AboutPage } from './pages/AboutPage';
+import { HelpPage } from './pages/HelpPage';
+import { LegalPage } from './pages/LegalPage';
 import { AppShell } from './components/common/AppShell';
 import { Button } from './components/common/Button';
 import { ArrowLeft, Construction } from 'lucide-react';
@@ -56,6 +64,23 @@ export const App: React.FC = () => {
       return <LinkedInOptimizerPage />;
     case '/interview':
       return <InterviewStudioPage />;
+    case '/pricing':
+      return <PricingPage />;
+    case '/billing':
+      return <BillingPage />;
+    case '/auto-apply':
+      return <AutoApplyPage />;
+    case '/settings':
+      return <SettingsPage />;
+    case '/tools':
+      return <ToolsCataloguePage />;
+    case '/about':
+      return <AboutPage />;
+    case '/help':
+      return <HelpPage />;
+    case '/privacy':
+    case '/terms':
+      return <LegalPage />;
     default:
       // Graceful fallback for subsequent bounded task routes
       return (
