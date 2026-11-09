@@ -39,25 +39,25 @@ export const PricingPage: React.FC = () => {
         <PricingSection />
 
         {/* FAQ Accordion Section */}
-        <div style={{ marginTop: '40px', maxWidth: '800px', margin: '40px auto 20px' }}>
+        <div style={{ marginTop: '48px', maxWidth: '800px', margin: '48px auto 20px' }}>
           <div style={{ textAlign: 'center', marginBottom: '28px' }}>
             <span
               style={{
-                fontSize: '11px',
-                fontWeight: 800,
-                textTransform: 'uppercase',
-                letterSpacing: '0.1em',
-                color: 'var(--rs-blue)',
+                fontSize: '12px',
+                fontWeight: 500,
+                letterSpacing: '-0.01em',
+                color: 'var(--rs-blue-strong)',
               }}
             >
-              FREQUENTLY ASKED QUESTIONS
+              Frequently asked questions
             </span>
             <h3
               style={{
                 margin: '8px 0 0',
-                fontFamily: 'var(--font-display)',
+                fontFamily: 'var(--font-serif)',
                 fontSize: '26px',
-                fontWeight: 700,
+                fontWeight: 600,
+                letterSpacing: '-0.025em',
                 color: 'var(--rs-ink)',
               }}
             >

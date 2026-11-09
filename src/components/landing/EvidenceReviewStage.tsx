@@ -166,113 +166,113 @@ export const EvidenceReviewStage: React.FC = () => {
         }}
         className="stage-body-grid"
       >
-        {/* Left: Authentic Paper Surface */}
+        {/* Left: Authentic Invariant Paper Surface */}
         <article
+          className="rs-paper-sheet"
           style={{
             minHeight: '380px',
-            padding: '30px 28px',
-            backgroundColor: 'var(--rs-paper)',
-            color: 'var(--rs-paper-ink)',
-            borderRadius: '8px',
-            boxShadow: '0 10px 24px rgba(0, 0, 0, 0.14)',
-            fontFamily: 'var(--font-body)',
+            padding: '32px 28px',
+            backgroundColor: '#FFFFFF',
+            color: '#0A0F1D',
+            borderRadius: 'var(--radius-sm)',
+            border: '1px solid rgba(0, 0, 0, 0.08)',
+            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.08)',
+            fontFamily: 'var(--font-sans)',
           }}
         >
           <div
             style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(1.25rem, 2vw, 1.65rem)',
-              fontWeight: 700,
-              letterSpacing: '-0.04em',
-              color: '#0F172A',
+              fontFamily: 'var(--font-serif)',
+              fontSize: 'clamp(1.35rem, 2vw, 1.75rem)',
+              fontWeight: 600,
+              letterSpacing: '-0.025em',
+              color: '#0A0F1D',
             }}
           >
             Alex Morgan
           </div>
-          <div style={{ marginTop: '4px', fontSize: '11px', color: '#64748B' }}>
+          <div style={{ marginTop: '4px', fontSize: '11px', color: '#556070' }}>
             Lead Product Manager · Seattle, WA
           </div>
-          <div style={{ height: '1px', margin: '20px 0 16px', backgroundColor: '#CBD5E1' }} />
+          <div style={{ height: '1px', margin: '18px 0 16px', backgroundColor: '#E2E6ED' }} />
 
           <div
             style={{
-              fontSize: '10px',
-              fontWeight: 800,
-              letterSpacing: '0.12em',
-              textTransform: 'uppercase',
-              color: '#3B82F6',
-              marginBottom: '8px',
+              fontSize: '11px',
+              fontWeight: 600,
+              letterSpacing: '-0.01em',
+              color: '#1E3A68',
+              marginBottom: '6px',
             }}
           >
-            Work Experience
+            Work experience
           </div>
-          <div style={{ fontSize: '12px', fontWeight: 800, color: '#1E293B' }}>
+          <div style={{ fontSize: '12px', fontWeight: 600, color: '#1B2432' }}>
             Product Lead · Lattice Works (2022–Present)
           </div>
 
           <p
             style={{
-              margin: '9px -6px 0',
+              margin: '8px -6px 0',
               padding: '8px 8px',
               borderRadius: '4px',
-              backgroundColor: '#DFEAF8',
-              color: '#1E3A8A',
+              backgroundColor: '#EEF4FC',
+              color: '#133566',
               fontSize: '11.5px',
-              lineHeight: 1.6,
-              boxShadow: focused ? '0 0 0 2px #3B82F6' : 'none',
-              transition: 'background-color 0.25s ease, box-shadow 0.25s ease',
+              lineHeight: 1.55,
+              border: focused ? '1px solid #2B6CB0' : '1px solid transparent',
+              transition: 'border-color 0.15s ease',
             }}
           >
             {current.highlight}
           </p>
 
-          <p style={{ margin: '8px 0 0', color: '#475569', fontSize: '11.5px', lineHeight: 1.6 }}>
+          <p style={{ margin: '8px 0 0', color: '#445163', fontSize: '11.5px', lineHeight: 1.55 }}>
             Interviewed 24 enterprise customers to identify key onboarding drop-off moments.
           </p>
 
           <div
             style={{
-              fontSize: '10px',
-              fontWeight: 800,
-              letterSpacing: '0.12em',
-              textTransform: 'uppercase',
-              color: '#3B82F6',
+              fontSize: '11px',
+              fontWeight: 600,
+              letterSpacing: '-0.01em',
+              color: '#1E3A68',
               marginTop: '18px',
               marginBottom: '6px',
             }}
           >
-            Verified Skills
+            Verified skills
           </div>
-          <p style={{ margin: 0, color: '#475569', fontSize: '11px' }}>
+          <p style={{ margin: 0, color: '#445163', fontSize: '11.5px' }}>
             Experiment Design, Funnel Optimization, SQL, Quantitative User Research
           </p>
         </article>
 
         {/* Right: Interactive Evidence Callouts */}
-        <aside style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+        <aside style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           <button
             onClick={() => setMode('evidence')}
             style={{
               padding: '16px',
-              borderRadius: '8px',
-              borderTop: '2px solid var(--rs-blue-strong)',
+              borderRadius: 'var(--radius-sm)',
+              border: activeMode === 'evidence' ? '1px solid var(--rs-blue-strong)' : '1px solid var(--rs-line)',
               backgroundColor:
                 activeMode === 'evidence'
-                  ? 'color-mix(in srgb, var(--rs-blue) 18%, var(--rs-surface))'
-                  : 'color-mix(in srgb, var(--rs-blue) 8%, var(--rs-surface))',
+                  ? 'var(--rs-blue-subtle)'
+                  : 'var(--rs-surface)',
               color: 'var(--rs-ink)',
               textAlign: 'left',
               cursor: 'pointer',
-              transition: 'transform 0.18s ease, background-color 0.18s ease',
+              transition: 'border-color 0.15s ease, background-color 0.15s ease',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-              <CheckCircle2 size={16} color="var(--rs-green)" />
-              <h3 style={{ margin: 0, fontFamily: 'var(--font-display)', fontSize: '13px', fontWeight: 700 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+              <CheckCircle2 size={15} color="var(--rs-green)" />
+              <h3 style={{ margin: 0, fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 600 }}>
                 {current.title}
               </h3>
             </div>
-            <p style={{ margin: 0, color: 'var(--rs-muted)', fontSize: '11.5px', lineHeight: 1.55 }}>
+            <p style={{ margin: 0, color: 'var(--rs-muted)', fontSize: '12px', lineHeight: 1.5 }}>
               {current.text}
             </p>
           </button>
@@ -281,25 +281,25 @@ export const EvidenceReviewStage: React.FC = () => {
             onClick={() => setMode('gap')}
             style={{
               padding: '16px',
-              borderRadius: '8px',
-              borderTop: `2px solid ${activeMode === 'gap' ? 'var(--rs-amber)' : 'var(--rs-line)'}`,
+              borderRadius: 'var(--radius-sm)',
+              border: activeMode === 'gap' ? '1px solid var(--rs-amber)' : '1px solid var(--rs-line)',
               backgroundColor:
                 activeMode === 'gap'
-                  ? 'color-mix(in srgb, var(--rs-amber) 16%, var(--rs-surface))'
-                  : 'color-mix(in srgb, var(--rs-surface-2) 60%, var(--rs-surface))',
+                  ? 'var(--rs-amber-subtle)'
+                  : 'var(--rs-surface)',
               color: 'var(--rs-ink)',
               textAlign: 'left',
               cursor: 'pointer',
-              transition: 'transform 0.18s ease, background-color 0.18s ease',
+              transition: 'border-color 0.15s ease, background-color 0.15s ease',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-              {activeMode === 'edit' ? <Sparkles size={16} color="var(--rs-amber)" /> : <Search size={16} color="var(--rs-amber)" />}
-              <h3 style={{ margin: 0, fontFamily: 'var(--font-display)', fontSize: '13px', fontWeight: 700 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+              {activeMode === 'edit' ? <Sparkles size={15} color="var(--rs-amber)" /> : <Search size={15} color="var(--rs-amber)" />}
+              <h3 style={{ margin: 0, fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 600 }}>
                 {current.gapTitle}
               </h3>
             </div>
-            <p style={{ margin: 0, color: 'var(--rs-muted)', fontSize: '11.5px', lineHeight: 1.55 }}>
+            <p style={{ margin: 0, color: 'var(--rs-muted)', fontSize: '12px', lineHeight: 1.5 }}>
               {current.gapText}
             </p>
           </button>
@@ -307,14 +307,14 @@ export const EvidenceReviewStage: React.FC = () => {
           <div
             style={{
               marginTop: 'auto',
-              paddingTop: '14px',
+              paddingTop: '12px',
               borderTop: '1px solid var(--rs-line)',
             }}
           >
-            <strong style={{ display: 'block', fontSize: '11px', color: 'var(--rs-ink)', marginBottom: '4px' }}>
+            <strong style={{ display: 'block', fontSize: '11px', color: 'var(--rs-ink)', marginBottom: '3px', fontWeight: 600 }}>
               {current.sourceTitle}:
             </strong>
-            <p style={{ margin: 0, color: 'var(--rs-muted)', fontSize: '11px', lineHeight: 1.5 }}>
+            <p style={{ margin: 0, color: 'var(--rs-muted)', fontSize: '11.5px', lineHeight: 1.45 }}>
               {current.sourceText}
             </p>
           </div>

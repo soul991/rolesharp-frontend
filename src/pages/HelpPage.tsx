@@ -38,34 +38,34 @@ export const HelpPage: React.FC = () => {
     <AppShell title="Help Center & ATS Optimization Guides">
       <div style={{ maxWidth: '960px', margin: '0 auto' }}>
         {/* Header */}
-        <div style={{ marginBottom: '32px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+        <div style={{ marginBottom: '36px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
             <span
               style={{
-                fontSize: '11px',
-                fontWeight: 800,
-                textTransform: 'uppercase',
-                letterSpacing: '0.12em',
-                color: 'var(--rs-blue)',
+                fontSize: '12px',
+                fontWeight: 500,
+                letterSpacing: '-0.01em',
+                color: 'var(--rs-blue-strong)',
               }}
             >
-              KNOWLEDGE BASE & GUIDES
+              Knowledge base & guides
             </span>
             <StatusBadge status="info" label="Recruiting Best Practices" />
           </div>
           <h1
             style={{
-              margin: '0 0 10px',
-              fontFamily: 'var(--font-display)',
-              fontSize: '32px',
-              fontWeight: 700,
+              margin: '0 0 12px',
+              fontFamily: 'var(--font-serif)',
+              fontSize: '34px',
+              fontWeight: 600,
               color: 'var(--rs-ink)',
               letterSpacing: '-0.03em',
+              lineHeight: 1.15,
             }}
           >
             RoleSharp Help Center & ATS Knowledge Base
           </h1>
-          <p style={{ margin: 0, color: 'var(--rs-muted)', fontSize: '15px', lineHeight: '1.6' }}>
+          <p style={{ margin: 0, color: 'var(--rs-muted)', fontSize: '15.5px', lineHeight: '1.6' }}>
             Comprehensive documentation on ATS compatibility heuristics, regional hiring standards, and responsible automation workflows.
           </p>
         </div>

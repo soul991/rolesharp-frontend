@@ -50,16 +50,15 @@ export const LoginPage: React.FC = () => {
           display: 'grid',
           placeItems: 'center',
           padding: '60px 20px',
-          background:
-            'radial-gradient(ellipse at 50% 20%, color-mix(in srgb, var(--rs-blue-strong) 10%, transparent), transparent 60%), var(--rs-bg)',
+          backgroundColor: 'var(--rs-bg)',
         }}
       >
         <div
           style={{
             width: '100%',
-            maxWidth: '460px',
+            maxWidth: '440px',
             padding: '36px 32px',
-            borderRadius: '16px',
+            borderRadius: 'var(--radius-md)',
             border: '1px solid var(--rs-line)',
             backgroundColor: 'var(--rs-surface)',
             boxShadow: 'var(--rs-shadow)',
@@ -69,30 +68,30 @@ export const LoginPage: React.FC = () => {
           <div style={{ textAlign: 'center', marginBottom: '28px' }}>
             <span
               style={{
-                fontSize: '11px',
-                fontWeight: 800,
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
-                color: 'var(--rs-blue)',
+                fontSize: '12px',
+                fontWeight: 500,
+                letterSpacing: '-0.01em',
+                color: 'var(--rs-blue-strong)',
                 display: 'block',
                 marginBottom: '8px',
               }}
             >
-              AUTHENTICATED WORKSPACE
+              Authenticated workspace
             </span>
             <h1
               style={{
                 margin: 0,
-                fontFamily: 'var(--font-display)',
-                fontSize: '26px',
-                fontWeight: 700,
+                fontFamily: 'var(--font-serif)',
+                fontSize: '28px',
+                fontWeight: 600,
                 color: 'var(--rs-ink)',
-                letterSpacing: '-0.04em',
+                letterSpacing: '-0.025em',
+                lineHeight: 1.15,
               }}
             >
               Sign in to RoleSharp
             </h1>
-            <p style={{ margin: '8px 0 0', color: 'var(--rs-muted)', fontSize: '13.5px' }}>
+            <p style={{ margin: '8px 0 0', color: 'var(--rs-muted)', fontSize: '13.5px', lineHeight: 1.5 }}>
               Access your verified evidence, tailored resumes, and active job pipelines.
             </p>
           </div>
@@ -101,7 +100,7 @@ export const LoginPage: React.FC = () => {
           <div
             style={{
               padding: '12px 14px',
-              borderRadius: '8px',
+              borderRadius: 'var(--radius-sm)',
               border: '1px solid var(--rs-line)',
               backgroundColor: 'var(--rs-surface-2)',
               marginBottom: '20px',
@@ -116,8 +115,8 @@ export const LoginPage: React.FC = () => {
                 onClick={() => autofillDemo('alex.morgan@lattice.io')}
                 style={{
                   color: 'var(--rs-blue-strong)',
-                  fontWeight: 700,
-                  fontSize: '11.5px',
+                  fontWeight: 600,
+                  fontSize: '12px',
                   textDecoration: 'underline',
                 }}
               >

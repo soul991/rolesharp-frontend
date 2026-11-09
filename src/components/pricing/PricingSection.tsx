@@ -126,26 +126,26 @@ export const PricingSection: React.FC<{ compact?: boolean }> = ({ compact = fals
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
           <span
             style={{
-              fontSize: '11px',
-              fontWeight: 800,
-              textTransform: 'uppercase',
-              letterSpacing: '0.12em',
-              color: 'var(--rs-blue)',
+              fontSize: '12px',
+              fontWeight: 500,
+              letterSpacing: '-0.01em',
+              color: 'var(--rs-blue-strong)',
             }}
           >
-            TRANSPARENT, EVIDENCE-FIRST PRICING
+            Transparent, evidence-first pricing
           </span>
-          <StatusBadge status="success" label="Zero Hidden Fees" />
+          <StatusBadge status="success" label="Zero hidden fees" />
         </div>
 
         <h2
           style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: compact ? '30px' : '40px',
-            fontWeight: 700,
+            fontFamily: 'var(--font-serif)',
+            fontSize: compact ? '28px' : '38px',
+            fontWeight: 600,
             color: 'var(--rs-ink)',
             margin: '0 0 14px',
             letterSpacing: '-0.03em',
+            lineHeight: 1.15,
           }}
         >
           Invest in precision career advancement.
@@ -154,10 +154,10 @@ export const PricingSection: React.FC<{ compact?: boolean }> = ({ compact = fals
         <p
           style={{
             color: 'var(--rs-muted)',
-            fontSize: '16px',
+            fontSize: '15px',
             maxWidth: '620px',
             margin: '0 auto 28px',
-            lineHeight: '1.55',
+            lineHeight: '1.6',
           }}
         >
           No fake subscription lock-ins or surprise renewals. Choose the tier that matches your job search velocity.
@@ -168,64 +168,62 @@ export const PricingSection: React.FC<{ compact?: boolean }> = ({ compact = fals
           style={{
             display: 'inline-flex',
             alignItems: 'center',
-            gap: '8px',
-            padding: '6px',
-            borderRadius: '9999px',
+            gap: '4px',
+            padding: '4px',
+            borderRadius: 'var(--radius-pill)',
             backgroundColor: 'var(--rs-surface-2)',
             border: '1px solid var(--rs-line)',
-            boxShadow: 'var(--rs-shadow)',
           }}
         >
           <button
             type="button"
             onClick={() => setIsAnnual(false)}
             style={{
-              padding: '8px 18px',
-              borderRadius: '9999px',
+              padding: '7px 16px',
+              borderRadius: 'var(--radius-pill)',
               border: 'none',
               backgroundColor: !isAnnual ? 'var(--rs-surface)' : 'transparent',
               color: !isAnnual ? 'var(--rs-ink)' : 'var(--rs-muted)',
               fontSize: '13px',
-              fontWeight: !isAnnual ? 700 : 500,
+              fontWeight: !isAnnual ? 600 : 500,
               cursor: 'pointer',
-              boxShadow: !isAnnual ? '0 2px 8px rgba(0,0,0,0.1)' : 'none',
-              transition: 'all 0.18s ease',
+              boxShadow: !isAnnual ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
+              transition: 'background-color 0.15s ease, color 0.15s ease',
             }}
           >
-            Monthly Billing
+            Monthly billing
           </button>
 
           <button
             type="button"
             onClick={() => setIsAnnual(true)}
             style={{
-              padding: '8px 18px',
-              borderRadius: '9999px',
+              padding: '7px 16px',
+              borderRadius: 'var(--radius-pill)',
               border: 'none',
               backgroundColor: isAnnual ? 'var(--rs-blue-strong)' : 'transparent',
               color: isAnnual ? '#FFFFFF' : 'var(--rs-muted)',
               fontSize: '13px',
-              fontWeight: isAnnual ? 700 : 500,
+              fontWeight: isAnnual ? 600 : 500,
               cursor: 'pointer',
-              boxShadow: isAnnual ? '0 2px 8px rgba(0,0,0,0.1)' : 'none',
               display: 'flex',
               alignItems: 'center',
               gap: '6px',
-              transition: 'all 0.18s ease',
+              transition: 'background-color 0.15s ease, color 0.15s ease',
             }}
           >
-            <span>Annual Billing</span>
+            <span>Annual billing</span>
             <span
               style={{
-                fontSize: '10px',
-                fontWeight: 800,
+                fontSize: '11px',
+                fontWeight: 600,
                 padding: '2px 7px',
-                borderRadius: '9999px',
-                backgroundColor: isAnnual ? '#FFFFFF' : 'var(--rs-surface)',
-                color: isAnnual ? 'var(--rs-blue-strong)' : 'var(--rs-amber)',
+                borderRadius: 'var(--radius-pill)',
+                backgroundColor: isAnnual ? 'rgba(255, 255, 255, 0.2)' : 'var(--rs-surface)',
+                color: isAnnual ? '#FFFFFF' : 'var(--rs-amber)',
               }}
             >
-              SAVE 20%
+              Save 20%
             </span>
           </button>
         </div>
@@ -304,22 +302,22 @@ export const PricingSection: React.FC<{ compact?: boolean }> = ({ compact = fals
             <div
               key={plan.id}
               style={{
-                borderRadius: '18px',
+                borderRadius: 'var(--radius-md)',
                 border: plan.popular
-                  ? '2px solid var(--rs-amber)'
+                  ? '1px solid var(--rs-amber)'
                   : isSelected
-                  ? '1.5px solid var(--rs-blue-strong)'
+                  ? '1px solid var(--rs-blue-strong)'
                   : '1px solid var(--rs-line)',
                 backgroundColor: plan.popular
-                  ? 'color-mix(in srgb, var(--rs-surface) 95%, var(--rs-amber))'
+                  ? 'color-mix(in srgb, var(--rs-surface) 96%, var(--rs-amber))'
                   : 'var(--rs-surface)',
                 padding: '32px 28px',
-                boxShadow: plan.popular ? '0 12px 36px rgba(242, 201, 109, 0.14)' : 'var(--rs-shadow)',
+                boxShadow: plan.popular ? '0 4px 16px rgba(217, 182, 94, 0.1)' : 'var(--rs-shadow)',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
                 position: 'relative',
-                transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                transition: 'border-color 0.15s ease',
               }}
             >
               {/* Popular Badge */}
@@ -327,24 +325,23 @@ export const PricingSection: React.FC<{ compact?: boolean }> = ({ compact = fals
                 <div
                   style={{
                     position: 'absolute',
-                    top: '-13px',
+                    top: '-12px',
                     left: '50%',
                     transform: 'translateX(-50%)',
                     backgroundColor: 'var(--rs-amber)',
-                    color: '#10243E',
+                    color: '#0A0F1D',
                     fontSize: '11px',
-                    fontWeight: 800,
-                    letterSpacing: '0.08em',
-                    padding: '4px 14px',
-                    borderRadius: '9999px',
-                    boxShadow: '0 4px 12px rgba(242, 201, 109, 0.3)',
+                    fontWeight: 600,
+                    letterSpacing: '-0.01em',
+                    padding: '3px 12px',
+                    borderRadius: 'var(--radius-pill)',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '4px',
                   }}
                 >
-                  <Star size={12} fill="#10243E" />
-                  {plan.badge}
+                  <Star size={12} fill="#0A0F1D" />
+                  Most popular
                 </div>
               )}
 
@@ -355,9 +352,10 @@ export const PricingSection: React.FC<{ compact?: boolean }> = ({ compact = fals
                     <h3
                       style={{
                         margin: '0 0 6px',
-                        fontFamily: 'var(--font-display)',
-                        fontSize: '22px',
-                        fontWeight: 700,
+                        fontFamily: 'var(--font-sans)',
+                        fontSize: '20px',
+                        fontWeight: 600,
+                        letterSpacing: '-0.02em',
                         color: 'var(--rs-ink)',
                       }}
                     >
@@ -374,11 +372,13 @@ export const PricingSection: React.FC<{ compact?: boolean }> = ({ compact = fals
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
                     <span
                       style={{
-                        fontFamily: 'var(--font-display)',
-                        fontSize: '44px',
-                        fontWeight: 800,
+                        fontFamily: 'var(--font-mono)',
+                        fontVariantNumeric: 'tabular-nums',
+                        fontSize: '40px',
+                        fontWeight: 600,
                         color: 'var(--rs-ink)',
                         lineHeight: 1,
+                        letterSpacing: '-0.03em',
                       }}
                     >
                       ${displayPrice}
@@ -387,7 +387,7 @@ export const PricingSection: React.FC<{ compact?: boolean }> = ({ compact = fals
                       / month
                     </span>
                   </div>
-                  <span style={{ fontSize: '11.5px', color: 'var(--rs-muted)', marginTop: '4px', display: 'block' }}>
+                  <span style={{ fontSize: '12px', color: 'var(--rs-muted)', marginTop: '4px', display: 'block' }}>
                     {plan.monthlyPrice === 0
                       ? 'Free forever · No credit card required'
                       : isAnnual
@@ -401,17 +401,16 @@ export const PricingSection: React.FC<{ compact?: boolean }> = ({ compact = fals
                   <span
                     style={{
                       display: 'block',
-                      fontSize: '11px',
-                      fontWeight: 800,
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.08em',
-                      color: 'var(--rs-muted)',
-                      marginBottom: '14px',
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      letterSpacing: '-0.01em',
+                      color: 'var(--rs-ink)',
+                      marginBottom: '12px',
                     }}
                   >
-                    Included In This Plan:
+                    Included in this plan:
                   </span>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '11px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                     {plan.features.map((feat, idx) => (
                       <div key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
                         <div

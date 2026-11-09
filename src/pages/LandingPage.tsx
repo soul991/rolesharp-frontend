@@ -21,9 +21,8 @@ export const LandingPage: React.FC = () => {
             minHeight: '660px',
             display: 'grid',
             alignItems: 'center',
-            padding: 'clamp(50px, 7vw, 90px) 0 60px',
-            background:
-              'radial-gradient(ellipse at 80% 45%, color-mix(in srgb, var(--rs-blue-strong) 12%, transparent), transparent 45%), var(--rs-bg)',
+            padding: 'clamp(48px, 6vw, 84px) 0 60px',
+            backgroundColor: 'var(--rs-bg)',
             borderBottom: '1px solid var(--rs-line)',
           }}
         >
@@ -31,8 +30,8 @@ export const LandingPage: React.FC = () => {
             <div
               style={{
                 display: 'grid',
-                gridTemplateColumns: 'minmax(0, 0.9fr) minmax(520px, 1.1fr)',
-                gap: 'clamp(30px, 5vw, 68px)',
+                gridTemplateColumns: 'minmax(0, 0.95fr) minmax(520px, 1.05fr)',
+                gap: 'clamp(32px, 5vw, 64px)',
                 alignItems: 'center',
               }}
               className="hero-grid-responsive"
@@ -45,18 +44,18 @@ export const LandingPage: React.FC = () => {
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '8px',
-                    marginBottom: '20px',
-                    color: 'var(--rs-blue)',
-                    fontSize: '11px',
-                    fontWeight: 800,
-                    letterSpacing: '0.14em',
-                    textTransform: 'uppercase',
+                    marginBottom: '18px',
+                    color: 'var(--rs-blue-strong)',
+                    fontSize: '12px',
+                    fontWeight: 500,
+                    letterSpacing: '-0.01em',
                   }}
                 >
                   <span
                     style={{
-                      width: '20px',
-                      height: '1px',
+                      width: '6px',
+                      height: '6px',
+                      borderRadius: '50%',
                       backgroundColor: 'var(--rs-amber)',
                     }}
                   />
@@ -67,27 +66,27 @@ export const LandingPage: React.FC = () => {
                 <h1
                   style={{
                     margin: 0,
-                    maxWidth: '13ch',
-                    fontFamily: 'var(--font-display)',
-                    fontSize: 'clamp(2.5rem, 4.3vw, 4.15rem)',
-                    fontWeight: 650,
-                    lineHeight: 1.02,
-                    letterSpacing: '-0.065em',
-                    textWrap: 'balance',
+                    maxWidth: '14ch',
+                    fontFamily: 'var(--font-serif)',
+                    fontSize: 'clamp(2.4rem, 4.2vw, 3.85rem)',
+                    fontWeight: 600,
+                    lineHeight: 1.08,
+                    letterSpacing: '-0.035em',
                     color: 'var(--rs-ink)',
                   }}
                 >
-                  <span style={{ color: 'var(--rs-blue)' }}>RoleSharp:</span> One step ahead towards a successful career.
+                  <span style={{ color: 'var(--rs-blue-strong)' }}>RoleSharp:</span> One step ahead towards a successful career.
                 </h1>
 
                 {/* Subtitle / Lede */}
                 <p
                   style={{
                     maxWidth: '46ch',
-                    margin: '22px 0 0',
+                    margin: '20px 0 0',
                     color: 'var(--rs-muted)',
-                    fontSize: 'clamp(1rem, 1.25vw, 1.15rem)',
-                    lineHeight: 1.65,
+                    fontSize: 'clamp(1rem, 1.2vw, 1.1rem)',
+                    lineHeight: 1.6,
+                    letterSpacing: '-0.01em',
                   }}
                 >
                   Turn the work you have actually completed into a resume that hiring teams understand, verify, and remember — without fabricating credentials.
@@ -106,7 +105,7 @@ export const LandingPage: React.FC = () => {
                   <Button
                     size="lg"
                     onClick={() => navigate('/checker')}
-                    icon={<ArrowRight size={16} />}
+                    icon={<ArrowRight size={15} />}
                   >
                     Check my resume free
                   </Button>
@@ -138,7 +137,7 @@ export const LandingPage: React.FC = () => {
                     gap: '16px',
                     marginTop: '18px',
                     color: 'var(--rs-muted)',
-                    fontSize: '11.5px',
+                    fontSize: '12px',
                   }}
                   aria-label="RoleSharp Core Guarantees"
                 >
@@ -169,7 +168,7 @@ export const LandingPage: React.FC = () => {
           style={{
             borderBottom: '1px solid var(--rs-line)',
             backgroundColor: 'var(--rs-surface)',
-            padding: '24px 0',
+            padding: '28px 0',
           }}
         >
           <div className="container">
@@ -183,75 +182,78 @@ export const LandingPage: React.FC = () => {
               <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                 <div
                   style={{
-                    width: '38px',
-                    height: '38px',
-                    borderRadius: '10px',
+                    width: '36px',
+                    height: '36px',
+                    borderRadius: 'var(--radius-sm)',
                     backgroundColor: 'var(--rs-surface-2)',
+                    border: '1px solid var(--rs-line)',
                     display: 'grid',
                     placeItems: 'center',
                     color: 'var(--rs-green)',
                     flexShrink: 0,
                   }}
                 >
-                  <CheckCircle2 size={18} />
+                  <CheckCircle2 size={16} />
                 </div>
                 <div>
-                  <strong style={{ display: 'block', fontSize: '13px', color: 'var(--rs-ink)', fontFamily: 'var(--font-display)' }}>
+                  <strong style={{ display: 'block', fontSize: '13px', color: 'var(--rs-ink)', fontFamily: 'var(--font-sans)', fontWeight: 600 }}>
                     Verifiable Evidence
                   </strong>
-                  <small style={{ color: 'var(--rs-muted)', fontSize: '11px' }}>
+                  <span style={{ color: 'var(--rs-muted)', fontSize: '12px' }}>
                     Every recommendation links directly to your real experience
-                  </small>
+                  </span>
                 </div>
               </div>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                 <div
                   style={{
-                    width: '38px',
-                    height: '38px',
-                    borderRadius: '10px',
+                    width: '36px',
+                    height: '36px',
+                    borderRadius: 'var(--radius-sm)',
                     backgroundColor: 'var(--rs-surface-2)',
+                    border: '1px solid var(--rs-line)',
                     display: 'grid',
                     placeItems: 'center',
                     color: 'var(--rs-blue)',
                     flexShrink: 0,
                   }}
                 >
-                  <Compass size={18} />
+                  <Compass size={16} />
                 </div>
                 <div>
-                  <strong style={{ display: 'block', fontSize: '13px', color: 'var(--rs-ink)', fontFamily: 'var(--font-display)' }}>
+                  <strong style={{ display: 'block', fontSize: '13px', color: 'var(--rs-ink)', fontFamily: 'var(--font-sans)', fontWeight: 600 }}>
                     One Job at a Time
                   </strong>
-                  <small style={{ color: 'var(--rs-muted)', fontSize: '11px' }}>
+                  <span style={{ color: 'var(--rs-muted)', fontSize: '12px' }}>
                     Tailor specifically without rewriting or distorting your history
-                  </small>
+                  </span>
                 </div>
               </div>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                 <div
                   style={{
-                    width: '38px',
-                    height: '38px',
-                    borderRadius: '10px',
+                    width: '36px',
+                    height: '36px',
+                    borderRadius: 'var(--radius-sm)',
                     backgroundColor: 'var(--rs-surface-2)',
+                    border: '1px solid var(--rs-line)',
                     display: 'grid',
                     placeItems: 'center',
                     color: 'var(--rs-amber)',
                     flexShrink: 0,
                   }}
                 >
-                  <Layers size={18} />
+                  <Layers size={16} />
                 </div>
                 <div>
-                  <strong style={{ display: 'block', fontSize: '13px', color: 'var(--rs-ink)', fontFamily: 'var(--font-display)' }}>
+                  <strong style={{ display: 'block', fontSize: '13px', color: 'var(--rs-ink)', fontFamily: 'var(--font-sans)', fontWeight: 600 }}>
                     True Invariant Exports
                   </strong>
-                  <small style={{ color: 'var(--rs-muted)', fontSize: '11px' }}>
+                  <span style={{ color: 'var(--rs-muted)', fontSize: '12px' }}>
                     Download identical PDF and DOCX documents with crisp ATS layouts
-                  </small>
+                  </span>
                 </div>
               </div>
             </div>
@@ -259,7 +261,7 @@ export const LandingPage: React.FC = () => {
         </section>
 
         {/* 4-Step Core Workflow */}
-        <section style={{ padding: 'clamp(60px, 8vw, 100px) 0' }}>
+        <section style={{ padding: 'clamp(56px, 7vw, 92px) 0' }}>
           <div className="container">
             <div
               style={{
@@ -268,19 +270,19 @@ export const LandingPage: React.FC = () => {
                 alignItems: 'flex-end',
                 flexWrap: 'wrap',
                 gap: '24px',
-                marginBottom: '48px',
+                marginBottom: '44px',
               }}
             >
               <div>
                 <h2
                   style={{
                     margin: 0,
-                    maxWidth: '16ch',
-                    fontFamily: 'var(--font-display)',
-                    fontSize: 'clamp(1.9rem, 3.2vw, 3rem)',
-                    fontWeight: 650,
-                    letterSpacing: '-0.055em',
-                    lineHeight: 1.05,
+                    maxWidth: '18ch',
+                    fontFamily: 'var(--font-serif)',
+                    fontSize: 'clamp(1.85rem, 3vw, 2.75rem)',
+                    fontWeight: 600,
+                    letterSpacing: '-0.03em',
+                    lineHeight: 1.12,
                     color: 'var(--rs-ink)',
                   }}
                 >
@@ -296,7 +298,7 @@ export const LandingPage: React.FC = () => {
               style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-                gap: '24px',
+                gap: '20px',
               }}
             >
               {[
@@ -333,7 +335,7 @@ export const LandingPage: React.FC = () => {
                   key={idx}
                   style={{
                     padding: '24px',
-                    borderRadius: '12px',
+                    borderRadius: 'var(--radius-md)',
                     border: '1px solid var(--rs-line)',
                     backgroundColor: 'var(--rs-surface)',
                     display: 'flex',
@@ -345,35 +347,36 @@ export const LandingPage: React.FC = () => {
                     <span
                       style={{
                         fontSize: '11px',
-                        fontWeight: 800,
-                        letterSpacing: '0.12em',
-                        color: 'var(--rs-blue)',
+                        fontWeight: 600,
+                        color: 'var(--rs-blue-strong)',
+                        letterSpacing: '-0.01em',
                       }}
                     >
                       {item.step}
                     </span>
                     <h3
                       style={{
-                        margin: '18px 0 10px',
-                        fontFamily: 'var(--font-display)',
-                        fontSize: '18px',
-                        fontWeight: 650,
+                        margin: '14px 0 8px',
+                        fontFamily: 'var(--font-sans)',
+                        fontSize: '16px',
+                        fontWeight: 600,
+                        letterSpacing: '-0.02em',
                         color: 'var(--rs-ink)',
                       }}
                     >
                       {item.title}
                     </h3>
-                    <p style={{ margin: 0, color: 'var(--rs-muted)', fontSize: '13px', lineHeight: 1.6 }}>
+                    <p style={{ margin: 0, color: 'var(--rs-muted)', fontSize: '13px', lineHeight: 1.55 }}>
                       {item.desc}
                     </p>
                   </div>
                   <button
                     onClick={() => navigate(item.route)}
                     style={{
-                      marginTop: '24px',
+                      marginTop: '20px',
                       color: 'var(--rs-blue-strong)',
                       fontSize: '12px',
-                      fontWeight: 700,
+                      fontWeight: 600,
                       textAlign: 'left',
                     }}
                   >
@@ -390,7 +393,7 @@ export const LandingPage: React.FC = () => {
           style={{
             backgroundColor: 'var(--rs-surface)',
             borderBlock: '1px solid var(--rs-line)',
-            padding: 'clamp(60px, 8vw, 100px) 0',
+            padding: 'clamp(56px, 7vw, 92px) 0',
           }}
         >
           <div className="container">
@@ -401,17 +404,18 @@ export const LandingPage: React.FC = () => {
                 alignItems: 'flex-end',
                 flexWrap: 'wrap',
                 gap: '20px',
-                marginBottom: '40px',
+                marginBottom: '36px',
               }}
             >
               <div>
                 <h2
                   style={{
                     margin: 0,
-                    fontFamily: 'var(--font-display)',
-                    fontSize: 'clamp(1.8rem, 3vw, 2.7rem)',
-                    fontWeight: 650,
-                    letterSpacing: '-0.05em',
+                    fontFamily: 'var(--font-serif)',
+                    fontSize: 'clamp(1.75rem, 2.8vw, 2.5rem)',
+                    fontWeight: 600,
+                    letterSpacing: '-0.03em',
+                    lineHeight: 1.15,
                     color: 'var(--rs-ink)',
                   }}
                 >
@@ -475,37 +479,38 @@ export const LandingPage: React.FC = () => {
                   key={idx}
                   onClick={() => navigate(tool.route)}
                   style={{
-                    padding: '24px',
-                    borderRadius: '10px',
+                    padding: '22px',
+                    borderRadius: 'var(--radius-sm)',
                     border: '1px solid var(--rs-line)',
                     backgroundColor: 'var(--rs-bg)',
                     cursor: 'pointer',
-                    transition: 'transform 0.18s ease, border-color 0.18s ease',
+                    transition: 'border-color 0.15s ease',
                   }}
                   className="rs-tool-card"
                 >
                   <span
                     style={{
-                      fontSize: '10.5px',
-                      fontWeight: 800,
+                      fontSize: '11px',
+                      fontWeight: 600,
                       color: 'var(--rs-amber)',
-                      letterSpacing: '0.08em',
+                      letterSpacing: '-0.01em',
                     }}
                   >
                     {tool.no}
                   </span>
                   <h3
                     style={{
-                      margin: '14px 0 8px',
-                      fontFamily: 'var(--font-display)',
-                      fontSize: '17px',
-                      fontWeight: 650,
+                      margin: '10px 0 6px',
+                      fontFamily: 'var(--font-sans)',
+                      fontSize: '16px',
+                      fontWeight: 600,
+                      letterSpacing: '-0.02em',
                       color: 'var(--rs-ink)',
                     }}
                   >
                     {tool.title}
                   </h3>
-                  <p style={{ margin: 0, color: 'var(--rs-muted)', fontSize: '13px', lineHeight: 1.6 }}>
+                  <p style={{ margin: 0, color: 'var(--rs-muted)', fontSize: '13px', lineHeight: 1.55 }}>
                     {tool.desc}
                   </p>
                 </div>
@@ -515,42 +520,30 @@ export const LandingPage: React.FC = () => {
         </section>
 
         {/* Closing Callout */}
-        <section style={{ padding: 'clamp(60px, 8vw, 100px) 0' }}>
+        <section style={{ padding: 'clamp(56px, 7vw, 92px) 0' }}>
           <div className="container">
             <div
               style={{
                 position: 'relative',
                 overflow: 'hidden',
-                borderRadius: '18px',
-                padding: 'clamp(40px, 6vw, 80px) 30px',
+                borderRadius: 'var(--radius-lg)',
+                padding: 'clamp(40px, 6vw, 72px) 24px',
                 backgroundColor: 'var(--rs-surface)',
                 border: '1px solid var(--rs-line)',
                 textAlign: 'center',
-                boxShadow: 'var(--rs-shadow)',
               }}
             >
-              <div
-                style={{
-                  position: 'absolute',
-                  inset: '-40% auto auto 50%',
-                  width: '600px',
-                  height: '400px',
-                  transform: 'translateX(-50%)',
-                  background: 'radial-gradient(ellipse, color-mix(in srgb, var(--rs-blue-strong) 14%, transparent), transparent 70%)',
-                  pointerEvents: 'none',
-                }}
-              />
               <h2
                 style={{
                   position: 'relative',
                   margin: '0 auto',
                   maxWidth: '18ch',
-                  fontFamily: 'var(--font-display)',
-                  fontSize: 'clamp(2rem, 3.8vw, 3.4rem)',
-                  fontWeight: 650,
-                  letterSpacing: '-0.055em',
+                  fontFamily: 'var(--font-serif)',
+                  fontSize: 'clamp(1.95rem, 3.5vw, 3.1rem)',
+                  fontWeight: 600,
+                  letterSpacing: '-0.035em',
                   color: 'var(--rs-ink)',
-                  lineHeight: 1.05,
+                  lineHeight: 1.1,
                 }}
               >
                 Your work deserves to be understood.
@@ -558,16 +551,16 @@ export const LandingPage: React.FC = () => {
               <p
                 style={{
                   position: 'relative',
-                  margin: '18px auto 28px',
+                  margin: '16px auto 26px',
                   maxWidth: '52ch',
                   color: 'var(--rs-muted)',
                   fontSize: '14.5px',
-                  lineHeight: 1.65,
+                  lineHeight: 1.6,
                 }}
               >
                 Start with the resume you have right now. Review the evidence, resolve parsing risks, and tailor it specifically for the opportunity ahead.
               </p>
-              <Button size="lg" onClick={() => navigate('/checker')} icon={<Sparkles size={16} />}>
+              <Button size="lg" onClick={() => navigate('/checker')} icon={<Sparkles size={15} />}>
                 Check my resume free →
               </Button>
             </div>

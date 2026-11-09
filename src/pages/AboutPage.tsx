@@ -17,34 +17,34 @@ export const AboutPage: React.FC = () => {
     <AppShell title="About RoleSharp & Methodological Manifesto">
       <div style={{ maxWidth: '960px', margin: '0 auto' }}>
         {/* Header */}
-        <div style={{ marginBottom: '32px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+        <div style={{ marginBottom: '36px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
             <span
               style={{
-                fontSize: '11px',
-                fontWeight: 800,
-                textTransform: 'uppercase',
-                letterSpacing: '0.12em',
-                color: 'var(--rs-blue)',
+                fontSize: '12px',
+                fontWeight: 500,
+                letterSpacing: '-0.01em',
+                color: 'var(--rs-blue-strong)',
               }}
             >
-              MANIFESTO & PRINCIPLES
+              Manifesto & principles
             </span>
             <StatusBadge status="success" label="Evidence-Grounded Engineering" />
           </div>
           <h1
             style={{
-              margin: '0 0 10px',
-              fontFamily: 'var(--font-display)',
-              fontSize: '32px',
-              fontWeight: 700,
+              margin: '0 0 12px',
+              fontFamily: 'var(--font-serif)',
+              fontSize: '34px',
+              fontWeight: 600,
               color: 'var(--rs-ink)',
               letterSpacing: '-0.03em',
+              lineHeight: 1.15,
             }}
           >
             The Anti-Slop, Evidence-First Career Platform
           </h1>
-          <p style={{ margin: 0, color: 'var(--rs-muted)', fontSize: '16px', lineHeight: '1.6' }}>
+          <p style={{ margin: 0, color: 'var(--rs-muted)', fontSize: '15.5px', lineHeight: '1.6' }}>
             Why we rebuilt RoleSharp 2.0 from scratch: to banish hallucinated claims, robotic templates, and fake candidate metrics in favor of verified engineering precision.
           </p>
         </div>
