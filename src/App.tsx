@@ -2,6 +2,9 @@ import React from 'react';
 import { useRouter } from './router/RouterContext';
 import { LandingPage } from './pages/LandingPage';
 import { DashboardPage } from './pages/DashboardPage';
+import { LoginPage } from './pages/LoginPage';
+import { SignupPage } from './pages/SignupPage';
+import { OnboardingPage } from './pages/OnboardingPage';
 import { AppShell } from './components/common/AppShell';
 import { Button } from './components/common/Button';
 import { ArrowLeft, Construction } from 'lucide-react';
@@ -14,6 +17,12 @@ export const App: React.FC = () => {
       return <LandingPage />;
     case '/dashboard':
       return <DashboardPage />;
+    case '/login':
+      return <LoginPage />;
+    case '/signup':
+      return <SignupPage />;
+    case '/onboarding':
+      return <OnboardingPage />;
     default:
       // Graceful fallback for subsequent bounded task routes
       return (
