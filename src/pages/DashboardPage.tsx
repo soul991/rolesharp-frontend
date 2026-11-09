@@ -28,7 +28,7 @@ export const DashboardPage: React.FC = () => {
         <section
           style={{
             padding: '28px 32px',
-            borderRadius: '16px',
+            borderRadius: 'var(--radius-md)',
             border: '1px solid var(--rs-line)',
             backgroundColor: 'var(--rs-surface)',
             boxShadow: 'var(--rs-shadow-sm)',
@@ -43,36 +43,36 @@ export const DashboardPage: React.FC = () => {
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
               <span
                 style={{
-                  fontSize: '11px',
-                  fontWeight: 800,
-                  letterSpacing: '0.12em',
-                  textTransform: 'uppercase',
-                  color: 'var(--rs-blue)',
+                  fontSize: '12px',
+                  fontWeight: 500,
+                  letterSpacing: '-0.01em',
+                  color: 'var(--rs-blue-strong)',
                 }}
               >
-                YOUR CAREER WORKSPACE
+                Your career workspace
               </span>
               <StatusBadge status="success" label="Active" dot />
             </div>
             <h2
               style={{
                 margin: 0,
-                fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(1.5rem, 2.5vw, 2.1rem)',
-                fontWeight: 650,
-                letterSpacing: '-0.04em',
+                fontFamily: 'var(--font-serif)',
+                fontSize: 'clamp(1.6rem, 2.5vw, 2.2rem)',
+                fontWeight: 600,
+                letterSpacing: '-0.03em',
+                lineHeight: 1.15,
                 color: 'var(--rs-ink)',
               }}
             >
               Welcome back, {userName}.
             </h2>
-            <p style={{ margin: '6px 0 0', color: 'var(--rs-muted)', fontSize: '14px', maxWidth: '48ch' }}>
+            <p style={{ margin: '6px 0 0', color: 'var(--rs-muted)', fontSize: '14px', maxWidth: '50ch', lineHeight: 1.55 }}>
               Your primary resume is verified with 86/100 ATS health. You have 2 new job matches aligned with your verified experience.
             </p>
           </div>
 
           <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-            <Button onClick={() => navigate('/tailor')} icon={<Sparkles size={16} />}>
+            <Button onClick={() => navigate('/tailor')} icon={<Sparkles size={15} />}>
               Tailor to Job
             </Button>
             <Button variant="secondary" onClick={() => navigate('/checker')}>
@@ -93,7 +93,7 @@ export const DashboardPage: React.FC = () => {
           <div
             style={{
               padding: '24px',
-              borderRadius: '14px',
+              borderRadius: 'var(--radius-md)',
               border: '1px solid var(--rs-line)',
               backgroundColor: 'var(--rs-surface)',
               display: 'flex',
@@ -102,10 +102,10 @@ export const DashboardPage: React.FC = () => {
             }}
           >
             <div>
-              <span style={{ fontSize: '11px', fontWeight: 800, color: 'var(--rs-muted)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                Primary Resume Health
+              <span style={{ fontSize: '12px', fontWeight: 500, color: 'var(--rs-muted)', letterSpacing: '-0.01em' }}>
+                Primary resume health
               </span>
-              <h3 style={{ margin: '6px 0 2px', fontFamily: 'var(--font-display)', fontSize: '18px', fontWeight: 700, color: 'var(--rs-ink)' }}>
+              <h3 style={{ margin: '6px 0 2px', fontFamily: 'var(--font-sans)', fontSize: '17px', fontWeight: 600, letterSpacing: '-0.02em', color: 'var(--rs-ink)' }}>
                 Product Lead (v2.4)
               </h3>
               <p style={{ margin: 0, fontSize: '12px', color: 'var(--rs-muted)' }}>
@@ -115,14 +115,14 @@ export const DashboardPage: React.FC = () => {
                 <StatusBadge status="success" label="ATS Ready" />
               </div>
             </div>
-            <ScoreRing score={86} size={90} strokeWidth={7} />
+            <ScoreRing score={86} size={90} strokeWidth={6} />
           </div>
 
           {/* Card 2: Role Alignment */}
           <div
             style={{
               padding: '24px',
-              borderRadius: '14px',
+              borderRadius: 'var(--radius-md)',
               border: '1px solid var(--rs-line)',
               backgroundColor: 'var(--rs-surface)',
               display: 'flex',
@@ -131,14 +131,24 @@ export const DashboardPage: React.FC = () => {
             }}
           >
             <div>
-              <span style={{ fontSize: '11px', fontWeight: 800, color: 'var(--rs-muted)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                Role Alignment
+              <span style={{ fontSize: '12px', fontWeight: 500, color: 'var(--rs-muted)', letterSpacing: '-0.01em' }}>
+                Role alignment
               </span>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', margin: '8px 0 4px' }}>
-                <span style={{ fontFamily: 'var(--font-display)', fontSize: '32px', fontWeight: 700, color: 'var(--rs-ink)', lineHeight: 1 }}>
+                <span
+                  style={{
+                    fontFamily: 'var(--font-mono)',
+                    fontVariantNumeric: 'tabular-nums',
+                    fontSize: '32px',
+                    fontWeight: 600,
+                    letterSpacing: '-0.03em',
+                    color: 'var(--rs-ink)',
+                    lineHeight: 1,
+                  }}
+                >
                   12
                 </span>
-                <span style={{ fontSize: '13px', color: 'var(--rs-muted)', fontWeight: 600 }}>
+                <span style={{ fontSize: '13px', color: 'var(--rs-muted)', fontWeight: 500 }}>
                   skills evidenced
                 </span>
               </div>
@@ -157,7 +167,7 @@ export const DashboardPage: React.FC = () => {
           <div
             style={{
               padding: '24px',
-              borderRadius: '14px',
+              borderRadius: 'var(--radius-md)',
               border: '1px solid var(--rs-line)',
               backgroundColor: 'var(--rs-surface)',
               display: 'flex',
@@ -166,14 +176,24 @@ export const DashboardPage: React.FC = () => {
             }}
           >
             <div>
-              <span style={{ fontSize: '11px', fontWeight: 800, color: 'var(--rs-muted)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                Application Pipeline
+              <span style={{ fontSize: '12px', fontWeight: 500, color: 'var(--rs-muted)', letterSpacing: '-0.01em' }}>
+                Application pipeline
               </span>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', margin: '8px 0 4px' }}>
-                <span style={{ fontFamily: 'var(--font-display)', fontSize: '32px', fontWeight: 700, color: 'var(--rs-blue-strong)', lineHeight: 1 }}>
+                <span
+                  style={{
+                    fontFamily: 'var(--font-mono)',
+                    fontVariantNumeric: 'tabular-nums',
+                    fontSize: '32px',
+                    fontWeight: 600,
+                    letterSpacing: '-0.03em',
+                    color: 'var(--rs-blue-strong)',
+                    lineHeight: 1,
+                  }}
+                >
                   7
                 </span>
-                <span style={{ fontSize: '13px', color: 'var(--rs-muted)', fontWeight: 600 }}>
+                <span style={{ fontSize: '13px', color: 'var(--rs-muted)', fontWeight: 500 }}>
                   active opportunities
                 </span>
               </div>

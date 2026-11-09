@@ -102,11 +102,11 @@ export const AppShell: React.FC<{ children: React.ReactNode; title?: string }> =
             style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '9px',
-              fontFamily: 'var(--font-display)',
-              fontWeight: 700,
+              gap: '10px',
+              fontFamily: 'var(--font-sans)',
+              fontWeight: 650,
               fontSize: '18px',
-              letterSpacing: '-0.05em',
+              letterSpacing: '-0.03em',
               color: 'var(--rs-ink)',
             }}
           >
@@ -116,10 +116,13 @@ export const AppShell: React.FC<{ children: React.ReactNode; title?: string }> =
                 height: '26px',
                 display: 'grid',
                 placeItems: 'center',
-                borderRadius: '7px',
+                borderRadius: '6px',
                 color: '#FFFFFF',
-                fontSize: '15px',
-                background: 'linear-gradient(145deg, #527DBA, #102B53 65%, #D9B65E)',
+                fontFamily: 'var(--font-serif)',
+                fontWeight: 600,
+                fontSize: '16px',
+                background: 'linear-gradient(135deg, #1E3A68 0%, #0F203C 100%)',
+                border: '1px solid rgba(255, 255, 255, 0.12)',
               }}
             >
               R
@@ -147,10 +150,9 @@ export const AppShell: React.FC<{ children: React.ReactNode; title?: string }> =
                 style={{
                   display: 'block',
                   padding: '0 10px 8px',
-                  fontSize: '10px',
-                  fontWeight: 800,
-                  letterSpacing: '0.12em',
-                  textTransform: 'uppercase',
+                  fontSize: '11px',
+                  fontWeight: 600,
+                  letterSpacing: '-0.01em',
                   color: 'var(--rs-muted)',
                 }}
               >
@@ -169,20 +171,21 @@ export const AppShell: React.FC<{ children: React.ReactNode; title?: string }> =
                         alignItems: 'center',
                         gap: '10px',
                         padding: '8px 12px',
-                        borderRadius: '8px',
+                        borderRadius: 'var(--radius-sm)',
                         fontSize: '13px',
-                        fontWeight: isActive ? 700 : 500,
+                        fontWeight: isActive ? 600 : 500,
+                        letterSpacing: '-0.01em',
                         color: isActive ? 'var(--rs-ink)' : 'var(--rs-muted)',
                         backgroundColor: isActive ? 'var(--rs-surface-2)' : 'transparent',
                         border: isActive ? '1px solid var(--rs-line)' : '1px solid transparent',
-                        transition: 'background-color 0.18s ease, color 0.18s ease',
+                        transition: 'background-color 0.15s ease, color 0.15s ease',
                         textAlign: 'left',
                         cursor: 'pointer',
                       }}
                       aria-current={isActive ? 'page' : undefined}
                     >
                       <Icon
-                        size={16}
+                        size={15}
                         color={isActive ? 'var(--rs-blue-strong)' : 'currentColor'}
                         aria-hidden="true"
                       />
