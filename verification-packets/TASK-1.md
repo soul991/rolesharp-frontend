@@ -3,9 +3,10 @@
 ## 1. Task Metadata
 - **Task ID**: TASK-1
 - **Title**: Design System Foundation, Tokens, Theme Reveal, Landing Page & App Shell
-- **Base Commit SHA**: INITIAL
-- **Task Commit SHA**: `6ce39548cd549e4b85827a13ff0a12bacc432244`
+- **Base Commit SHA**: `6ce39548cd549e4b85827a13ff0a12bacc432244`
+- **Task Commit SHA**: `920563bea2d9d571a71d3fb84b31807023834cd4`
 - **Branch**: `main`
+- **Framework Specification**: React 19 (`19.3.1`) + React DOM (`19.3.1`) + TypeScript (`5.7.2`) + Vite (`6.4.6`)
 - **Working Tree Cleanliness**: Clean (confirmed via `git status`)
 - **Changed Files Manifest**:
   - `src/styles/tokens.css` (semantic design tokens for light & dark palettes)
