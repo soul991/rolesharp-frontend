@@ -91,8 +91,8 @@ The application pipeline was upgraded to communicate directly with authoritative
 | **Cover Letter Generator** | `POST /api/cover` | Superdesign Animated List Tone Selector | **Client-Side Workflow + Real Contract Adapter** | Accepts `{ resumeId, company, role, tone }`. Explicitly **rejects job description inputs** as per contract. |
 | **Cover Letter Analyzer** | `POST /api/cover-letter-analyzer` | Dispatches `POST /api/cover-letter-analyzer` with in-memory fallback | **Client-Side Engine + Real API Adapter** | Computes word count, reading time, quantified evidence ratio, and cliché detection. Zero persistence. |
 | **LinkedIn Optimizer** | `POST /api/linkedin` | Saved resume selector (`res_master_01`) + `POST /api/linkedin` dispatch | **Client-Side Studio + Real API Adapter** | Operates strictly on user text / saved resume. **Zero web scraping or automated crawling**. Recruiter simulation card. |
-| **Interview Studio** | `POST /api/interview` | Dispatches `POST /api/interview` on regenerate | **Client-Side Studio + Real API Adapter** | Generates 6 grounded STAR prompts tied to candidate resume evidence; interactive stopwatch timer. |
-| **Application Tracker** | `GET/POST/PATCH/DELETE /api/applications` | Dedicated `applicationsApi` with offline fallback | **Verified API Adapter + Local Cache** | Strictly serializes `saved`, `applied`, `interview`, `offer`, `rejected`. |
+| **Interview Studio** | `POST /api/interview` | Authenticated resume selector + `POST /api/interview` dispatch | **Client-Side Studio + Real API Adapter** | Selects user's saved resume (`#interview-resume-select`), enforces authentication and credit balance, dispatches `{ resumeId: selectedResumeId, useCredit: true }`, with explicit offline fallback state on backend failure (zero credits consumed). |
+| **Application Tracker** | `GET/POST/PATCH/DELETE /api/applications` | Dedicated `applicationsApi` with offline fallback | **Verified API Adapter + Local Cache** | Strictly serializes `saved`, `applied`, `interview`, `offer`, `rejected`. Explicit `Live Backend Sync` vs `Offline Cache Mode` status badges. |
 | **Auto Apply Queue** | `GET /api/application-packages`<br>`POST /api/application-packages/approve` | Staged Review Queue | **Client-Side Safety Gate** | Enforces 5 mandatory safeguards (provenance, send-only mailbox, SHA anchor, human modal approval, terminal unknown outcome). |
 
 ---
@@ -121,19 +121,19 @@ Exit Code: 0 (0 errors)
 npm run lint
 Exit Code: 0 (0 errors, 13 warnings)
 
-# 3. Automated Vitest Suite (34/34 Tests Passing)
+# 3. Automated Vitest Suite (41/41 Tests Passing)
 npm test
-Exit Code: 0 (34 passed across 6 test suites in 3.77s)
-  ✓ src/test/LandingPage.test.tsx (2 tests)
+Exit Code: 0 (41 passed across 6 test suites in 4.07s)
+  ✓ src/test/LandingPage.test.tsx (5 tests, including /resumes, /about, /help route availability)
   ✓ src/test/AuthOnboarding.test.tsx (4 tests)
   ✓ src/test/OpportunitiesTracker.test.tsx (6 tests, including API serialization & network failure fallback)
   ✓ src/test/ResumeWorkspaces.test.tsx (6 tests)
-  ✓ src/test/PreparationStudio.test.tsx (8 tests)
+  ✓ src/test/PreparationStudio.test.tsx (12 tests, including interview resume selector serialization & offline fallback)
   ✓ src/test/BillingAutoApply.test.tsx (8 tests)
 
 # 4. Production Build with Manual Chunk Optimization
 npm run build
-Exit Code: 0 (Built in 2.55s, 0 warnings, 0 errors)
+Exit Code: 0 (Built in 2.58s, 0 warnings, 0 errors)
   dist/index.html                         1.91 kB
   dist/assets/index-B_BN5MCZ.css          3.54 kB
   dist/assets/vendor-react-B18TlZLm.js    4.22 kB
@@ -149,3 +149,37 @@ Exit Code: 0 (Built in 2.55s, 0 warnings, 0 errors)
 - **Environment Template**: `.env.example` contains only benign configuration placeholders (`VITE_API_BASE_URL=/api`, feature flags).
 - **Archive Dumps**: Verified zero `.zip`, `.tar.gz`, or scratch debug dumps exist in repository.
 - **Client Storage Policy**: `localStorage` is restricted to UI preferences (`rolesharp-theme`) and temporary client cache (`rolesharp_tracker_applications`). No session tokens or passwords are stored in web storage.
+
+---
+
+## 9. Resolution of Final Outstanding Defects
+
+### 1. Fix the Hardcoded Interview Resume ID
+- **Issue**: The previous audit recorded a hardcoded `POST /api/interview` payload with `{ resumeId: 'res_master_01', useCredit: true }`.
+- **Resolution**: Implemented the complete authenticated resume-selection workflow in [`src/pages/InterviewStudioPage.tsx`](file:///d:/Istak/Rolesharp%20Frontend%202.0/src/pages/InterviewStudioPage.tsx):
+  - Automatically loads user's saved resumes via `GET /api/resumes` on mount.
+  - Prominent dropdown selector (`#interview-resume-select`) requiring the user to explicitly choose their target rehearsal resume.
+  - Submitting without selecting a resume is disabled and rejected with an explicit error message (`"Please select a saved resume to rehearse against."`).
+  - Serializes the selected resume's actual ID (e.g. `res_stripe_02`, `res_datadog_03`) to `POST /api/interview`.
+  - Enforces authentication and credit checks (`session.credits >= 1`).
+  - Deducts credits strictly upon confirmed server-side success (HTTP 200).
+  - Handles backend failure with an explicit offline fallback banner ("Offline Rehearsal Mode", zero credits consumed, and a "Retry Server Connection" button).
+  - Regression tests added to `src/test/PreparationStudio.test.tsx` (all passing).
+
+### 2. Complete Route Inventory Reconciliation
+- **Issue**: Discrepancies existed between earlier matrices and QA documentation regarding `/resumes`, `/about`, `/help` vs `/forgot-password`, `/reset-password`, `/jobs/:id`.
+- **Resolution**:
+  - Confirmed that `/resumes` (`MyResumesPage`), `/about` (`AboutPage`), and `/help` (`HelpPage`) are active, fully registered in `src/App.tsx`, and reachable via application navigation.
+  - Clarified that `/forgot-password` and `/reset-password` are handled inline inside `LoginPage` via recovery action modals to prevent URL proliferation.
+  - Clarified that `/jobs/:id` is handled inside `JobFinderPage` (`/jobs`) via an interactive details drawer with direct ATS linkouts rather than an isolated sub-route.
+  - Reconciled all 25 registered URL paths in [`ROUTE_MATRIX.md`](file:///d:/Istak/Rolesharp%20Frontend%202.0/ROUTE_MATRIX.md), [`README.md`](file:///d:/Istak/Rolesharp%20Frontend%202.0/README.md), and [`BROWSER_QA_REPORT.md`](file:///d:/Istak/Rolesharp%20Frontend%202.0/BROWSER_QA_REPORT.md).
+  - Added route rendering regression tests in `src/test/LandingPage.test.tsx`.
+
+### 3. Explicit Offline Fallback Disclosures Across Studios
+- **Issue**: Fallback outputs must never be presented as successful results from the real backend.
+- **Resolution**:
+  - **Interview Studio**: Explicit banner distinguishes `Live /api/interview` from `Offline Rehearsal Mode`. Zero credits deducted on failure, with Retry button.
+  - **Cover Letter Analyzer**: Explicit status badge `<StatusBadge status="info" label="In-Memory Analysis" />` and zero-data-retention disclosure.
+  - **ATS Checker**: `<StatusBadge status="neutral" label="In-Memory Privacy Engine (Zero Remote Storage)" />` and clear note that evaluation ran locally without remote storage.
+  - **LinkedIn Optimizer**: Explicit warning and badge if `/api/linkedin` fails, displaying local heuristic draft notice with zero third-party scraping.
+  - **Application Tracker**: Header badge actively distinguishes `Live /api/applications` vs `Offline Cache Mode`.

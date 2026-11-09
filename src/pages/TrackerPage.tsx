@@ -40,15 +40,17 @@ const COLUMNS: { id: ApplicationStatus; title: string; color: string }[] = [
 
 export const TrackerPage: React.FC = () => {
   const [applications, setApplications] = useState<TrackerItem[]>(() => getOfflineCachedApplications() as TrackerItem[]);
+  const [dataSource, setDataSource] = useState<'backend' | 'offline_fallback'>('offline_fallback');
   const [searchFilter, setSearchFilter] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
   const [notification, setNotification] = useState<string | null>(null);
 
   useEffect(() => {
     let active = true;
-    applicationsApi.getApplications().then(({ applications: loaded }) => {
+    applicationsApi.getApplications().then(({ applications: loaded, source }) => {
       if (active) {
         setApplications(loaded as TrackerItem[]);
+        setDataSource(source);
       }
     });
     return () => {
@@ -150,6 +152,10 @@ export const TrackerPage: React.FC = () => {
                 ACTIVE PIPELINE
               </span>
               <StatusBadge status="info" label={`${applications.length} Tracked Roles`} />
+              <StatusBadge
+                status={dataSource === 'backend' ? 'success' : 'warning'}
+                label={dataSource === 'backend' ? 'Live /api/applications' : 'Offline Cache Mode'}
+              />
             </div>
             <h1
               style={{

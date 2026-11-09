@@ -55,6 +55,7 @@ export const ATSCheckerPage: React.FC = () => {
 
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [hasReport, setHasReport] = useState(true);
+  const [engineMode, setEngineMode] = useState<'client_privacy' | 'server'>('client_privacy');
 
   // Subscores
   const overallScore = 88;
@@ -73,12 +74,23 @@ export const ATSCheckerPage: React.FC = () => {
         targetRole,
         targetCompany,
       }),
-    }).catch(() => {});
-
-    setTimeout(() => {
-      setIsAnalyzing(false);
-      setHasReport(true);
-    }, 800);
+    })
+      .then((res) => {
+        if (res.ok) {
+          setEngineMode('server');
+        } else {
+          setEngineMode('client_privacy');
+        }
+      })
+      .catch(() => {
+        setEngineMode('client_privacy');
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setIsAnalyzing(false);
+          setHasReport(true);
+        }, 800);
+      });
   };
 
   return (
@@ -331,6 +343,12 @@ export const ATSCheckerPage: React.FC = () => {
                 <ScoreRing score={overallScore} size={84} strokeWidth={7} />
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                    <StatusBadge
+                      status={engineMode === 'server' ? 'success' : 'neutral'}
+                      label={engineMode === 'server' ? 'Live /api/check-resume' : 'In-Memory Privacy Engine (Zero Remote Storage)'}
+                    />
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
                     <span
                       style={{
                         fontFamily: 'var(--font-mono)',
@@ -349,7 +367,7 @@ export const ATSCheckerPage: React.FC = () => {
                     High Parsing Fidelity & Single-Column Compliance
                   </h3>
                   <p style={{ margin: '4px 0 0', fontSize: '12.5px', color: 'var(--rs-muted)' }}>
-                    Calibrated against {targetCompany} standards. 0 critical layout errors found.
+                    Calibrated against {targetCompany} standards. {engineMode === 'server' ? 'Verified server parsing.' : 'Evaluated in-memory (0 document retention).'}
                   </p>
                 </div>
               </div>

@@ -37,3 +37,17 @@ This matrix maps all 25 registered URL paths, 24 unique page components, and the
 | 22 | `/billing` | Authenticated | Subscription, Credits & History | `GET /api/me`, `GET /api/account/billing` | Canonical plan details, usage quotas, invoice history, payment provider integration |
 | 23 | `/settings` | Authenticated | Profile & Account Settings | `GET /api/me`, `POST /api/auth/logout` | Career preferences, country conventions override, theme preference, logout |
 | 24 | `/privacy`, `/terms` | Public | Legal Documents & Retention | `GET /api/me` (versioned) | Full privacy policy, terms of service, consent disclosures |
+
+
+---
+
+## Disputed Routes & Topology Reconciliation
+
+| Disputed Route | Status in Router | Component / Handling | Navigation Link | Required by PRD? | Status & Architecture |
+|---|---|---|---|:---:|---|
+| `/resumes` | **Active / Registered** | `MyResumesPage` | Sidebar | **YES** | Core candidate document workspace. Renders document cards, version history, duplicate, delete, and ATS scores. |
+| `/about` | **Active / Registered** | `AboutPage` | Footer & Landing | **YES** | Public methodology & anti-hallucination manifesto. |
+| `/help` | **Active / Registered** | `HelpPage` | Header & Footer | **YES** | Public knowledge base, ATS mythbusters, and country guides. |
+| `/forgot-password` | **Not Registered** | Inline in `LoginPage` | N/A | **NO** | Handled inline via recovery modal/toast to prevent URL proliferation. |
+| `/reset-password` | **Not Registered** | Inline in `LoginPage` | N/A | **NO** | Auth verification token handled in session flow. |
+| `/jobs/:id` | **Not Registered** | Inline Drawer in `JobFinderPage` (`/jobs`) | N/A | **NO** | Interactive detail drawer with direct ATS links inside `/jobs`. |

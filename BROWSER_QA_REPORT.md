@@ -29,7 +29,7 @@
 | 10 | `/resumes` | `MyResumesPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | Document workspace cards, search filter, version badges, duplicate resume action, download PDF/DOCX toasts. |
 | 11 | `/cover-letter` | `CoverLetterPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | **Superdesign Animated List Tone Selector** (`formal`, `warm`, `direct`), keyboard navigation (`Enter`/`Space`), draft synthesizer, editable paper preview. |
 | 12 | `/linkedin` | `LinkedInOptimizerPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | Saved resume selector (`res_master_01`), headline studio with 220-char live counter, About section hook, recruiter boolean card, `POST /api/linkedin` dispatch. |
-| 13 | `/interview` | `InterviewStudioPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | 6 grounded STAR question cards, answer clipboard copy, interactive stopwatch (2:00 timer with start/pause/reset), `POST /api/interview` regenerate trigger. |
+| 13 | `/interview` | `InterviewStudioPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | Authenticated saved resume selector (`#interview-resume-select`), credit balance enforcement, `POST /api/interview` dispatch with `{ resumeId, useCredit: true }`, explicit offline fallback banner with zero credit deduction on failure, 6 grounded STAR cards, and interactive 2:00 stopwatch. |
 | 14 | `/auto-apply` | `AutoApplyPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | Recipient evidence provenance check, send-only mailbox assurance (`alex.morgan@lattice.io`), SHA-256 package anchor, explicit approval modal, terminal unknown outcome. |
 | 15 | `/jobs` | `JobFinderPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | Opportunity query search, country/type/remote filters, freshness badges, external ATS source linkouts, save-to-tracker action. |
 | 16 | `/daily-matches` | `DailyMatchesPage` | 1440, 1024, 768, 390 | Verified Both | None (0px) | 0 | **Full Interactive** | Dual independent scoring badges (Role Fit % and Evidence Confidence), matched bullet breakdown, daily campaign pause/resume toggle. |
@@ -60,3 +60,17 @@
    - Navigation collapses to top hamburger bar with animated navigation drawer.
    - Cards switch to single-column stacking with full-width primary action buttons.
    - Verified zero horizontal page overflow (`scrollWidth === clientWidth`) across all 25 routes.
+
+
+---
+
+## Disputed Route Reconciliation & Route Topology
+
+| Route Pattern | Registration Status | Component / Architecture | Nav Reachability | Required by Spec? | Architectural Rationale & Reconciliation |
+|---|---|---|---|:---:|---|
+| `/resumes` | **Registered** | `MyResumesPage` | **Reachable** (Sidebar Navigation) | **YES** | Core candidate document repository managing versions, duplicates, downloads, and ATS scores. Fully restored and verified. |
+| `/about` | **Registered** | `AboutPage` | **Reachable** (Footer / Landing links) | **YES** | Public manifesto, anti-hallucination engineering pillars, and algorithmic disclosure standards. Fully restored and verified. |
+| `/help` | **Registered** | `HelpPage` | **Reachable** (Header / Footer links) | **YES** | Knowledge base, ATS parser mythbusters, and country convention guides. Fully restored and verified. |
+| `/forgot-password` | **Not Registered** | Inline in `LoginPage` | Inline Action | **NO** | Handled via inline recovery modal and notification inside `/login` to preserve session context and avoid unnecessary route fragmentation. |
+| `/reset-password` | **Not Registered** | Inline in `LoginPage` | Inline Action | **NO** | Token-based reset verification is handled directly within the authenticated authentication flow. |
+| `/jobs/:id` | **Not Registered** | Inline Drawer in `JobFinderPage` (`/jobs`) | Inline Detail Drawer | **NO** | Dynamic job inspection is presented in an interactive details drawer with direct outbound ATS linkouts inside `/jobs`, maintaining user filter and search state. |

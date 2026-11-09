@@ -156,5 +156,151 @@ describe('Task 5 — Preparation Tools & Superdesign Animated List', () => {
       fireEvent.click(markBtn);
       expect(screen.getAllByRole('button', { name: /Mark as Rehearsed/i })[0]).toBeInTheDocument();
     });
+
+    it('disables calibration when no resume is selected and prevents submission', () => {
+      renderWithProviders(<InterviewStudioPage />);
+
+      const select = screen.getByTestId('interview-resume-select');
+      expect(select).toHaveValue('');
+      expect(screen.getByText(/Select one of your authenticated saved resumes above/i)).toBeInTheDocument();
+
+      const calibrateBtn = screen.getByTestId('calibrate-interview-btn');
+      expect(calibrateBtn).toBeDisabled();
+    });
+
+    it('correctly serializes the selected resume ID to POST /api/interview and handles response', async () => {
+      localStorage.setItem(
+        'rolesharp-auth-session',
+        JSON.stringify({
+          authenticated: true,
+          credits: 5,
+          features: { interview_prep: true },
+        })
+      );
+
+      const fetchSpy = vi.spyOn(global, 'fetch').mockImplementation((url) => {
+        if (url === '/api/interview') {
+          return Promise.resolve(
+            new Response(
+              JSON.stringify({
+                questions: [
+                  {
+                    id: 'q_server_1',
+                    category: 'System Architecture',
+                    question: 'Server Calibrated: How did you scale Redis clusters?',
+                    rationale: 'Directly from server',
+                    resumeAnchor: 'scaled Redis clusters to 50k ops/sec',
+                    modelAnswer: 'We sharded across 16 master nodes...',
+                    keyTalkingPoints: ['Redis sharding', 'Cluster failover'],
+                    rehearsed: false,
+                  },
+                ],
+              }),
+              { status: 200, headers: { 'Content-Type': 'application/json' } }
+            )
+          );
+        }
+        return Promise.resolve(
+          new Response(
+            JSON.stringify({
+              resumes: [
+                { id: 'res_stripe_02', name: 'Stripe — Staff Infrastructure & Platform Lead (v1.4)' },
+                { id: 'res_datadog_03', name: 'Datadog — Senior Systems Architect (v2.0)' },
+              ],
+            }),
+            { status: 200 }
+          )
+        );
+      });
+
+      renderWithProviders(<InterviewStudioPage />);
+
+      const select = screen.getByTestId('interview-resume-select');
+      fireEvent.change(select, { target: { value: 'res_stripe_02' } });
+      expect(select).toHaveValue('res_stripe_02');
+
+      const calibrateBtn = screen.getByTestId('calibrate-interview-btn');
+      expect(calibrateBtn).not.toBeDisabled();
+
+      fireEvent.click(calibrateBtn);
+
+      await act(async () => {
+        await Promise.resolve();
+      });
+
+      expect(fetchSpy).toHaveBeenCalledWith(
+        '/api/interview',
+        expect.objectContaining({
+          method: 'POST',
+          body: JSON.stringify({ resumeId: 'res_stripe_02', useCredit: true }),
+        })
+      );
+
+      expect(await screen.findByText(/Live Backend Active/i)).toBeInTheDocument();
+      expect(screen.getAllByText(/Server Calibrated: How did you scale Redis clusters/i)[0]).toBeInTheDocument();
+
+      fetchSpy.mockRestore();
+    });
+
+    it('displays explicit offline fallback warning when /api/interview fails and does not consume credits', async () => {
+      localStorage.setItem(
+        'rolesharp-auth-session',
+        JSON.stringify({
+          authenticated: true,
+          credits: 5,
+          features: { interview_prep: true },
+        })
+      );
+
+      const fetchSpy = vi.spyOn(global, 'fetch').mockImplementation((url) => {
+        if (url === '/api/interview') {
+          return Promise.reject(new Error('Network error'));
+        }
+        return Promise.resolve(
+          new Response(
+            JSON.stringify({
+              resumes: [
+                { id: 'res_stripe_02', name: 'Stripe — Staff Infrastructure & Platform Lead (v1.4)' },
+                { id: 'res_datadog_03', name: 'Datadog — Senior Systems Architect (v2.0)' },
+              ],
+            }),
+            { status: 200 }
+          )
+        );
+      });
+
+      renderWithProviders(<InterviewStudioPage />);
+
+      const select = screen.getByTestId('interview-resume-select');
+      fireEvent.change(select, { target: { value: 'res_datadog_03' } });
+
+      const calibrateBtn = screen.getByTestId('calibrate-interview-btn');
+      fireEvent.click(calibrateBtn);
+
+      await act(async () => {
+        await Promise.resolve();
+      });
+
+      expect(await screen.findByText(/Offline Rehearsal Mode/i)).toBeInTheDocument();
+      expect(screen.getByText(/Zero credits were consumed/i)).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /Retry Server Connection/i })).toBeInTheDocument();
+
+      fetchSpy.mockRestore();
+    });
+
+    it('prevents submission and displays honest error when user is not authenticated', () => {
+      localStorage.removeItem('rolesharp-auth-session');
+      renderWithProviders(<InterviewStudioPage />);
+
+      const select = screen.getByTestId('interview-resume-select');
+      fireEvent.change(select, { target: { value: 'res_stripe_02' } });
+
+      const calibrateBtn = screen.getByTestId('calibrate-interview-btn');
+      act(() => {
+        fireEvent.click(calibrateBtn);
+      });
+
+      expect(screen.getByText(/Authentication required/i)).toBeInTheDocument();
+    });
   });
 });

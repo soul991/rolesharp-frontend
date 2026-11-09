@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { AppShell } from '../components/common/AppShell';
 import { Button } from '../components/common/Button';
 import { StatusBadge } from '../components/common/StatusBadge';
+import { useAuth } from '../context/AuthContext';
 import {
   CheckCircle2,
   Clock,
@@ -11,7 +12,19 @@ import {
   Play,
   Pause,
   RotateCcw,
+  AlertTriangle,
+  AlertCircle,
+  FileText,
+  Sparkles,
 } from 'lucide-react';
+
+export interface SavedResumeOption {
+  id: string;
+  name: string;
+  role?: string;
+  atsScore?: number;
+  version?: string;
+}
 
 interface InterviewQuestion {
   id: string;
@@ -24,7 +37,31 @@ interface InterviewQuestion {
   rehearsed: boolean;
 }
 
-const INITIAL_QUESTIONS: InterviewQuestion[] = [
+export const DEFAULT_SAVED_RESUMES: SavedResumeOption[] = [
+  {
+    id: 'res_master_01',
+    name: 'Master Executive Profile (v3.2) — 92 ATS Score',
+    role: 'Staff Systems Architect',
+    atsScore: 92,
+    version: 'v3.2',
+  },
+  {
+    id: 'res_stripe_02',
+    name: 'Stripe — Staff Infrastructure & Platform Lead (v1.4)',
+    role: 'Staff Infrastructure Lead',
+    atsScore: 89,
+    version: 'v1.4',
+  },
+  {
+    id: 'res_datadog_03',
+    name: 'Datadog — Senior Systems Architect (v2.0)',
+    role: 'Senior Systems Architect',
+    atsScore: 86,
+    version: 'v2.0',
+  },
+];
+
+const MASTER_QUESTIONS: InterviewQuestion[] = [
   {
     id: 'q1',
     category: 'System Architecture',
@@ -118,8 +155,105 @@ const INITIAL_QUESTIONS: InterviewQuestion[] = [
   },
 ];
 
+const STRIPE_QUESTIONS: InterviewQuestion[] = [
+  {
+    id: 'q1_stripe',
+    category: 'System Architecture',
+    question: 'How did your canary CI/CD gate reduce rollback incidents by 28% for high-throughput payment clusters?',
+    rationale: 'Validates headline claim from your Stripe Staff Infrastructure resume.',
+    resumeAnchor: 'designed automated canary deployment gates, reducing rollback incidents by 28%',
+    modelAnswer:
+      'At Stripe, we instituted automated canary deployment gates that evaluated P99 latency and database connection pool saturation on a 2% shadow traffic tier before promoting changes.',
+    keyTalkingPoints: [
+      '2% shadow traffic validation',
+      'Connection pool saturation triggers',
+      '28% reduction in rollback incidents',
+    ],
+    rehearsed: true,
+  },
+  {
+    id: 'q2_stripe',
+    category: 'Execution & Delivery',
+    question: 'How did you benchmark multi-region compute clusters to guarantee 99.98% financial platform uptime?',
+    rationale: 'Directly probes your high-availability multi-region architecture.',
+    resumeAnchor: 'maintained 99.98% production uptime across four geographical cloud regions',
+    modelAnswer:
+      'We ran automated chaos tests across regional endpoints, simulating datacenter network partitions and verifying zero-loss state transitions across our financial ledger infrastructure.',
+    keyTalkingPoints: [
+      'Regional chaos testing',
+      'Zero-data-loss failover',
+      'Four geographical cloud regions',
+    ],
+    rehearsed: false,
+  },
+  {
+    id: 'q3_stripe',
+    category: 'Behavioral & Leadership',
+    question: 'Walk me through how you aligned 45 engineering contributors when establishing strict infrastructure SLOs.',
+    rationale: 'Probes cross-team engineering leadership and consensus building.',
+    resumeAnchor: 'collaborated across 45 engineering contributors and cross-functional teams',
+    modelAnswer:
+      'We launched an internal architecture guild and authored lightweight RFCs. By treating the remaining error budget as currency for feature velocity, teams naturally aligned on stability goals.',
+    keyTalkingPoints: [
+      'Internal architecture guild',
+      'Lightweight RFC design reviews',
+      'Error budgets as velocity currency',
+    ],
+    rehearsed: false,
+  },
+];
+
+const DATADOG_QUESTIONS: InterviewQuestion[] = [
+  {
+    id: 'q1_datadog',
+    category: 'System Architecture',
+    question: 'How did you optimize Kafka consumer group rebalancing to eliminate stop-the-world partition storms?',
+    rationale: 'Validates deep streaming telemetry and Kafka cluster expertise.',
+    resumeAnchor: 'high-concurrency event streaming and Kafka cluster optimization',
+    modelAnswer:
+      'We tuned heartbeat intervals, migrated consumer groups to cooperative sticky assignors, and enabled zstd batch compression, eliminating stop-the-world rebalance storms.',
+    keyTalkingPoints: [
+      'Cooperative sticky assignors',
+      'zstd batch compression',
+      'P99 tail latency reduction',
+    ],
+    rehearsed: true,
+  },
+  {
+    id: 'q2_datadog',
+    category: 'Execution & Delivery',
+    question: 'What telemetry metrics do you monitor first when diagnosing sudden P99 latency spikes?',
+    rationale: 'Evaluates production diagnostic intuition and high-velocity triage.',
+    resumeAnchor: 'slashing P99 latency by 42% across distributed compute clusters',
+    modelAnswer:
+      'I inspect consumer lag metrics, garbage collection pause frequency, and thread pool exhaustion before drilling into distributed trace waterfalls.',
+    keyTalkingPoints: [
+      'Consumer lag vs ingress rate',
+      'GC pause metrics',
+      'Distributed trace span waterfalls',
+    ],
+    rehearsed: false,
+  },
+];
+
+const getGroundedQuestionsForResume = (resumeId: string): InterviewQuestion[] => {
+  if (resumeId === 'res_stripe_02') return STRIPE_QUESTIONS;
+  if (resumeId === 'res_datadog_03') return DATADOG_QUESTIONS;
+  return MASTER_QUESTIONS;
+};
+
 export const InterviewStudioPage: React.FC = () => {
-  const [questions, setQuestions] = useState<InterviewQuestion[]>(INITIAL_QUESTIONS);
+  const { session, updateSession } = useAuth();
+
+  // Resume selection state
+  const [savedResumes, setSavedResumes] = useState<SavedResumeOption[]>(DEFAULT_SAVED_RESUMES);
+  const [selectedResumeId, setSelectedResumeId] = useState<string>('');
+  const [isCalibrating, setIsCalibrating] = useState(false);
+  const [serverStatus, setServerStatus] = useState<'idle' | 'connected' | 'offline_fallback'>('idle');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  // Questions state
+  const [questions, setQuestions] = useState<InterviewQuestion[]>(MASTER_QUESTIONS);
   const [selectedQuestionId, setSelectedQuestionId] = useState<string>('q1');
   const [filterCategory, setFilterCategory] = useState<string>('All');
   const [notification, setNotification] = useState<string | null>(null);
@@ -127,6 +261,22 @@ export const InterviewStudioPage: React.FC = () => {
   // Rehearsal timer state
   const [timerSeconds, setTimerSeconds] = useState(120);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
+
+  // Load available resumes from /api/resumes on mount
+  useEffect(() => {
+    let active = true;
+    fetch('/api/resumes', { credentials: 'include' })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (active && Array.isArray(data?.resumes) && data.resumes.length > 0) {
+          setSavedResumes(data.resumes);
+        }
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
 
   useEffect(() => {
     let interval: any = null;
@@ -140,10 +290,11 @@ export const InterviewStudioPage: React.FC = () => {
     return () => clearInterval(interval);
   }, [isTimerRunning, timerSeconds]);
 
+  const selectedResume = savedResumes.find((r) => r.id === selectedResumeId);
   const activeQuestion = questions.find((q) => q.id === selectedQuestionId) || questions[0];
   const rehearsedCount = questions.filter((q) => q.rehearsed).length;
   const totalCount = questions.length;
-  const progressPercent = Math.round((rehearsedCount / totalCount) * 100);
+  const progressPercent = totalCount > 0 ? Math.round((rehearsedCount / totalCount) * 100) : 0;
 
   const toggleRehearsed = (id: string) => {
     setQuestions((prev) =>
@@ -157,25 +308,72 @@ export const InterviewStudioPage: React.FC = () => {
     setTimeout(() => setNotification(null), 2500);
   };
 
-  const handleRegenerate = () => {
-    setNotification('Calibrating questions from backend (POST /api/interview)...');
-    fetch('/api/interview', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', credentials: 'include' },
-      body: JSON.stringify({ resumeId: 'res_master_01', useCredit: true }),
-    })
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data) => {
+  const handleCalibrate = async () => {
+    setErrorMessage(null);
+
+    // 1. Enforce resume selection
+    if (!selectedResumeId) {
+      setErrorMessage('Please select a saved resume to rehearse against.');
+      return;
+    }
+
+    // 2. Enforce authentication
+    if (!session.authenticated) {
+      setErrorMessage('Authentication required: Please sign in to rehearse against saved resumes.');
+      return;
+    }
+
+    // 3. Enforce credit balance
+    if (session.credits < 1) {
+      setErrorMessage('Insufficient credits: Rehearsal calibration requires at least 1 credit.');
+      return;
+    }
+
+    setIsCalibrating(true);
+    setNotification(`Calibrating interview questions for "${selectedResume?.name}"...`);
+
+    try {
+      const res = await fetch('/api/interview', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', credentials: 'include' },
+        body: JSON.stringify({ resumeId: selectedResumeId, useCredit: true }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
         if (Array.isArray(data?.questions) && data.questions.length > 0) {
           setQuestions(data.questions);
+          setSelectedQuestionId(data.questions[0].id);
         }
-      })
-      .catch(() => {});
-
-    setTimeout(() => {
-      setNotification('Interview questions refreshed and grounded in verified resume metrics.');
-      setTimeout(() => setNotification(null), 3000);
-    }, 600);
+        // Deduct credit only upon verified server success
+        updateSession({ credits: Math.max(0, session.credits - 1) });
+        setServerStatus('connected');
+        setNotification(`Calibrated questions from server for "${selectedResume?.name}". 1 credit consumed.`);
+        setTimeout(() => setNotification(null), 3500);
+      } else {
+        // Explicit offline fallback: load resume-specific baseline template without consuming credit
+        setServerStatus('offline_fallback');
+        const grounded = getGroundedQuestionsForResume(selectedResumeId);
+        setQuestions(grounded);
+        setSelectedQuestionId(grounded[0].id);
+        setNotification(null);
+        setErrorMessage(
+          `Backend unavailable (HTTP ${res.status}): Server returned an error. Displaying local grounded rehearsal template for ${selectedResume?.name}. No credits were consumed.`
+        );
+      }
+    } catch {
+      // Network failure: explicit offline state
+      setServerStatus('offline_fallback');
+      const grounded = getGroundedQuestionsForResume(selectedResumeId);
+      setQuestions(grounded);
+      setSelectedQuestionId(grounded[0].id);
+      setNotification(null);
+      setErrorMessage(
+        `Network error: Server (/api/interview) unreachable. Operating in offline rehearsal mode with grounded template for ${selectedResume?.name}. No credits were consumed.`
+      );
+    } finally {
+      setIsCalibrating(false);
+    }
   };
 
   const filteredQuestions =
@@ -227,6 +425,232 @@ export const InterviewStudioPage: React.FC = () => {
             Practice answering 6 rigorous interview prompts calibrated directly to your verified career history and metrics.
           </p>
         </div>
+
+        {/* Target Rehearsal Resume Selection Card */}
+        <div
+          style={{
+            padding: '20px',
+            borderRadius: '14px',
+            backgroundColor: 'var(--rs-surface)',
+            border: '1px solid var(--rs-line)',
+            boxShadow: 'var(--rs-shadow)',
+            marginBottom: '20px',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: '12px',
+              marginBottom: '14px',
+            }}
+          >
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <FileText size={16} color="var(--rs-blue)" />
+                <span
+                  style={{
+                    fontSize: '12.5px',
+                    fontWeight: 700,
+                    color: 'var(--rs-ink)',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.06em',
+                  }}
+                >
+                  Target Rehearsal Resume (Authenticated)
+                </span>
+                <StatusBadge
+                  status={serverStatus === 'connected' ? 'success' : serverStatus === 'offline_fallback' ? 'warning' : 'neutral'}
+                  label={
+                    serverStatus === 'connected'
+                      ? 'Live /api/interview'
+                      : serverStatus === 'offline_fallback'
+                      ? 'Offline Fallback Active'
+                      : 'Not Calibrated'
+                  }
+                />
+              </div>
+              <p style={{ margin: '4px 0 0', fontSize: '13px', color: 'var(--rs-muted)' }}>
+                Select an authenticated saved resume. The studio will calibrate 6 grounded STAR interview questions against that exact document’s metrics.
+              </p>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--rs-muted)' }}>Available Balance:</span>
+              <StatusBadge status={session.credits > 0 ? 'success' : 'warning'} label={`${session.credits} Credits`} />
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+            <select
+              id="interview-resume-select"
+              data-testid="interview-resume-select"
+              value={selectedResumeId}
+              onChange={(e) => {
+                setSelectedResumeId(e.target.value);
+                setErrorMessage(null);
+                if (e.target.value) {
+                  const grounded = getGroundedQuestionsForResume(e.target.value);
+                  setQuestions(grounded);
+                  setSelectedQuestionId(grounded[0].id);
+                }
+              }}
+              disabled={isCalibrating}
+              style={{
+                flex: '1 1 320px',
+                height: '42px',
+                padding: '0 14px',
+                borderRadius: '8px',
+                border: '1px solid var(--rs-line)',
+                backgroundColor: 'var(--rs-surface-2)',
+                color: 'var(--rs-ink)',
+                fontSize: '13.5px',
+                outline: 'none',
+                fontWeight: 600,
+              }}
+            >
+              <option value="">-- Choose a Saved Resume to Rehearse Against --</option>
+              {savedResumes.map((resume) => (
+                <option key={resume.id} value={resume.id}>
+                  {resume.name}
+                </option>
+              ))}
+            </select>
+
+            <Button
+              data-testid="calibrate-interview-btn"
+              onClick={handleCalibrate}
+              disabled={!selectedResumeId || isCalibrating}
+              icon={isCalibrating ? <RotateCcw size={14} className="spin" /> : <Sparkles size={14} />}
+            >
+              {isCalibrating ? 'Calibrating Questions...' : 'Calibrate Questions (1 Credit)'}
+            </Button>
+          </div>
+
+          {!selectedResumeId && (
+            <div
+              style={{
+                marginTop: '10px',
+                fontSize: '12px',
+                color: 'var(--rs-amber)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+              }}
+            >
+              <AlertTriangle size={14} />
+              <span>Select one of your authenticated saved resumes above to calibrate interview questions.</span>
+            </div>
+          )}
+
+          {selectedResume && (
+            <div
+              style={{
+                marginTop: '12px',
+                padding: '10px 14px',
+                borderRadius: '8px',
+                backgroundColor: 'var(--rs-bg)',
+                border: '1px solid var(--rs-line)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                gap: '8px',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ fontSize: '12.5px', fontWeight: 700, color: 'var(--rs-ink)' }}>
+                  Active Anchor: {selectedResume.name}
+                </span>
+                {selectedResume.atsScore && (
+                  <StatusBadge status="success" label={`${selectedResume.atsScore} ATS`} />
+                )}
+              </div>
+              <span style={{ fontSize: '12px', color: 'var(--rs-muted)' }}>
+                Target Role: {selectedResume.role || 'Executive Lead'} (ID: <code>{selectedResume.id}</code>)
+              </span>
+            </div>
+          )}
+        </div>
+
+        {/* Offline Fallback Banner */}
+        {serverStatus === 'offline_fallback' && (
+          <div
+            style={{
+              padding: '14px 18px',
+              borderRadius: '10px',
+              backgroundColor: 'color-mix(in srgb, var(--rs-amber) 12%, var(--rs-surface))',
+              border: '1px solid var(--rs-amber)',
+              color: 'var(--rs-ink)',
+              fontSize: '13px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: '12px',
+              marginBottom: '20px',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <AlertTriangle size={18} color="var(--rs-amber)" />
+              <div>
+                <strong style={{ color: 'var(--rs-amber)' }}>Offline Rehearsal Mode:</strong> Backend endpoint (
+                <code>POST /api/interview</code>) is unavailable. Questions below are from the local baseline rehearsal
+                template for <em>{selectedResume?.name || 'the selected resume'}</em>. <strong>Zero credits were consumed.</strong>
+              </div>
+            </div>
+            <Button size="sm" variant="ghost" onClick={handleCalibrate} icon={<RotateCcw size={13} />}>
+              Retry Server Connection
+            </Button>
+          </div>
+        )}
+
+        {/* Server Connected Banner */}
+        {serverStatus === 'connected' && (
+          <div
+            style={{
+              padding: '12px 16px',
+              borderRadius: '10px',
+              backgroundColor: 'color-mix(in srgb, var(--rs-green) 12%, var(--rs-surface))',
+              border: '1px solid var(--rs-green)',
+              color: 'var(--rs-ink)',
+              fontSize: '13px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              marginBottom: '20px',
+            }}
+          >
+            <CheckCircle2 size={16} color="var(--rs-green)" />
+            <span>
+              <strong>Live Backend Active:</strong> Questions successfully calibrated from server (
+              <code>POST /api/interview</code>) for <em>{selectedResume?.name}</em>.
+            </span>
+          </div>
+        )}
+
+        {/* Error Banner */}
+        {errorMessage && serverStatus !== 'offline_fallback' && (
+          <div
+            style={{
+              padding: '12px 16px',
+              borderRadius: '10px',
+              backgroundColor: 'color-mix(in srgb, #ef4444 14%, var(--rs-surface))',
+              border: '1px solid #ef4444',
+              color: 'var(--rs-ink)',
+              fontSize: '13px',
+              fontWeight: 600,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              marginBottom: '20px',
+            }}
+          >
+            <AlertCircle size={16} color="#ef4444" />
+            <span>{errorMessage}</span>
+          </div>
+        )}
 
         {/* Temporary Notification */}
         {notification && (
@@ -353,10 +777,11 @@ export const InterviewStudioPage: React.FC = () => {
           <Button
             size="sm"
             variant="ghost"
-            onClick={handleRegenerate}
+            onClick={handleCalibrate}
+            disabled={!selectedResumeId || isCalibrating}
             icon={<RotateCcw size={13} />}
           >
-            Regenerate Questions
+            Recalibrate Questions
           </Button>
         </div>
 

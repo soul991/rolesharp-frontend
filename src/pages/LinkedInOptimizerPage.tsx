@@ -38,6 +38,7 @@ export const LinkedInOptimizerPage: React.FC = () => {
   const [aboutText, setAboutText] = useState(INITIAL_ABOUT);
   const [isOptimizing, setIsOptimizing] = useState(false);
   const [notification, setNotification] = useState<string | null>(null);
+  const [serverStatus, setServerStatus] = useState<'idle' | 'connected' | 'offline_fallback'>('idle');
 
   // Diagnostics state
   const [activeTab, setActiveTab] = useState<'headline' | 'about' | 'keywords'>('headline');
@@ -53,18 +54,29 @@ export const LinkedInOptimizerPage: React.FC = () => {
       headers: { 'Content-Type': 'application/json', credentials: 'include' },
       body: JSON.stringify({ resumeId: selectedResumeId }),
     })
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data) => {
-        if (data?.headline) setHeadline(data.headline);
-        if (data?.about) setAboutText(data.about);
+      .then((res) => {
+        if (res.ok) {
+          return res.json().then((data) => {
+            if (data?.headline) setHeadline(data.headline);
+            if (data?.about) setAboutText(data.about);
+            setServerStatus('connected');
+            setNotification('LinkedIn profile sections optimized and grounded via backend (/api/linkedin).');
+          });
+        } else {
+          setServerStatus('offline_fallback');
+          setNotification('Offline Mode: Server (/api/linkedin) returned an error. Displaying local heuristic profile draft.');
+        }
       })
-      .catch(() => {});
-
-    setTimeout(() => {
-      setIsOptimizing(false);
-      setNotification('LinkedIn profile sections optimized and grounded in your verified Master Executive Profile.');
-      setTimeout(() => setNotification(null), 3500);
-    }, 650);
+      .catch(() => {
+        setServerStatus('offline_fallback');
+        setNotification('Offline Mode: Server (/api/linkedin) unreachable. Displaying local heuristic profile draft.');
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setIsOptimizing(false);
+          setTimeout(() => setNotification(null), 3500);
+        }, 650);
+      });
   };
 
   const copyToClipboard = (text: string, label: string) => {
@@ -91,6 +103,16 @@ export const LinkedInOptimizerPage: React.FC = () => {
               PREPARATION SUITE
             </span>
             <StatusBadge status="success" label="100% Anti-Scraping Compliant" />
+            <StatusBadge
+              status={serverStatus === 'connected' ? 'success' : serverStatus === 'offline_fallback' ? 'warning' : 'neutral'}
+              label={
+                serverStatus === 'connected'
+                  ? 'Live /api/linkedin'
+                  : serverStatus === 'offline_fallback'
+                  ? 'Offline Fallback'
+                  : 'Local Optimizer'
+              }
+            />
             <span style={{ fontSize: '12px', color: 'var(--rs-muted)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
               <ShieldCheck size={14} color="var(--rs-green)" /> Zero-Scraping Guarantee
             </span>
