@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AppShell } from '../components/common/AppShell';
 import { Button } from '../components/common/Button';
 import { StatusBadge } from '../components/common/StatusBadge';
+import { useAuth } from '../context/AuthContext';
 import {
   Sparkles,
   Copy,
@@ -10,18 +11,20 @@ import {
   Zap,
   TrendingUp,
   Eye,
+  AlertTriangle,
 } from 'lucide-react';
 
-const RESUME_SOURCES = [
-  { id: 'res_master_01', name: 'Master Executive Profile (v3.2) — 92 ATS Score' },
-  { id: 'res_stripe_02', name: 'Stripe — Staff Infrastructure & Platform Lead (v1.4)' },
-  { id: 'res_datadog_03', name: 'Datadog — Senior Systems Architect (v2.0)' },
-];
+export interface SavedResumeOption {
+  id: string;
+  name: string;
+  role?: string;
+  atsScore?: number;
+}
 
-const INITIAL_HEADLINE =
+const SAMPLE_HEADLINE =
   'Staff Systems Architect | Distributed Systems & Multi-Region Kubernetes | Slashing P99 Latency at Scale';
 
-const INITIAL_ABOUT = `I architect high-throughput distributed compute platforms that maintain four-nines reliability under extreme volume.
+const SAMPLE_ABOUT = `I architect high-throughput distributed compute platforms that maintain four-nines reliability under extreme volume.
 
 Over the past 9+ years, I have helped platform engineering teams transform legacy monolithic backends into resilient, distributed microservices. At Enterprise Platform Group, I led the Kubernetes infrastructure migration across 14 services, slashing P99 latency by 42% and keeping uptime at 99.98% across four geographical cloud regions.
 
@@ -33,9 +36,19 @@ Core Areas of Competence:
 Currently exploring Staff Infrastructure & Principal Systems Architecture roles at mission-driven platforms. Let’s connect: alex.morgan@lattice.io`;
 
 export const LinkedInOptimizerPage: React.FC = () => {
-  const [selectedResumeId, setSelectedResumeId] = useState('res_master_01');
-  const [headline, setHeadline] = useState(INITIAL_HEADLINE);
-  const [aboutText, setAboutText] = useState(INITIAL_ABOUT);
+  const { session } = useAuth();
+
+  // Resume selection state
+  const [savedResumes, setSavedResumes] = useState<SavedResumeOption[]>([]);
+  const [resumeLoadState, setResumeLoadState] = useState<'loading' | 'success' | 'empty' | 'error'>('loading');
+  const [resumeLoadError, setResumeLoadError] = useState<string | null>(null);
+  const [selectedResumeId, setSelectedResumeId] = useState<string>('');
+
+  // Editor content states (empty placeholders by default)
+  const [headline, setHeadline] = useState<string>('');
+  const [aboutText, setAboutText] = useState<string>('');
+  const [isSampleLoaded, setIsSampleLoaded] = useState<boolean>(false);
+
   const [isOptimizing, setIsOptimizing] = useState(false);
   const [notification, setNotification] = useState<string | null>(null);
   const [serverStatus, setServerStatus] = useState<'idle' | 'connected' | 'offline_fallback'>('idle');
@@ -43,40 +56,117 @@ export const LinkedInOptimizerPage: React.FC = () => {
   // Diagnostics state
   const [activeTab, setActiveTab] = useState<'headline' | 'about' | 'keywords'>('headline');
 
-  const headlineLength = headline.length;
-  const isHeadlineOptimal = headlineLength >= 80 && headlineLength <= 220;
+  // Load authenticated user's saved resumes from GET /api/resumes
+  useEffect(() => {
+    let active = true;
+    setResumeLoadState('loading');
+    setResumeLoadError(null);
 
-  const handleOptimize = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsOptimizing(true);
-    fetch('/api/linkedin', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', credentials: 'include' },
-      body: JSON.stringify({ resumeId: selectedResumeId }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json().then((data) => {
-            if (data?.headline) setHeadline(data.headline);
-            if (data?.about) setAboutText(data.about);
-            setServerStatus('connected');
-            setNotification('LinkedIn profile sections optimized and grounded via backend (/api/linkedin).');
-          });
-        } else {
-          setServerStatus('offline_fallback');
-          setNotification('Offline Mode: Server (/api/linkedin) returned an error. Displaying local heuristic profile draft.');
+    fetch('/api/resumes', { credentials: 'include' })
+      .then(async (res) => {
+        if (!res.ok) {
+          if (active) {
+            setSavedResumes([]);
+            setResumeLoadState('error');
+            setResumeLoadError(`Server returned HTTP ${res.status}`);
+          }
+          return;
+        }
+        const text = await res.text();
+        let data: unknown;
+        try {
+          data = JSON.parse(text);
+        } catch {
+          if (active) {
+            setSavedResumes([]);
+            setResumeLoadState('error');
+            setResumeLoadError('Server returned non-JSON response (endpoint offline)');
+          }
+          return;
+        }
+        if (active) {
+          if (Array.isArray(data)) {
+            const valid = data.filter(
+              (item): item is SavedResumeOption =>
+                Boolean(item && typeof item.id === 'string' && typeof item.name === 'string')
+            );
+            setSavedResumes(valid);
+            setResumeLoadState(valid.length > 0 ? 'success' : 'empty');
+          } else {
+            setSavedResumes([]);
+            setResumeLoadState('error');
+            setResumeLoadError('Invalid response shape from /api/resumes: expected array');
+          }
         }
       })
-      .catch(() => {
-        setServerStatus('offline_fallback');
-        setNotification('Offline Mode: Server (/api/linkedin) unreachable. Displaying local heuristic profile draft.');
-      })
-      .finally(() => {
-        setTimeout(() => {
-          setIsOptimizing(false);
-          setTimeout(() => setNotification(null), 3500);
-        }, 650);
+      .catch((err) => {
+        if (active) {
+          setSavedResumes([]);
+          setResumeLoadState('error');
+          setResumeLoadError(err.message || 'Network error loading resumes');
+        }
       });
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const headlineLength = headline.length;
+  const isHeadlineOptimal = headlineLength >= 80 && headlineLength <= 220;
+  const selectedResume = savedResumes.find((r) => r.id === selectedResumeId);
+
+  const handleOptimize = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+
+    if (!selectedResumeId || !savedResumes.some((r) => r.id === selectedResumeId)) {
+      setNotification('Please select a valid saved resume from your account.');
+      return;
+    }
+
+    setIsOptimizing(true);
+    setNotification(`Optimizing LinkedIn profile grounded in "${selectedResume?.name}"...`);
+
+    try {
+      const res = await fetch('/api/linkedin', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ resumeId: selectedResumeId }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data && typeof data === 'object') {
+          if (typeof data.headline === 'string' && data.headline.trim()) {
+            setHeadline(data.headline);
+          }
+          if (typeof data.about === 'string' && data.about.trim()) {
+            setAboutText(data.about);
+          }
+          setServerStatus('connected');
+          setIsSampleLoaded(false);
+          setNotification('LinkedIn profile sections optimized and grounded via backend (/api/linkedin).');
+        }
+      } else {
+        setServerStatus('offline_fallback');
+        setNotification(`Server error (HTTP ${res.status}): /api/linkedin returned an error. Profile not updated.`);
+      }
+    } catch {
+      setServerStatus('offline_fallback');
+      setNotification('Network error: /api/linkedin unreachable. Profile not updated.');
+    } finally {
+      setIsOptimizing(false);
+      setTimeout(() => setNotification(null), 3500);
+    }
+  };
+
+  const handleLoadSample = () => {
+    setHeadline(SAMPLE_HEADLINE);
+    setAboutText(SAMPLE_ABOUT);
+    setIsSampleLoaded(true);
+    setNotification('Loaded illustrative sample persona (Alex Morgan). Note: Demo data is not saved to your profile.');
+    setTimeout(() => setNotification(null), 3500);
   };
 
   const copyToClipboard = (text: string, label: string) => {
@@ -84,6 +174,15 @@ export const LinkedInOptimizerPage: React.FC = () => {
     setNotification(`${label} copied to clipboard! Paste directly into LinkedIn.`);
     setTimeout(() => setNotification(null), 2500);
   };
+
+  const displayName = isSampleLoaded
+    ? 'Alex Morgan, PMP'
+    : session.user?.name || (session.authenticated ? 'Authenticated Professional' : 'Alex Morgan, PMP');
+  const displayInitials = isSampleLoaded
+    ? 'AM'
+    : session.user?.name
+    ? session.user.name.slice(0, 2).toUpperCase()
+    : 'AM';
 
   return (
     <AppShell title="LinkedIn Profile Optimizer">
@@ -104,13 +203,23 @@ export const LinkedInOptimizerPage: React.FC = () => {
             </span>
             <StatusBadge status="success" label="100% Anti-Scraping Compliant" />
             <StatusBadge
-              status={serverStatus === 'connected' ? 'success' : serverStatus === 'offline_fallback' ? 'warning' : 'neutral'}
+              status={
+                serverStatus === 'connected'
+                  ? 'success'
+                  : serverStatus === 'offline_fallback'
+                  ? 'warning'
+                  : selectedResume
+                  ? 'info'
+                  : 'neutral'
+              }
               label={
                 serverStatus === 'connected'
                   ? 'Live /api/linkedin'
                   : serverStatus === 'offline_fallback'
                   ? 'Offline Fallback'
-                  : 'Local Optimizer'
+                  : selectedResume
+                  ? 'Resume Grounded'
+                  : 'Awaiting Resume Selection'
               }
             />
             <span style={{ fontSize: '12px', color: 'var(--rs-muted)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
@@ -245,17 +354,40 @@ export const LinkedInOptimizerPage: React.FC = () => {
             }}
           >
             <div style={{ marginBottom: '4px' }}>
-              <label
-                htmlFor="li-resume-source"
-                style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--rs-muted)', textTransform: 'uppercase', marginBottom: '6px' }}
-              >
-                Grounded Resume Profile *
-              </label>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
+                <label
+                  htmlFor="li-resume-source"
+                  style={{ fontSize: '11px', fontWeight: 700, color: 'var(--rs-muted)', textTransform: 'uppercase' }}
+                >
+                  Grounded Resume Profile *
+                </label>
+                <button
+                  type="button"
+                  onClick={handleLoadSample}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: 'var(--rs-blue)',
+                    fontSize: '11.5px',
+                    fontWeight: 600,
+                    textDecoration: 'underline',
+                    cursor: 'pointer',
+                    padding: 0,
+                  }}
+                >
+                  {isSampleLoaded ? 'Sample Persona Loaded' : 'Load Illustrative Sample (Demo)'}
+                </button>
+              </div>
               <select
                 id="li-resume-source"
                 name="liResumeSource"
+                data-testid="linkedin-resume-select"
                 value={selectedResumeId}
-                onChange={(e) => setSelectedResumeId(e.target.value)}
+                onChange={(e) => {
+                  setSelectedResumeId(e.target.value);
+                  setIsSampleLoaded(false);
+                }}
+                disabled={resumeLoadState === 'loading'}
                 style={{
                   width: '100%',
                   padding: '9px 12px',
@@ -268,12 +400,49 @@ export const LinkedInOptimizerPage: React.FC = () => {
                   boxSizing: 'border-box',
                 }}
               >
-                {RESUME_SOURCES.map((s) => (
+                {resumeLoadState === 'loading' ? (
+                  <option value="">Loading your saved resumes...</option>
+                ) : resumeLoadState === 'error' ? (
+                  <option value="">Error loading resumes: {resumeLoadError}</option>
+                ) : resumeLoadState === 'empty' ? (
+                  <option value="">No saved resumes found in account</option>
+                ) : (
+                  <option value="">-- Choose an Authenticated Saved Resume --</option>
+                )}
+                {savedResumes.map((s) => (
                   <option key={s.id} value={s.id}>
                     {s.name}
                   </option>
                 ))}
               </select>
+
+              {resumeLoadState === 'empty' && !isSampleLoaded && (
+                <p style={{ margin: '6px 0 0', fontSize: '11.5px', color: 'var(--rs-muted)' }}>
+                  No saved resumes found. Create one in Resume Studio, or click &ldquo;Load Illustrative Sample (Demo)&rdquo; to preview.
+                </p>
+              )}
+
+              {isSampleLoaded && (
+                <div
+                  style={{
+                    marginTop: '8px',
+                    padding: '8px 10px',
+                    borderRadius: '6px',
+                    backgroundColor: 'color-mix(in srgb, var(--rs-amber) 12%, var(--rs-surface))',
+                    border: '1px solid var(--rs-amber)',
+                    fontSize: '11.5px',
+                    color: 'var(--rs-ink)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                  }}
+                >
+                  <AlertTriangle size={13} color="var(--rs-amber)" />
+                  <span>
+                    <strong>Illustrative Sample Persona Active:</strong> Displaying demonstration text for Alex Morgan. Select an authenticated saved resume to ground your own profile.
+                  </span>
+                </div>
+              )}
             </div>
 
             {/* Content for Active Tab */}
@@ -303,6 +472,7 @@ export const LinkedInOptimizerPage: React.FC = () => {
                   rows={4}
                   value={headline}
                   onChange={(e) => setHeadline(e.target.value)}
+                  placeholder="Select a saved resume above and click 'Calibrate Profile' to generate a high-signal headline grounded in your verified achievements..."
                   style={{
                     width: '100%',
                     padding: '12px',
@@ -327,11 +497,13 @@ export const LinkedInOptimizerPage: React.FC = () => {
                   </Button>
                   <Button
                     size="sm"
+                    data-testid="linkedin-optimize-btn"
                     onClick={handleOptimize}
                     loading={isOptimizing}
+                    disabled={!selectedResumeId || !savedResumes.some((r) => r.id === selectedResumeId) || isOptimizing}
                     icon={<Sparkles size={13} />}
                   >
-                    Re-Calibrate
+                    Calibrate Profile
                   </Button>
                 </div>
               </div>
@@ -356,6 +528,7 @@ export const LinkedInOptimizerPage: React.FC = () => {
                   rows={12}
                   value={aboutText}
                   onChange={(e) => setAboutText(e.target.value)}
+                  placeholder="Your calibrated About section will appear here once optimized. RoleSharp anchors each paragraph to verified achievements from your selected resume..."
                   style={{
                     width: '100%',
                     padding: '12px',
@@ -380,11 +553,13 @@ export const LinkedInOptimizerPage: React.FC = () => {
                   </Button>
                   <Button
                     size="sm"
+                    data-testid="linkedin-optimize-btn-about"
                     onClick={handleOptimize}
                     loading={isOptimizing}
+                    disabled={!selectedResumeId || !savedResumes.some((r) => r.id === selectedResumeId) || isOptimizing}
                     icon={<Sparkles size={13} />}
                   >
-                    Re-Calibrate
+                    Calibrate Profile
                   </Button>
                 </div>
               </div>
@@ -522,12 +697,12 @@ export const LinkedInOptimizerPage: React.FC = () => {
                     placeItems: 'center',
                     fontFamily: 'var(--font-display)',
                     fontWeight: 700,
-                    fontSize: '22px',
+                    fontSize: '20px',
                     color: '#123B7A',
                     boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
                   }}
                 >
-                  AM
+                  {displayInitials}
                 </div>
 
                 {/* Name & Headline */}
@@ -538,9 +713,26 @@ export const LinkedInOptimizerPage: React.FC = () => {
                     fontSize: '18px',
                     fontWeight: 700,
                     color: '#10243E',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
                   }}
                 >
-                  Alex Morgan, PMP
+                  <span>{displayName}</span>
+                  {isSampleLoaded && (
+                    <span
+                      style={{
+                        fontSize: '10.5px',
+                        padding: '2px 6px',
+                        borderRadius: '4px',
+                        backgroundColor: '#FEF3C7',
+                        color: '#92400E',
+                        fontWeight: 600,
+                      }}
+                    >
+                      Demo Persona
+                    </span>
+                  )}
                 </h3>
                 <p
                   style={{
@@ -551,7 +743,7 @@ export const LinkedInOptimizerPage: React.FC = () => {
                     fontWeight: 500,
                   }}
                 >
-                  {headline}
+                  {headline || 'Select a saved resume and click "Calibrate Profile" to generate a verified headline...'}
                 </p>
 
                 <div style={{ display: 'flex', gap: '8px', fontSize: '11px', color: '#64748B', marginBottom: '14px' }}>
@@ -581,7 +773,9 @@ export const LinkedInOptimizerPage: React.FC = () => {
                       whiteSpace: 'pre-line',
                     }}
                   >
-                    {aboutText.slice(0, 220)}...
+                    {aboutText
+                      ? `${aboutText.slice(0, 220)}...`
+                      : 'Your calibrated executive summary will appear here once optimized from your saved resume...'}
                   </p>
                 </div>
               </div>

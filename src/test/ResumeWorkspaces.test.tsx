@@ -79,7 +79,7 @@ describe('Resume Workspaces & Superdesign Patterns (Task 3)', () => {
     expect(screen.queryByText(/Stripe — Staff Infrastructure & Platform Lead/i)).not.toBeInTheDocument();
   });
 
-  it('renders ATSCheckerPage with category breakdown and anchored evidence gaps', () => {
+  it('renders ATSCheckerPage with category breakdown and anchored evidence gaps', async () => {
     render(
       <ThemeProvider>
         <RouterProvider>
@@ -91,7 +91,13 @@ describe('Resume Workspaces & Superdesign Patterns (Task 3)', () => {
     );
 
     expect(screen.getByText(/ATS Resume Health & Diagnostic Report/i)).toBeInTheDocument();
-    expect(screen.getByText(/High Parsing Fidelity & Single-Column Compliance/i)).toBeInTheDocument();
+    expect(screen.getByText(/No Diagnostic Report Yet/i)).toBeInTheDocument();
+
+    // Load demo persona and run analysis
+    fireEvent.click(screen.getByRole('button', { name: /Try Demo Persona/i }));
+    fireEvent.click(screen.getByTestId('ats-analyze-btn'));
+
+    expect(await screen.findByText(/High Parsing Fidelity & Single-Column Compliance/i)).toBeInTheDocument();
     expect(screen.getAllByText(/Formatting Safety/i)[0]).toBeInTheDocument();
     expect(screen.getAllByText(/Metric Density/i)[0]).toBeInTheDocument();
     expect(screen.getAllByText(/Keyword Coverage/i)[0]).toBeInTheDocument();

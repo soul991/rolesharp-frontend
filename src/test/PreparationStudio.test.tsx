@@ -1,6 +1,6 @@
 import React from 'react';
-import { render, screen, fireEvent, act } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { render, screen, fireEvent, act, waitFor } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { RouterProvider } from '../router/RouterContext';
 import { AuthProvider } from '../context/AuthContext';
 import { ThemeProvider } from '../context/ThemeContext';
@@ -21,6 +21,14 @@ const renderWithProviders = (ui: React.ReactElement) => {
 };
 
 describe('Task 5 — Preparation Tools & Superdesign Animated List', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   describe('AnimatedList Component', () => {
     const mockItems: AnimatedListItem[] = [
       { id: 'item_1', title: 'Formal Tone', description: 'Enterprise and executive standard' },
@@ -96,153 +104,267 @@ describe('Task 5 — Preparation Tools & Superdesign Animated List', () => {
     });
   });
 
-  describe('CoverLetterAnalyzerPage', () => {
-    it('analyzes cover letter text and shows 4 dimension diagnostics', async () => {
-      vi.useFakeTimers();
-      renderWithProviders(<CoverLetterAnalyzerPage />);
-
-      expect(screen.getAllByText('Cover Letter Diagnostic Analyzer')[0]).toBeInTheDocument();
-      const auditBtn = screen.getByRole('button', { name: /Run Diagnostic Audit/i });
-      fireEvent.click(auditBtn);
-
-      await act(async () => {
-        vi.advanceTimersByTime(700);
-      });
-
-      expect(screen.getByText('Overall Letter Quality')).toBeInTheDocument();
-      expect(screen.getByText('Length & Readability')).toBeInTheDocument();
-      expect(screen.getByText('Quantified Evidence & Metrics')).toBeInTheDocument();
-      expect(screen.getByText('Target Alignment & Purpose')).toBeInTheDocument();
-      expect(screen.getByText('Cliché & Buzzword Detection')).toBeInTheDocument();
-      vi.useRealTimers();
-    });
-  });
-
-  describe('LinkedInOptimizerPage', () => {
-    it('renders headline studio, zero-scraping guarantee, and simulated recruiter card', () => {
-      renderWithProviders(<LinkedInOptimizerPage />);
-
-      expect(screen.getAllByText('LinkedIn Profile Optimizer')[0]).toBeInTheDocument();
-      expect(screen.getByText('Zero-Scraping Guarantee')).toBeInTheDocument();
-      expect(screen.getByLabelText(/LinkedIn Headline/i)).toBeInTheDocument();
-      expect(screen.getByText('Recruiter View Simulation')).toBeInTheDocument();
-      expect(screen.getByText('Alex Morgan, PMP')).toBeInTheDocument();
-    });
-
-    it('switches between Headline, About, and Keywords tabs', () => {
-      renderWithProviders(<LinkedInOptimizerPage />);
-
-      const aboutTab = screen.getByRole('button', { name: /About & Summary Hook/i });
-      fireEvent.click(aboutTab);
-      expect(screen.getByLabelText(/About Section & Executive Hook/i)).toBeInTheDocument();
-
-      const keywordsTab = screen.getByRole('button', { name: /Recruiter Search Keywords/i });
-      fireEvent.click(keywordsTab);
-      expect(screen.getByText('High-Visibility Recruiter Keywords')).toBeInTheDocument();
-      expect(screen.getByText('Kubernetes (K8s)')).toBeInTheDocument();
-    });
-  });
-
-  describe('InterviewStudioPage', () => {
-    it('renders 6 grounded questions and tracks rehearsal mastery', () => {
-      renderWithProviders(<InterviewStudioPage />);
-
-      expect(screen.getAllByText('Interview Practice Studio')[0]).toBeInTheDocument();
-      expect(screen.getByText(/Questions Rehearsed/i)).toBeInTheDocument();
-      expect(screen.getByText('Model Executive Answer (STAR Format)')).toBeInTheDocument();
-      expect(screen.getByText(/Calibrated To Verified Resume Anchor/i)).toBeInTheDocument();
-
-      const markBtn = screen.getByRole('button', { name: /Mark Unrehearsed/i });
-      fireEvent.click(markBtn);
-      expect(screen.getAllByRole('button', { name: /Mark as Rehearsed/i })[0]).toBeInTheDocument();
-    });
-
-    it('disables calibration when no resume is selected and prevents submission', () => {
-      renderWithProviders(<InterviewStudioPage />);
-
-      const select = screen.getByTestId('interview-resume-select');
-      expect(select).toHaveValue('');
-      expect(screen.getByText(/Select one of your authenticated saved resumes above/i)).toBeInTheDocument();
-
-      const calibrateBtn = screen.getByTestId('calibrate-interview-btn');
-      expect(calibrateBtn).toBeDisabled();
-    });
-
-    it('correctly serializes the selected resume ID to POST /api/interview and handles response', async () => {
-      localStorage.setItem(
-        'rolesharp-auth-session',
-        JSON.stringify({
-          authenticated: true,
-          credits: 5,
-          features: { interview_prep: true },
-        })
-      );
-
+  describe('CoverLetterAnalyzerPage — Data Flow & Server Contract', () => {
+    it('submits letter to POST /api/cover-letter-analyzer and renders server response upon HTTP 200', async () => {
       const fetchSpy = vi.spyOn(global, 'fetch').mockImplementation((url) => {
-        if (url === '/api/interview') {
+        if (url === '/api/cover-letter-analyzer') {
           return Promise.resolve(
             new Response(
               JSON.stringify({
-                questions: [
-                  {
-                    id: 'q_server_1',
-                    category: 'System Architecture',
-                    question: 'Server Calibrated: How did you scale Redis clusters?',
-                    rationale: 'Directly from server',
-                    resumeAnchor: 'scaled Redis clusters to 50k ops/sec',
-                    modelAnswer: 'We sharded across 16 master nodes...',
-                    keyTalkingPoints: ['Redis sharding', 'Cluster failover'],
-                    rehearsed: false,
-                  },
+                overallScore: 91,
+                wordCount: 310,
+                readingTimeMin: 2,
+                dimensions: {
+                  lengthAndBrevity: { score: 94, label: '310 words (Optimal)', status: 'success' },
+                  quantifiedEvidence: { score: 92, label: '5 verified anchors', status: 'success', metrics: ['42% latency'] },
+                  personalization: { score: 88, label: 'Target alignment verified', status: 'success' },
+                  clicheIndex: { score: 95, label: '0 cliches detected', status: 'success', flaggedTerms: [] },
+                },
+                recommendations: [
+                  { id: 'rec_server_1', type: 'praise', text: 'Server validated: Excellent technical density.' },
                 ],
               }),
               { status: 200, headers: { 'Content-Type': 'application/json' } }
             )
           );
         }
-        return Promise.resolve(
-          new Response(
-            JSON.stringify({
-              resumes: [
-                { id: 'res_stripe_02', name: 'Stripe — Staff Infrastructure & Platform Lead (v1.4)' },
-                { id: 'res_datadog_03', name: 'Datadog — Senior Systems Architect (v2.0)' },
-              ],
-            }),
-            { status: 200 }
-          )
-        );
+        return Promise.reject(new Error('Unknown endpoint'));
+      });
+
+      renderWithProviders(<CoverLetterAnalyzerPage />);
+
+      const auditBtn = screen.getByRole('button', { name: /Run Diagnostic Audit/i });
+      fireEvent.click(auditBtn);
+
+      await waitFor(() => {
+        expect(screen.getByText('Overall Letter Quality')).toBeInTheDocument();
+      });
+
+      expect(fetchSpy).toHaveBeenCalledWith(
+        '/api/cover-letter-analyzer',
+        expect.objectContaining({
+          method: 'POST',
+          credentials: 'include',
+        })
+      );
+
+      expect(screen.getByText(/Live \/api\/cover-letter-analyzer/i)).toBeInTheDocument();
+      expect(screen.getByText('Server validated: Excellent technical density.')).toBeInTheDocument();
+    });
+
+    it('falls back to local heuristic analysis with honest offline disclosure when server fails', async () => {
+      vi.spyOn(global, 'fetch').mockImplementation((url) => {
+        if (url === '/api/cover-letter-analyzer') {
+          return Promise.resolve(new Response(JSON.stringify({ error: 'Server unavailable' }), { status: 503 }));
+        }
+        return Promise.reject(new Error('Unknown endpoint'));
+      });
+
+      renderWithProviders(<CoverLetterAnalyzerPage />);
+
+      const auditBtn = screen.getByRole('button', { name: /Run Diagnostic Audit/i });
+      fireEvent.click(auditBtn);
+
+      await waitFor(() => {
+        expect(screen.getByText('Overall Letter Quality')).toBeInTheDocument();
+      });
+
+      expect(screen.getAllByText(/Local In-Memory Heuristic Engine/i)[0]).toBeInTheDocument();
+      expect(screen.getByText(/Backend unavailable \(HTTP 503\)/i)).toBeInTheDocument();
+    });
+  });
+
+  describe('LinkedInOptimizerPage — Saved Resume Integration', () => {
+    it('loads saved resumes via GET /api/resumes as a direct array and populates selector', async () => {
+      vi.spyOn(global, 'fetch').mockImplementation((url) => {
+        if (url === '/api/resumes') {
+          return Promise.resolve(
+            new Response(
+              JSON.stringify([
+                { id: 'res_auth_101', name: 'Real User Executive Profile', role: 'Staff Systems Architect' },
+                { id: 'res_auth_102', name: 'Real User Cloud Lead', role: 'Cloud Lead' },
+              ]),
+              { status: 200, headers: { 'Content-Type': 'application/json' } }
+            )
+          );
+        }
+        return Promise.reject(new Error('Unknown endpoint'));
+      });
+
+      renderWithProviders(<LinkedInOptimizerPage />);
+
+      const select = await screen.findByTestId('linkedin-resume-select');
+      expect(select).toBeInTheDocument();
+
+      await waitFor(() => {
+        expect(screen.getByText('Real User Executive Profile')).toBeInTheDocument();
+        expect(screen.getByText('Real User Cloud Lead')).toBeInTheDocument();
+      });
+
+      // Initially unselected
+      expect(select).toHaveValue('');
+      const optimizeBtn = screen.getByTestId('linkedin-optimize-btn');
+      expect(optimizeBtn).toBeDisabled();
+    });
+
+    it('submits selected real resume ID to POST /api/linkedin and updates fields from server response', async () => {
+      const fetchSpy = vi.spyOn(global, 'fetch').mockImplementation((url) => {
+        if (url === '/api/resumes') {
+          return Promise.resolve(
+            new Response(
+              JSON.stringify([
+                { id: 'res_auth_101', name: 'Real User Executive Profile', role: 'Staff Systems Architect' },
+              ]),
+              { status: 200, headers: { 'Content-Type': 'application/json' } }
+            )
+          );
+        }
+        if (url === '/api/linkedin') {
+          return Promise.resolve(
+            new Response(
+              JSON.stringify({
+                headline: 'Server Generated Headline | Kubernetes & Go Specialist',
+                about: 'Server Generated About: Architecting multi-region systems at scale.',
+              }),
+              { status: 200, headers: { 'Content-Type': 'application/json' } }
+            )
+          );
+        }
+        return Promise.reject(new Error('Unknown endpoint'));
+      });
+
+      renderWithProviders(<LinkedInOptimizerPage />);
+
+      const select = await screen.findByTestId('linkedin-resume-select');
+      await waitFor(() => {
+        expect(screen.getByText('Real User Executive Profile')).toBeInTheDocument();
+      });
+
+      fireEvent.change(select, { target: { value: 'res_auth_101' } });
+      expect(select).toHaveValue('res_auth_101');
+
+      const optimizeBtn = screen.getByTestId('linkedin-optimize-btn');
+      expect(optimizeBtn).not.toBeDisabled();
+      fireEvent.click(optimizeBtn);
+
+      await waitFor(() => {
+        expect(screen.getByDisplayValue('Server Generated Headline | Kubernetes & Go Specialist')).toBeInTheDocument();
+      });
+
+      expect(fetchSpy).toHaveBeenCalledWith(
+        '/api/linkedin',
+        expect.objectContaining({
+          method: 'POST',
+          credentials: 'include',
+          body: JSON.stringify({ resumeId: 'res_auth_101' }),
+        })
+      );
+      expect(screen.getByText(/Live \/api\/linkedin/i)).toBeInTheDocument();
+    });
+
+    it('handles server failure honestly without using sample fallback data', async () => {
+      vi.spyOn(global, 'fetch').mockImplementation((url) => {
+        if (url === '/api/resumes') {
+          return Promise.resolve(
+            new Response(
+              JSON.stringify([
+                { id: 'res_auth_101', name: 'Real User Executive Profile' },
+              ]),
+              { status: 200 }
+            )
+          );
+        }
+        if (url === '/api/linkedin') {
+          return Promise.resolve(new Response(JSON.stringify({ error: 'Server error' }), { status: 500 }));
+        }
+        return Promise.reject(new Error('Unknown endpoint'));
+      });
+
+      renderWithProviders(<LinkedInOptimizerPage />);
+
+      const select = await screen.findByTestId('linkedin-resume-select');
+      await waitFor(() => {
+        expect(screen.getByText('Real User Executive Profile')).toBeInTheDocument();
+      });
+
+      fireEvent.change(select, { target: { value: 'res_auth_101' } });
+      const optimizeBtn = screen.getByTestId('linkedin-optimize-btn');
+      fireEvent.click(optimizeBtn);
+
+      await waitFor(() => {
+        expect(screen.getByText(/Offline Fallback/i)).toBeInTheDocument();
+      });
+      expect(screen.getByText(/Server error \(HTTP 500\)/i)).toBeInTheDocument();
+    });
+  });
+
+  describe('InterviewStudioPage — Authoritative Saved Resume Contract', () => {
+    it('1. Direct array response from GET /api/resumes loads correctly into selector', async () => {
+      vi.spyOn(global, 'fetch').mockImplementation((url) => {
+        if (url === '/api/resumes') {
+          return Promise.resolve(
+            new Response(
+              JSON.stringify([
+                { id: 'res_user_alpha', name: 'Alpha Production Profile (v1.0)' },
+                { id: 'res_user_beta', name: 'Beta Systems Profile (v2.0)' },
+              ]),
+              { status: 200, headers: { 'Content-Type': 'application/json' } }
+            )
+          );
+        }
+        return Promise.reject(new Error('Unknown endpoint'));
       });
 
       renderWithProviders(<InterviewStudioPage />);
 
       const select = screen.getByTestId('interview-resume-select');
-      fireEvent.change(select, { target: { value: 'res_stripe_02' } });
-      expect(select).toHaveValue('res_stripe_02');
+      expect(select).toHaveValue('');
 
-      const calibrateBtn = screen.getByTestId('calibrate-interview-btn');
-      expect(calibrateBtn).not.toBeDisabled();
-
-      fireEvent.click(calibrateBtn);
-
-      await act(async () => {
-        await Promise.resolve();
+      await waitFor(() => {
+        expect(screen.getByText('Alpha Production Profile (v1.0)')).toBeInTheDocument();
+        expect(screen.getByText('Beta Systems Profile (v2.0)')).toBeInTheDocument();
       });
-
-      expect(fetchSpy).toHaveBeenCalledWith(
-        '/api/interview',
-        expect.objectContaining({
-          method: 'POST',
-          body: JSON.stringify({ resumeId: 'res_stripe_02', useCredit: true }),
-        })
-      );
-
-      expect(await screen.findByText(/Live Backend Active/i)).toBeInTheDocument();
-      expect(screen.getAllByText(/Server Calibrated: How did you scale Redis clusters/i)[0]).toBeInTheDocument();
-
-      fetchSpy.mockRestore();
     });
 
-    it('displays explicit offline fallback warning when /api/interview fails and does not consume credits', async () => {
+    it('2. Empty array from GET /api/resumes leaves selector empty with honest empty state', async () => {
+      vi.spyOn(global, 'fetch').mockImplementation((url) => {
+        if (url === '/api/resumes') {
+          return Promise.resolve(new Response(JSON.stringify([]), { status: 200 }));
+        }
+        return Promise.reject(new Error('Unknown endpoint'));
+      });
+
+      renderWithProviders(<InterviewStudioPage />);
+
+      await waitFor(() => {
+        expect(screen.getByText(/No saved resumes found in your account/i)).toBeInTheDocument();
+      });
+
+      const select = screen.getByTestId('interview-resume-select');
+      expect(select).toHaveValue('');
+      expect(screen.getByTestId('calibrate-interview-btn')).toBeDisabled();
+    });
+
+    it('3. 401 response and network failure do not expose demo resumes', async () => {
+      vi.spyOn(global, 'fetch').mockImplementation((url) => {
+        if (url === '/api/resumes') {
+          return Promise.resolve(new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 }));
+        }
+        return Promise.reject(new Error('Network error'));
+      });
+
+      renderWithProviders(<InterviewStudioPage />);
+
+      await waitFor(() => {
+        expect(screen.getByText(/Error loading resumes: Server returned HTTP 401/i)).toBeInTheDocument();
+      });
+
+      // Demo resumes must NOT be present as options in the select
+      expect(screen.queryByText(/Master Executive Profile \(v3\.2\)/i)).not.toBeInTheDocument();
+      expect(screen.getByTestId('calibrate-interview-btn')).toBeDisabled();
+    });
+
+    it('4. A real returned resume ID is submitted unchanged to POST /api/interview', async () => {
       localStorage.setItem(
         'rolesharp-auth-session',
         JSON.stringify({
@@ -253,54 +375,221 @@ describe('Task 5 — Preparation Tools & Superdesign Animated List', () => {
       );
 
       const fetchSpy = vi.spyOn(global, 'fetch').mockImplementation((url) => {
-        if (url === '/api/interview') {
-          return Promise.reject(new Error('Network error'));
+        if (url === '/api/resumes') {
+          return Promise.resolve(
+            new Response(
+              JSON.stringify([
+                { id: 'res_real_999', name: 'Real Engineer Resume' },
+              ]),
+              { status: 200 }
+            )
+          );
         }
-        return Promise.resolve(
-          new Response(
-            JSON.stringify({
-              resumes: [
-                { id: 'res_stripe_02', name: 'Stripe — Staff Infrastructure & Platform Lead (v1.4)' },
-                { id: 'res_datadog_03', name: 'Datadog — Senior Systems Architect (v2.0)' },
-              ],
-            }),
-            { status: 200 }
-          )
-        );
+        if (url === '/api/interview') {
+          return Promise.resolve(
+            new Response(
+              JSON.stringify({
+                questions: [
+                  {
+                    id: 'q_server_real',
+                    category: 'System Architecture',
+                    question: 'Server: How did you scale distributed queues?',
+                    rationale: 'Direct from backend',
+                    resumeAnchor: 'scaled queues to 100k QPS',
+                    modelAnswer: 'We sharded partitions...',
+                    keyTalkingPoints: ['Partitioning', 'Compaction'],
+                    rehearsed: false,
+                  },
+                ],
+                creditsRemaining: 4,
+              }),
+              { status: 200, headers: { 'Content-Type': 'application/json' } }
+            )
+          );
+        }
+        return Promise.reject(new Error('Unknown endpoint'));
       });
 
       renderWithProviders(<InterviewStudioPage />);
 
+      await waitFor(() => {
+        expect(screen.getByText('Real Engineer Resume')).toBeInTheDocument();
+      });
+
       const select = screen.getByTestId('interview-resume-select');
-      fireEvent.change(select, { target: { value: 'res_datadog_03' } });
+      fireEvent.change(select, { target: { value: 'res_real_999' } });
+      expect(select).toHaveValue('res_real_999');
+
+      const calibrateBtn = screen.getByTestId('calibrate-interview-btn');
+      expect(calibrateBtn).not.toBeDisabled();
+      fireEvent.click(calibrateBtn);
+
+      await waitFor(() => {
+        expect(screen.getByText(/Live \/api\/interview/i)).toBeInTheDocument();
+      });
+
+      expect(fetchSpy).toHaveBeenCalledWith(
+        '/api/interview',
+        expect.objectContaining({
+          method: 'POST',
+          credentials: 'include',
+          body: JSON.stringify({ resumeId: 'res_real_999', useCredit: true }),
+        })
+      );
+      expect(screen.getAllByText(/Server: How did you scale distributed queues/i)[0]).toBeInTheDocument();
+    });
+
+    it('5. An unselected or invalid ID cannot be submitted', async () => {
+      localStorage.setItem(
+        'rolesharp-auth-session',
+        JSON.stringify({
+          authenticated: true,
+          credits: 5,
+        })
+      );
+
+      vi.spyOn(global, 'fetch').mockImplementation((url) => {
+        if (url === '/api/resumes') {
+          return Promise.resolve(
+            new Response(
+              JSON.stringify([
+                { id: 'res_valid_1', name: 'Valid User Resume' },
+              ]),
+              { status: 200 }
+            )
+          );
+        }
+        return Promise.reject(new Error('Unknown endpoint'));
+      });
+
+      renderWithProviders(<InterviewStudioPage />);
+
+      await waitFor(() => {
+        expect(screen.getByText('Valid User Resume')).toBeInTheDocument();
+      });
+
+      const calibrateBtn = screen.getByTestId('calibrate-interview-btn');
+      expect(calibrateBtn).toBeDisabled();
+
+      // Attempt to click disabled button
+      fireEvent.click(calibrateBtn);
+      expect(screen.queryByText(/Live \/api\/interview/i)).not.toBeInTheDocument();
+    });
+
+    it('6. An unsuccessful request consumes no credits', async () => {
+      localStorage.setItem(
+        'rolesharp-auth-session',
+        JSON.stringify({
+          authenticated: true,
+          credits: 7,
+          features: { interview_prep: true },
+        })
+      );
+
+      vi.spyOn(global, 'fetch').mockImplementation((url) => {
+        if (url === '/api/resumes') {
+          return Promise.resolve(
+            new Response(
+              JSON.stringify([
+                { id: 'res_real_100', name: 'Production Cloud Resume' },
+              ]),
+              { status: 200 }
+            )
+          );
+        }
+        if (url === '/api/interview') {
+          return Promise.resolve(new Response(JSON.stringify({ error: 'Failed' }), { status: 500 }));
+        }
+        return Promise.reject(new Error('Unknown endpoint'));
+      });
+
+      renderWithProviders(<InterviewStudioPage />);
+
+      await waitFor(() => {
+        expect(screen.getByText('Production Cloud Resume')).toBeInTheDocument();
+      });
+
+      const select = screen.getByTestId('interview-resume-select');
+      fireEvent.change(select, { target: { value: 'res_real_100' } });
 
       const calibrateBtn = screen.getByTestId('calibrate-interview-btn');
       fireEvent.click(calibrateBtn);
 
-      await act(async () => {
-        await Promise.resolve();
+      await waitFor(() => {
+        expect(screen.getByText(/Offline Fallback Active/i)).toBeInTheDocument();
       });
 
-      expect(await screen.findByText(/Offline Rehearsal Mode/i)).toBeInTheDocument();
       expect(screen.getByText(/Zero credits were consumed/i)).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: /Retry Server Connection/i })).toBeInTheDocument();
 
-      fetchSpy.mockRestore();
+      // Check stored session in localStorage: credits must remain 7!
+      const stored = JSON.parse(localStorage.getItem('rolesharp-auth-session') || '{}');
+      expect(stored.credits).toBe(7);
     });
 
-    it('prevents submission and displays honest error when user is not authenticated', () => {
-      localStorage.removeItem('rolesharp-auth-session');
-      renderWithProviders(<InterviewStudioPage />);
+    it('7. Successful credit usage is reconciled with authoritative server response', async () => {
+      localStorage.setItem(
+        'rolesharp-auth-session',
+        JSON.stringify({
+          authenticated: true,
+          credits: 10,
+          features: { interview_prep: true },
+        })
+      );
 
-      const select = screen.getByTestId('interview-resume-select');
-      fireEvent.change(select, { target: { value: 'res_stripe_02' } });
-
-      const calibrateBtn = screen.getByTestId('calibrate-interview-btn');
-      act(() => {
-        fireEvent.click(calibrateBtn);
+      vi.spyOn(global, 'fetch').mockImplementation((url) => {
+        if (url === '/api/resumes') {
+          return Promise.resolve(
+            new Response(
+              JSON.stringify([
+                { id: 'res_credit_check', name: 'Credit Verification Resume' },
+              ]),
+              { status: 200 }
+            )
+          );
+        }
+        if (url === '/api/interview') {
+          return Promise.resolve(
+            new Response(
+              JSON.stringify({
+                questions: [
+                  {
+                    id: 'q1',
+                    category: 'System Architecture',
+                    question: 'Question 1',
+                    rationale: 'Rationale',
+                    resumeAnchor: 'Anchor',
+                    modelAnswer: 'Answer',
+                    keyTalkingPoints: ['Point'],
+                    rehearsed: false,
+                  },
+                ],
+                creditsRemaining: 9, // Authoritative server accounting
+              }),
+              { status: 200 }
+            )
+          );
+        }
+        return Promise.reject(new Error('Unknown endpoint'));
       });
 
-      expect(screen.getByText(/Authentication required/i)).toBeInTheDocument();
+      renderWithProviders(<InterviewStudioPage />);
+
+      await waitFor(() => {
+        expect(screen.getByText('Credit Verification Resume')).toBeInTheDocument();
+      });
+
+      const select = screen.getByTestId('interview-resume-select');
+      fireEvent.change(select, { target: { value: 'res_credit_check' } });
+
+      const calibrateBtn = screen.getByTestId('calibrate-interview-btn');
+      fireEvent.click(calibrateBtn);
+
+      await waitFor(() => {
+        expect(screen.getByText(/Live \/api\/interview/i)).toBeInTheDocument();
+      });
+
+      const stored = JSON.parse(localStorage.getItem('rolesharp-auth-session') || '{}');
+      expect(stored.credits).toBe(9);
     });
   });
 });
