@@ -169,8 +169,7 @@ export const OnboardingPage: React.FC = () => {
         style={{
           flex: 1,
           padding: '40px 20px 80px',
-          background:
-            'radial-gradient(ellipse at 50% 10%, color-mix(in srgb, var(--rs-blue-strong) 8%, transparent), transparent 60%), var(--rs-bg)',
+          backgroundColor: 'var(--rs-bg)',
         }}
       >
         <div style={{ maxWidth: '820px', margin: '0 auto' }}>
@@ -179,9 +178,7 @@ export const OnboardingPage: React.FC = () => {
             <span
               style={{
                 fontSize: '11px',
-                fontWeight: 800,
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
+                fontWeight: 700,
                 color: 'var(--rs-blue)',
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -190,21 +187,21 @@ export const OnboardingPage: React.FC = () => {
               }}
             >
               <Sparkles size={13} />
-              ROLESHARP PRECISION ONBOARDING
+              Precision onboarding
             </span>
             <h1
               style={{
                 margin: 0,
-                fontFamily: 'var(--font-display)',
-                fontSize: '30px',
-                fontWeight: 700,
+                fontFamily: 'var(--font-serif)',
+                fontSize: '34px',
+                fontWeight: 600,
                 color: 'var(--rs-ink)',
-                letterSpacing: '-0.03em',
+                letterSpacing: '-0.02em',
               }}
             >
               Configure Your Career Studio
             </h1>
-            <p style={{ margin: '8px 0 0', color: 'var(--rs-muted)', fontSize: '14px' }}>
+            <p style={{ margin: '8px 0 0', color: 'var(--rs-muted)', fontSize: '14.5px', lineHeight: 1.5 }}>
               Tailor ATS parsing rules, regional conventions, and evidence benchmarks in six focused steps.
             </p>
           </div>
@@ -270,10 +267,11 @@ export const OnboardingPage: React.FC = () => {
                     <h2
                       style={{
                         margin: 0,
-                        fontFamily: 'var(--font-display)',
-                        fontSize: '20px',
-                        fontWeight: 700,
+                        fontFamily: 'var(--font-serif)',
+                        fontSize: '22px',
+                        fontWeight: 600,
                         color: 'var(--rs-ink)',
+                        letterSpacing: '-0.01em',
                       }}
                     >
                       Personal & Professional Identity
@@ -453,10 +451,11 @@ export const OnboardingPage: React.FC = () => {
                     <h2
                       style={{
                         margin: 0,
-                        fontFamily: 'var(--font-display)',
-                        fontSize: '20px',
-                        fontWeight: 700,
+                        fontFamily: 'var(--font-serif)',
+                        fontSize: '22px',
+                        fontWeight: 600,
                         color: 'var(--rs-ink)',
+                        letterSpacing: '-0.01em',
                       }}
                     >
                       Target Role & Seniority Tier
@@ -594,10 +593,11 @@ export const OnboardingPage: React.FC = () => {
                     <h2
                       style={{
                         margin: 0,
-                        fontFamily: 'var(--font-display)',
-                        fontSize: '20px',
-                        fontWeight: 700,
+                        fontFamily: 'var(--font-serif)',
+                        fontSize: '22px',
+                        fontWeight: 600,
                         color: 'var(--rs-ink)',
+                        letterSpacing: '-0.01em',
                       }}
                     >
                       Regional Hiring Conventions
@@ -726,10 +726,11 @@ export const OnboardingPage: React.FC = () => {
                     <h2
                       style={{
                         margin: 0,
-                        fontFamily: 'var(--font-display)',
-                        fontSize: '20px',
-                        fontWeight: 700,
+                        fontFamily: 'var(--font-serif)',
+                        fontSize: '22px',
+                        fontWeight: 600,
                         color: 'var(--rs-ink)',
+                        letterSpacing: '-0.01em',
                       }}
                     >
                       Work Environment & Logistics
@@ -868,10 +869,11 @@ export const OnboardingPage: React.FC = () => {
                     <h2
                       style={{
                         margin: 0,
-                        fontFamily: 'var(--font-display)',
-                        fontSize: '20px',
-                        fontWeight: 700,
+                        fontFamily: 'var(--font-serif)',
+                        fontSize: '22px',
+                        fontWeight: 600,
                         color: 'var(--rs-ink)',
+                        letterSpacing: '-0.01em',
                       }}
                     >
                       Establish Your Master Evidence Base
@@ -990,10 +992,11 @@ export const OnboardingPage: React.FC = () => {
                     <h2
                       style={{
                         margin: 0,
-                        fontFamily: 'var(--font-display)',
-                        fontSize: '20px',
-                        fontWeight: 700,
+                        fontFamily: 'var(--font-serif)',
+                        fontSize: '22px',
+                        fontWeight: 600,
                         color: 'var(--rs-ink)',
+                        letterSpacing: '-0.01em',
                       }}
                     >
                       Review & Activate Studio

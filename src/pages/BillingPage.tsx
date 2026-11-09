@@ -64,34 +64,32 @@ export const BillingPage: React.FC = () => {
     <AppShell title="Subscription, Credits & Invoices">
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
         {/* Header */}
-        <div style={{ marginBottom: '24px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+        <div style={{ marginBottom: '28px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
             <span
               style={{
                 fontSize: '11px',
-                fontWeight: 800,
-                textTransform: 'uppercase',
-                letterSpacing: '0.1em',
+                fontWeight: 700,
                 color: 'var(--rs-blue)',
               }}
             >
-              WORKSPACE SETTINGS
+              Workspace settings
             </span>
             <StatusBadge status="success" label="Active Subscription" />
           </div>
           <h1
             style={{
               margin: 0,
-              fontFamily: 'var(--font-display)',
-              fontSize: '28px',
-              fontWeight: 700,
+              fontFamily: 'var(--font-serif)',
+              fontSize: '32px',
+              fontWeight: 600,
               color: 'var(--rs-ink)',
-              letterSpacing: '-0.03em',
+              letterSpacing: '-0.02em',
             }}
           >
             Subscription, Quotas & Invoices
           </h1>
-          <p style={{ margin: '6px 0 0', color: 'var(--rs-muted)', fontSize: '14px' }}>
+          <p style={{ margin: '6px 0 0', color: 'var(--rs-muted)', fontSize: '14.5px', lineHeight: 1.5 }}>
             Canonical plan entitlements are synced live from your verified identity. Manage payment methods, credit quotas, and invoices.
           </p>
         </div>
@@ -124,7 +122,7 @@ export const BillingPage: React.FC = () => {
           <div
             style={{
               borderRadius: '16px',
-              border: '1.5px solid var(--rs-blue-strong)',
+              border: '1px solid var(--rs-line)',
               backgroundColor: 'var(--rs-surface)',
               padding: '24px',
               boxShadow: 'var(--rs-shadow)',
@@ -137,21 +135,22 @@ export const BillingPage: React.FC = () => {
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <div>
-                  <span style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', color: 'var(--rs-blue)' }}>
-                    CURRENT ACTIVE PLAN
+                  <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--rs-blue)' }}>
+                    Current active plan
                   </span>
                   <h2
                     style={{
-                      margin: '4px 0 2px',
-                      fontFamily: 'var(--font-display)',
-                      fontSize: '24px',
-                      fontWeight: 700,
+                      margin: '6px 0 2px',
+                      fontFamily: 'var(--font-serif)',
+                      fontSize: '26px',
+                      fontWeight: 600,
                       color: 'var(--rs-ink)',
+                      letterSpacing: '-0.02em',
                     }}
                   >
                     Professional Suite
                   </h2>
-                  <span style={{ fontSize: '13px', color: 'var(--rs-muted)' }}>
+                  <span style={{ fontSize: '13px', color: 'var(--rs-muted)', fontVariantNumeric: 'tabular-nums' }}>
                     $19/month · Billed annually (renews Oct 31, 2027)
                   </span>
                 </div>
@@ -212,10 +211,10 @@ export const BillingPage: React.FC = () => {
             }}
           >
             <div>
-              <span style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', color: 'var(--rs-muted)' }}>
-                MONTHLY RESOURCE CONSUMPTION
+              <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--rs-muted)' }}>
+                Monthly resource consumption
               </span>
-              <h3 style={{ margin: '4px 0 0', fontSize: '18px', fontWeight: 700, color: 'var(--rs-ink)' }}>
+              <h3 style={{ margin: '6px 0 0', fontFamily: 'var(--font-serif)', fontSize: '20px', fontWeight: 600, color: 'var(--rs-ink)', letterSpacing: '-0.01em' }}>
                 Current Usage Period
               </h3>
             </div>
@@ -224,7 +223,7 @@ export const BillingPage: React.FC = () => {
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12.5px', marginBottom: '6px' }}>
                 <span style={{ fontWeight: 600, color: 'var(--rs-ink)' }}>Tailored Job Resumes</span>
-                <span style={{ color: 'var(--rs-muted)', fontFamily: 'var(--font-mono)' }}>6 of 20 generated</span>
+                <span style={{ color: 'var(--rs-muted)', fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums' }}>6 of 20 generated</span>
               </div>
               <div style={{ height: '7px', borderRadius: '4px', backgroundColor: 'var(--rs-surface-2)', overflow: 'hidden' }}>
                 <div style={{ width: '30%', height: '100%', backgroundColor: 'var(--rs-blue-strong)', borderRadius: '4px' }} />
@@ -235,7 +234,7 @@ export const BillingPage: React.FC = () => {
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12.5px', marginBottom: '6px' }}>
                 <span style={{ fontWeight: 600, color: 'var(--rs-ink)' }}>Controlled Auto Apply Dispatches</span>
-                <span style={{ color: 'var(--rs-muted)', fontFamily: 'var(--font-mono)' }}>2 of 5 packages dispatched</span>
+                <span style={{ color: 'var(--rs-muted)', fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums' }}>2 of 5 packages dispatched</span>
               </div>
               <div style={{ height: '7px', borderRadius: '4px', backgroundColor: 'var(--rs-surface-2)', overflow: 'hidden' }}>
                 <div style={{ width: '40%', height: '100%', backgroundColor: 'var(--rs-amber)', borderRadius: '4px' }} />
@@ -256,10 +255,10 @@ export const BillingPage: React.FC = () => {
               }}
             >
               <div>
-                <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--rs-muted)', textTransform: 'uppercase', display: 'block' }}>
+                <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--rs-muted)', display: 'block' }}>
                   Available Credit Balance
                 </span>
-                <span style={{ fontFamily: 'var(--font-display)', fontSize: '20px', fontWeight: 800, color: 'var(--rs-ink)' }}>
+                <span style={{ fontFamily: 'var(--font-serif)', fontSize: '22px', fontWeight: 600, color: 'var(--rs-ink)', fontVariantNumeric: 'tabular-nums' }}>
                   15 Credits
                 </span>
                 <span style={{ display: 'block', fontSize: '11px', color: 'var(--rs-green)', marginTop: '2px' }}>
@@ -293,8 +292,8 @@ export const BillingPage: React.FC = () => {
               boxShadow: 'var(--rs-shadow)',
             }}
           >
-            <span style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', color: 'var(--rs-muted)', display: 'block', marginBottom: '14px' }}>
-              PAYMENT METHOD
+            <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--rs-muted)', display: 'block', marginBottom: '14px' }}>
+              Payment method
             </span>
             <div
               style={{
@@ -314,22 +313,23 @@ export const BillingPage: React.FC = () => {
                     width: '40px',
                     height: '28px',
                     borderRadius: '5px',
-                    backgroundColor: '#1E293B',
-                    color: '#FFFFFF',
+                    backgroundColor: 'var(--rs-surface-2)',
+                    color: 'var(--rs-ink)',
                     display: 'grid',
                     placeItems: 'center',
                     fontFamily: 'var(--font-mono)',
                     fontSize: '11px',
                     fontWeight: 700,
+                    border: '1px solid var(--rs-line)',
                   }}
                 >
                   VISA
                 </div>
                 <div>
-                  <span style={{ fontSize: '13px', fontWeight: 650, color: 'var(--rs-ink)', display: 'block' }}>
+                  <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--rs-ink)', display: 'block', fontVariantNumeric: 'tabular-nums' }}>
                     •••• •••• •••• 4242
                   </span>
-                  <span style={{ fontSize: '11px', color: 'var(--rs-muted)' }}>Expires 08/2028 · Default</span>
+                  <span style={{ fontSize: '11px', color: 'var(--rs-muted)', fontVariantNumeric: 'tabular-nums' }}>Expires 08/2028 · Default</span>
                 </div>
               </div>
 
@@ -355,10 +355,10 @@ export const BillingPage: React.FC = () => {
             }}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-              <span style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', color: 'var(--rs-muted)' }}>
-                INVOICE & RECEIPT HISTORY
+              <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--rs-muted)' }}>
+                Invoice & receipt history
               </span>
-              <span style={{ fontSize: '11px', color: 'var(--rs-muted)' }}>GET /api/account/billing</span>
+              <span style={{ fontSize: '11px', color: 'var(--rs-muted)', fontFamily: 'var(--font-mono)' }}>GET /api/account/billing</span>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -376,10 +376,10 @@ export const BillingPage: React.FC = () => {
                   }}
                 >
                   <div>
-                    <span style={{ fontSize: '12.5px', fontWeight: 650, color: 'var(--rs-ink)', display: 'block' }}>
+                    <span style={{ fontSize: '12.5px', fontWeight: 600, color: 'var(--rs-ink)', display: 'block' }}>
                       {inv.plan}
                     </span>
-                    <span style={{ fontSize: '11px', color: 'var(--rs-muted)' }}>
+                    <span style={{ fontSize: '11px', color: 'var(--rs-muted)', fontVariantNumeric: 'tabular-nums' }}>
                       {inv.date} · {inv.amount}
                     </span>
                   </div>
