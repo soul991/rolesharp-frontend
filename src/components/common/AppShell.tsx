@@ -51,6 +51,7 @@ export const AppShell: React.FC<{ children: React.ReactNode; title?: string }> =
         { label: 'ATS Analyzer', icon: FileCheck2, path: '/checker' },
         { label: 'Resume Tailor', icon: Sparkles, path: '/tailor' },
         { label: 'Cover Letters', icon: Mail, path: '/cover-letter' },
+        { label: 'Letter Diagnostics', icon: FileCheck2, path: '/cover-letter-analyzer' },
         { label: 'LinkedIn Optimizer', icon: Linkedin, path: '/linkedin' },
       ],
     },

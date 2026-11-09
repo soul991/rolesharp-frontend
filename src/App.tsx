@@ -12,6 +12,10 @@ import { ResumeBuilderPage } from './pages/ResumeBuilderPage';
 import { JobFinderPage } from './pages/JobFinderPage';
 import { DailyMatchesPage } from './pages/DailyMatchesPage';
 import { TrackerPage } from './pages/TrackerPage';
+import { CoverLetterPage } from './pages/CoverLetterPage';
+import { CoverLetterAnalyzerPage } from './pages/CoverLetterAnalyzerPage';
+import { LinkedInOptimizerPage } from './pages/LinkedInOptimizerPage';
+import { InterviewStudioPage } from './pages/InterviewStudioPage';
 import { AppShell } from './components/common/AppShell';
 import { Button } from './components/common/Button';
 import { ArrowLeft, Construction } from 'lucide-react';
@@ -44,6 +48,14 @@ export const App: React.FC = () => {
       return <DailyMatchesPage />;
     case '/tracker':
       return <TrackerPage />;
+    case '/cover-letter':
+      return <CoverLetterPage />;
+    case '/cover-letter-analyzer':
+      return <CoverLetterAnalyzerPage />;
+    case '/linkedin':
+      return <LinkedInOptimizerPage />;
+    case '/interview':
+      return <InterviewStudioPage />;
     default:
       // Graceful fallback for subsequent bounded task routes
       return (
