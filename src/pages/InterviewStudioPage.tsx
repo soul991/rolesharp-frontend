@@ -245,9 +245,12 @@ const getGroundedQuestionsForResume = (resumeId: string): InterviewQuestion[] =>
 export const InterviewStudioPage: React.FC = () => {
   const { session, updateSession } = useAuth();
 
-  // Resume selection state
-  const [savedResumes, setSavedResumes] = useState<SavedResumeOption[]>(DEFAULT_SAVED_RESUMES);
+  // Resume selection state (initialized as empty production collection)
+  const [savedResumes, setSavedResumes] = useState<SavedResumeOption[]>([]);
+  const [resumeLoadState, setResumeLoadState] = useState<'loading' | 'success' | 'empty' | 'error'>('loading');
+  const [resumeLoadError, setResumeLoadError] = useState<string | null>(null);
   const [selectedResumeId, setSelectedResumeId] = useState<string>('');
+  const [isDemoMode, setIsDemoMode] = useState<boolean>(false);
   const [isCalibrating, setIsCalibrating] = useState(false);
   const [serverStatus, setServerStatus] = useState<'idle' | 'connected' | 'offline_fallback'>('idle');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -262,17 +265,47 @@ export const InterviewStudioPage: React.FC = () => {
   const [timerSeconds, setTimerSeconds] = useState(120);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
 
-  // Load available resumes from /api/resumes on mount
+  // Load available resumes from GET /api/resumes on mount
   useEffect(() => {
     let active = true;
+    setResumeLoadState('loading');
+    setResumeLoadError(null);
+
     fetch('/api/resumes', { credentials: 'include' })
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data) => {
-        if (active && Array.isArray(data?.resumes) && data.resumes.length > 0) {
-          setSavedResumes(data.resumes);
+      .then(async (res) => {
+        if (!res.ok) {
+          if (active) {
+            setSavedResumes([]);
+            setResumeLoadState('error');
+            setResumeLoadError(`Server returned HTTP ${res.status}`);
+          }
+          return;
+        }
+        const data = await res.json();
+        if (active) {
+          // Documented contract: direct array [{ id, name, updatedAt, role, template }, ...]
+          if (Array.isArray(data)) {
+            const valid = data.filter(
+              (item): item is SavedResumeOption =>
+                Boolean(item && typeof item.id === 'string' && typeof item.name === 'string')
+            );
+            setSavedResumes(valid);
+            setResumeLoadState(valid.length > 0 ? 'success' : 'empty');
+          } else {
+            setSavedResumes([]);
+            setResumeLoadState('error');
+            setResumeLoadError('Invalid response shape from /api/resumes: expected array');
+          }
         }
       })
-      .catch(() => {});
+      .catch((err) => {
+        if (active) {
+          setSavedResumes([]);
+          setResumeLoadState('error');
+          setResumeLoadError(err.message || 'Network failure loading resumes');
+        }
+      });
+
     return () => {
       active = false;
     };
@@ -311,9 +344,9 @@ export const InterviewStudioPage: React.FC = () => {
   const handleCalibrate = async () => {
     setErrorMessage(null);
 
-    // 1. Enforce resume selection
-    if (!selectedResumeId) {
-      setErrorMessage('Please select a saved resume to rehearse against.');
+    // 1. Enforce resume selection and verify ID belongs to authenticated user's loaded resumes
+    if (!selectedResumeId || !savedResumes.some((r) => r.id === selectedResumeId)) {
+      setErrorMessage('Please select a valid saved resume belonging to your account.');
       return;
     }
 
@@ -335,7 +368,8 @@ export const InterviewStudioPage: React.FC = () => {
     try {
       const res = await fetch('/api/interview', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', credentials: 'include' },
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ resumeId: selectedResumeId, useCredit: true }),
       });
 
@@ -345,10 +379,26 @@ export const InterviewStudioPage: React.FC = () => {
           setQuestions(data.questions);
           setSelectedQuestionId(data.questions[0].id);
         }
-        // Deduct credit only upon verified server success
-        updateSession({ credits: Math.max(0, session.credits - 1) });
+
+        // Reconcile credits strictly via authoritative server response or fresh /api/me
+        if (typeof data?.creditsRemaining === 'number') {
+          updateSession({ credits: data.creditsRemaining });
+        } else if (typeof data?.credits === 'number') {
+          updateSession({ credits: data.credits });
+        } else {
+          try {
+            const meRes = await fetch('/api/me', { credentials: 'include' });
+            if (meRes.ok) {
+              const meData = await meRes.json();
+              if (typeof meData?.credits === 'number') {
+                updateSession({ credits: meData.credits });
+              }
+            }
+          } catch (_) {}
+        }
+
         setServerStatus('connected');
-        setNotification(`Calibrated questions from server for "${selectedResume?.name}". 1 credit consumed.`);
+        setNotification(`Calibrated questions from server for "${selectedResume?.name}".`);
         setTimeout(() => setNotification(null), 3500);
       } else {
         // Explicit offline fallback: load resume-specific baseline template without consuming credit
@@ -404,10 +454,29 @@ export const InterviewStudioPage: React.FC = () => {
             >
               PREPARATION SUITE
             </span>
-            <StatusBadge status="success" label="100% Resume Grounded" />
-            <span style={{ fontSize: '12px', color: 'var(--rs-muted)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-              <ShieldCheck size={14} color="var(--rs-green)" /> 0 Fabricated Stories
-            </span>
+            <StatusBadge
+              status={selectedResume ? 'success' : isDemoMode ? 'info' : 'neutral'}
+              label={
+                selectedResume
+                  ? '100% Resume Grounded'
+                  : isDemoMode
+                  ? 'Demo Persona (Alex Morgan)'
+                  : 'Awaiting Resume Selection'
+              }
+            />
+            {selectedResume ? (
+              <span style={{ fontSize: '12px', color: 'var(--rs-muted)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                <ShieldCheck size={14} color="var(--rs-green)" /> 0 Fabricated Stories (Grounded in Verified Bullets)
+              </span>
+            ) : isDemoMode ? (
+              <span style={{ fontSize: '12px', color: 'var(--rs-muted)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                <ShieldCheck size={14} color="var(--rs-blue)" /> Illustrative Persona (Demo Rehearsal)
+              </span>
+            ) : (
+              <span style={{ fontSize: '12px', color: 'var(--rs-muted)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                <ShieldCheck size={14} color="var(--rs-muted)" /> Select a verified saved resume below
+              </span>
+            )}
           </div>
           <h1
             style={{
@@ -488,15 +557,17 @@ export const InterviewStudioPage: React.FC = () => {
               data-testid="interview-resume-select"
               value={selectedResumeId}
               onChange={(e) => {
-                setSelectedResumeId(e.target.value);
+                const val = e.target.value;
+                setSelectedResumeId(val);
                 setErrorMessage(null);
-                if (e.target.value) {
-                  const grounded = getGroundedQuestionsForResume(e.target.value);
+                if (val) {
+                  setIsDemoMode(false);
+                  const grounded = getGroundedQuestionsForResume(val);
                   setQuestions(grounded);
                   setSelectedQuestionId(grounded[0].id);
                 }
               }}
-              disabled={isCalibrating}
+              disabled={isCalibrating || resumeLoadState === 'loading'}
               style={{
                 flex: '1 1 320px',
                 height: '42px',
@@ -510,7 +581,15 @@ export const InterviewStudioPage: React.FC = () => {
                 fontWeight: 600,
               }}
             >
-              <option value="">-- Choose a Saved Resume to Rehearse Against --</option>
+              {resumeLoadState === 'loading' ? (
+                <option value="">Loading your saved resumes...</option>
+              ) : resumeLoadState === 'error' ? (
+                <option value="">Error loading resumes: {resumeLoadError}</option>
+              ) : resumeLoadState === 'empty' ? (
+                <option value="">No saved resumes found in your account</option>
+              ) : (
+                <option value="">-- Choose a Saved Resume to Rehearse Against --</option>
+              )}
               {savedResumes.map((resume) => (
                 <option key={resume.id} value={resume.id}>
                   {resume.name}
@@ -521,12 +600,83 @@ export const InterviewStudioPage: React.FC = () => {
             <Button
               data-testid="calibrate-interview-btn"
               onClick={handleCalibrate}
-              disabled={!selectedResumeId || isCalibrating}
+              disabled={
+                !selectedResumeId ||
+                !savedResumes.some((r) => r.id === selectedResumeId) ||
+                isCalibrating ||
+                resumeLoadState === 'loading'
+              }
               icon={isCalibrating ? <RotateCcw size={14} className="spin" /> : <Sparkles size={14} />}
             >
               {isCalibrating ? 'Calibrating Questions...' : 'Calibrate Questions (1 Credit)'}
             </Button>
           </div>
+
+          {/* Loading or Error Alerts for Resume Fetching */}
+          {resumeLoadState === 'empty' && !isDemoMode && (
+            <div
+              style={{
+                marginTop: '10px',
+                padding: '8px 12px',
+                borderRadius: '8px',
+                backgroundColor: 'var(--rs-bg)',
+                border: '1px dashed var(--rs-line)',
+                fontSize: '12.5px',
+                color: 'var(--rs-muted)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                gap: '8px',
+              }}
+            >
+              <span>No authenticated resumes found. Create one in Resume Studio to calibrate against your experience.</span>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsDemoMode(true);
+                  setSelectedResumeId('');
+                  setQuestions(MASTER_QUESTIONS);
+                  setSelectedQuestionId('q1');
+                  setNotification('Loaded sample candidate questions (Alex Morgan) for demonstration.');
+                  setTimeout(() => setNotification(null), 3000);
+                }}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: 'var(--rs-blue)',
+                  fontWeight: 600,
+                  textDecoration: 'underline',
+                  cursor: 'pointer',
+                  fontSize: '12px',
+                }}
+              >
+                Explore Sample Persona (Demo)
+              </button>
+            </div>
+          )}
+
+          {isDemoMode && (
+            <div
+              style={{
+                marginTop: '10px',
+                padding: '8px 12px',
+                borderRadius: '8px',
+                backgroundColor: 'color-mix(in srgb, var(--rs-amber) 10%, var(--rs-surface))',
+                border: '1px solid var(--rs-amber)',
+                fontSize: '12px',
+                color: 'var(--rs-ink)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+              }}
+            >
+              <AlertTriangle size={14} color="var(--rs-amber)" />
+              <span>
+                <strong>Demo Mode Active:</strong> Rehearsing against sample candidate persona (Alex Morgan). Select an authenticated saved resume above to calibrate your own profile.
+              </span>
+            </div>
+          )}
 
           {!selectedResumeId && (
             <div
