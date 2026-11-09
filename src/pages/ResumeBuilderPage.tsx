@@ -86,28 +86,28 @@ export const ResumeBuilderPage: React.FC = () => {
           }}
         >
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
               <span
                 style={{
-                  fontSize: '11px',
-                  fontWeight: 800,
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.1em',
-                  color: 'var(--rs-blue)',
+                  fontSize: '12px',
+                  fontWeight: 500,
+                  letterSpacing: '-0.01em',
+                  color: 'var(--rs-blue-strong)',
                 }}
               >
-                STRUCTURED BUILDER
+                Structured builder
               </span>
               <StatusBadge status="info" label={selectedTemplate.name} />
             </div>
             <h1
               style={{
                 margin: 0,
-                fontFamily: 'var(--font-display)',
-                fontSize: '26px',
-                fontWeight: 700,
+                fontFamily: 'var(--font-serif)',
+                fontSize: '28px',
+                fontWeight: 600,
                 color: 'var(--rs-ink)',
                 letterSpacing: '-0.03em',
+                lineHeight: 1.15,
               }}
             >
               Resume Workspace Editor

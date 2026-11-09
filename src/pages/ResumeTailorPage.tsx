@@ -109,30 +109,30 @@ export const ResumeTailorPage: React.FC = () => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
             <span
               style={{
-                fontSize: '11px',
-                fontWeight: 800,
-                textTransform: 'uppercase',
-                letterSpacing: '0.1em',
-                color: 'var(--rs-blue)',
+                fontSize: '12px',
+                fontWeight: 500,
+                letterSpacing: '-0.01em',
+                color: 'var(--rs-blue-strong)',
               }}
             >
-              EVIDENCE-GROUNDED TAILORING
+              Evidence-grounded tailoring
             </span>
             <StatusBadge status="success" label="Zero Hallucination Guarantee" />
           </div>
           <h1
             style={{
               margin: 0,
-              fontFamily: 'var(--font-display)',
-              fontSize: '28px',
-              fontWeight: 700,
+              fontFamily: 'var(--font-serif)',
+              fontSize: '30px',
+              fontWeight: 600,
               color: 'var(--rs-ink)',
               letterSpacing: '-0.03em',
+              lineHeight: 1.15,
             }}
           >
             Job-Calibrated Resume Tailoring Studio
           </h1>
-          <p style={{ margin: '6px 0 0', color: 'var(--rs-muted)', fontSize: '14px' }}>
+          <p style={{ margin: '6px 0 0', color: 'var(--rs-muted)', fontSize: '14px', lineHeight: 1.55 }}>
             Align your verified experience against target job requirements without fabricating credentials.
           </p>
         </div>

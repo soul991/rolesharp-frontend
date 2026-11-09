@@ -180,38 +180,39 @@ export const ResumeWritingAnimation: React.FC<ResumeWritingAnimationProps> = ({
 
       {/* Superdesign White Paper Sheet */}
       <div
+        className="rs-paper-sheet"
         style={{
           width: '100%',
           backgroundColor: '#FFFFFF',
-          color: '#172B48',
-          borderRadius: '8px',
-          border: '1px solid #D5DFEA',
-          boxShadow: '0 12px 36px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.04)',
+          color: '#0A0F1D',
+          borderRadius: 'var(--radius-sm)',
+          border: '1px solid rgba(0, 0, 0, 0.08)',
+          boxShadow: '0 8px 30px rgba(0, 0, 0, 0.08)',
           padding: '40px 48px',
-          fontFamily: 'var(--font-body)',
+          fontFamily: 'var(--font-sans)',
           minHeight: '440px',
           position: 'relative',
           overflow: 'hidden',
         }}
       >
         {/* Document Header */}
-        <div style={{ borderBottom: '2px solid #172B48', paddingBottom: '16px', marginBottom: '20px' }}>
+        <div style={{ borderBottom: '2px solid #0A0F1D', paddingBottom: '16px', marginBottom: '20px' }}>
           <h2
             style={{
               margin: '0 0 4px',
-              fontFamily: 'var(--font-display)',
-              fontSize: '24px',
-              fontWeight: 700,
-              color: '#10243E',
-              letterSpacing: '-0.02em',
+              fontFamily: 'var(--font-serif)',
+              fontSize: '26px',
+              fontWeight: 600,
+              color: '#0A0F1D',
+              letterSpacing: '-0.025em',
             }}
           >
             {candidateName}
           </h2>
-          <div style={{ fontSize: '13px', fontWeight: 600, color: '#2458A6', marginBottom: '4px' }}>
+          <div style={{ fontSize: '13px', fontWeight: 600, color: '#1E3A68', marginBottom: '4px' }}>
             {targetRole} · Calibrated for {company}
           </div>
-          <div style={{ fontSize: '11px', color: '#52647A', fontFamily: 'var(--font-mono)' }}>
+          <div style={{ fontSize: '11px', color: '#556070', fontFamily: 'var(--font-mono)' }}>
             San Francisco, CA · alex.morgan@lattice.io · +1 (555) 019-2834 · linkedin.com/in/alexmorgan
           </div>
         </div>
@@ -221,18 +222,17 @@ export const ResumeWritingAnimation: React.FC<ResumeWritingAnimationProps> = ({
           <div
             style={{
               fontSize: '11px',
-              fontWeight: 800,
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              color: '#10243E',
-              borderBottom: '1px solid #D5DFEA',
+              fontWeight: 600,
+              letterSpacing: '-0.01em',
+              color: '#1E3A68',
+              borderBottom: '1px solid #E2E6ED',
               paddingBottom: '4px',
               marginBottom: '8px',
             }}
           >
             Professional Experience & Verified Achievements
           </div>
-          <div style={{ fontSize: '12.5px', lineHeight: '1.5', color: '#2C3E50', marginBottom: '14px' }}>
+          <div style={{ fontSize: '12.5px', lineHeight: '1.55', color: '#2B3545', marginBottom: '14px' }}>
             Accomplished technology leader with 9+ years delivering distributed cloud systems. Proven
             record architecting resilient microservices, reducing MTTR, and mentoring engineering teams.
           </div>

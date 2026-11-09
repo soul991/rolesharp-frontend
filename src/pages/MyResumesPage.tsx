@@ -128,33 +128,33 @@ export const MyResumesPage: React.FC = () => {
           }}
         >
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
               <span
                 style={{
-                  fontSize: '11px',
-                  fontWeight: 800,
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.1em',
-                  color: 'var(--rs-blue)',
+                  fontSize: '12px',
+                  fontWeight: 500,
+                  letterSpacing: '-0.01em',
+                  color: 'var(--rs-blue-strong)',
                 }}
               >
-                DOCUMENT REPOSITORY
+                Document repository
               </span>
               <StatusBadge status="info" label="4 Synced Versions" />
             </div>
             <h1
               style={{
                 margin: 0,
-                fontFamily: 'var(--font-display)',
-                fontSize: '26px',
-                fontWeight: 700,
+                fontFamily: 'var(--font-serif)',
+                fontSize: '28px',
+                fontWeight: 600,
                 color: 'var(--rs-ink)',
                 letterSpacing: '-0.03em',
+                lineHeight: 1.15,
               }}
             >
               Master Profiles & Role-Specific Tailors
             </h1>
-            <p style={{ margin: '4px 0 0', color: 'var(--rs-muted)', fontSize: '13.5px' }}>
+            <p style={{ margin: '6px 0 0', color: 'var(--rs-muted)', fontSize: '14px' }}>
               Every version maintains evidence citations grounded in your verified career history.
             </p>
           </div>
@@ -163,20 +163,20 @@ export const MyResumesPage: React.FC = () => {
             <Button
               variant="secondary"
               onClick={() => navigate('/checker')}
-              icon={<Search size={16} />}
+              icon={<Search size={15} />}
             >
               Analyze with ATS
             </Button>
             <Button
               variant="secondary"
               onClick={() => navigate('/tailor')}
-              icon={<Sparkles size={16} />}
+              icon={<Sparkles size={15} />}
             >
               Tailor for Job
             </Button>
             <Button
               onClick={() => navigate('/resume-builder')}
-              icon={<Plus size={16} />}
+              icon={<Plus size={15} />}
             >
               New Resume
             </Button>

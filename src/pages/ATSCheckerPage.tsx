@@ -373,18 +373,17 @@ export const ATSCheckerPage: React.FC = () => {
     <AppShell title="ATS Checker & Parsing Diagnostics">
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
         {/* Page Header */}
-        <div style={{ marginBottom: '28px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+        <div style={{ marginBottom: '32px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', flexWrap: 'wrap' }}>
             <span
               style={{
-                fontSize: '11px',
-                fontWeight: 800,
-                textTransform: 'uppercase',
-                letterSpacing: '0.1em',
-                color: 'var(--rs-blue)',
+                fontSize: '12px',
+                fontWeight: 500,
+                letterSpacing: '-0.01em',
+                color: 'var(--rs-blue-strong)',
               }}
             >
-              ATS PARSING SUITE
+              ATS parsing suite
             </span>
             <StatusBadge status="success" label="Zero Remote Retention" />
             <StatusBadge
@@ -402,16 +401,17 @@ export const ATSCheckerPage: React.FC = () => {
           <h1
             style={{
               margin: 0,
-              fontFamily: 'var(--font-display)',
-              fontSize: '28px',
-              fontWeight: 700,
+              fontFamily: 'var(--font-serif)',
+              fontSize: '32px',
+              fontWeight: 600,
               color: 'var(--rs-ink)',
               letterSpacing: '-0.03em',
+              lineHeight: 1.15,
             }}
           >
             ATS Resume Health & Diagnostic Report
           </h1>
-          <p style={{ margin: '6px 0 0', color: 'var(--rs-muted)', fontSize: '14px' }}>
+          <p style={{ margin: '8px 0 0', color: 'var(--rs-muted)', fontSize: '14.5px', lineHeight: 1.55 }}>
             Evaluate formatting safety, metric density, and keyword coverage against enterprise ATS standards.
           </p>
         </div>
