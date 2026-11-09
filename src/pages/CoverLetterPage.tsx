@@ -259,7 +259,8 @@ alex.morgan@lattice.io · +1 (555) 019-2834`
 
               {/* Superdesign Animated List Tone Selector */}
               <div style={{ marginBottom: '18px' }}>
-                <label
+                <div
+                  id="tone-group-label"
                   style={{
                     display: 'block',
                     fontSize: '11px',
@@ -270,7 +271,7 @@ alex.morgan@lattice.io · +1 (555) 019-2834`
                   }}
                 >
                   Voice & Tone (Superdesign Animated List)
-                </label>
+                </div>
                 <AnimatedList
                   items={TONE_OPTIONS}
                   selectedId={selectedTone}

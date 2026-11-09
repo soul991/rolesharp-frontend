@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AppShell } from '../components/common/AppShell';
 import { Button } from '../components/common/Button';
 import { StatusBadge } from '../components/common/StatusBadge';
@@ -10,6 +10,25 @@ import {
 } from 'lucide-react';
 
 export type ApplicationStatus = 'saved' | 'applied' | 'interview' | 'offer' | 'rejected';
+
+export const VALID_APPLICATION_STATUSES: readonly ApplicationStatus[] = [
+  'saved',
+  'applied',
+  'interview',
+  'offer',
+  'rejected',
+] as const;
+
+export function isValidApplicationStatus(status: unknown): status is ApplicationStatus {
+  return typeof status === 'string' && (VALID_APPLICATION_STATUSES as readonly string[]).includes(status);
+}
+
+export function sanitizeApplicationStatus(status: unknown): ApplicationStatus {
+  if (isValidApplicationStatus(status)) return status;
+  if (status === 'archived') return 'rejected';
+  if (status === 'interviewing') return 'interview';
+  return 'saved';
+}
 
 export interface TrackerItem {
   id: string;
@@ -23,6 +42,8 @@ export interface TrackerItem {
   notes?: string;
   sourceUrl?: string;
 }
+
+const STORAGE_KEY = 'rolesharp_tracker_applications';
 
 const INITIAL_APPLICATIONS: TrackerItem[] = [
   {
@@ -108,11 +129,33 @@ const COLUMNS: { id: ApplicationStatus; title: string; color: string }[] = [
   { id: 'rejected', title: 'Archived / Rejected', color: '#6b7280' },
 ];
 
+function loadStoredApplications(): TrackerItem[] {
+  if (typeof window === 'undefined') return INITIAL_APPLICATIONS;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return INITIAL_APPLICATIONS;
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed) && parsed.length > 0) {
+      return parsed.map((item) => ({
+        ...item,
+        status: sanitizeApplicationStatus(item.status),
+      }));
+    }
+  } catch (_) {}
+  return INITIAL_APPLICATIONS;
+}
+
 export const TrackerPage: React.FC = () => {
-  const [applications, setApplications] = useState<TrackerItem[]>(INITIAL_APPLICATIONS);
+  const [applications, setApplications] = useState<TrackerItem[]>(loadStoredApplications);
   const [searchFilter, setSearchFilter] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
   const [notification, setNotification] = useState<string | null>(null);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(applications));
+    } catch (_) {}
+  }, [applications]);
 
   // New App Form State
   const [newCompany, setNewCompany] = useState('');
@@ -127,11 +170,28 @@ export const TrackerPage: React.FC = () => {
   );
 
   const handleMoveStatus = (id: string, nextStatus: ApplicationStatus) => {
+    const sanitized = sanitizeApplicationStatus(nextStatus);
     setApplications((prev) =>
-      prev.map((app) => (app.id === id ? { ...app, status: nextStatus } : app))
+      prev.map((app) => (app.id === id ? { ...app, status: sanitized } : app))
     );
-    setNotification(`Moved application to ${nextStatus.toUpperCase()}.`);
+    setNotification(`Moved application to ${sanitized.toUpperCase()}.`);
     setTimeout(() => setNotification(null), 2500);
+  };
+
+  const handleDragStart = (e: React.DragEvent, id: string) => {
+    e.dataTransfer.setData('text/plain', id);
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e: React.DragEvent, targetStatus: ApplicationStatus) => {
+    e.preventDefault();
+    const id = e.dataTransfer.getData('text/plain');
+    if (id) {
+      handleMoveStatus(id, targetStatus);
+    }
   };
 
   const handleDelete = (id: string, title: string) => {
@@ -149,7 +209,7 @@ export const TrackerPage: React.FC = () => {
       company: newCompany,
       role: newRole,
       salary: newSalary || undefined,
-      status: newStatus,
+      status: sanitizeApplicationStatus(newStatus),
       date: 'Added today',
     };
 
@@ -219,6 +279,9 @@ export const TrackerPage: React.FC = () => {
             >
               <Search size={15} color="var(--rs-muted)" />
               <input
+                id="tracker-search-filter"
+                name="tracker-search-filter"
+                aria-label="Filter applications by company or role"
                 type="text"
                 value={searchFilter}
                 onChange={(e) => setSearchFilter(e.target.value)}
@@ -372,6 +435,7 @@ export const TrackerPage: React.FC = () => {
                     <option value="applied">Applied</option>
                     <option value="interview">Interviewing</option>
                     <option value="offer">Offer Received</option>
+                    <option value="rejected">Archived / Rejected</option>
                   </select>
                 </div>
               </div>
@@ -405,6 +469,8 @@ export const TrackerPage: React.FC = () => {
             return (
               <div
                 key={col.id}
+                onDragOver={handleDragOver}
+                onDrop={(e) => handleDrop(e, col.id)}
                 style={{
                   borderRadius: '14px',
                   backgroundColor: 'var(--rs-surface-2)',
@@ -460,6 +526,8 @@ export const TrackerPage: React.FC = () => {
                   {colApps.map((app) => (
                     <div
                       key={app.id}
+                      draggable
+                      onDragStart={(e) => handleDragStart(e, app.id)}
                       style={{
                         padding: '16px',
                         borderRadius: '12px',
@@ -469,6 +537,7 @@ export const TrackerPage: React.FC = () => {
                         display: 'flex',
                         flexDirection: 'column',
                         gap: '10px',
+                        cursor: 'grab',
                       }}
                     >
                       <div>

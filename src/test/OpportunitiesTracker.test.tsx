@@ -1,13 +1,21 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { JobFinderPage } from '../pages/JobFinderPage';
 import { DailyMatchesPage } from '../pages/DailyMatchesPage';
-import { TrackerPage } from '../pages/TrackerPage';
+import {
+  TrackerPage,
+  isValidApplicationStatus,
+  sanitizeApplicationStatus,
+  VALID_APPLICATION_STATUSES,
+} from '../pages/TrackerPage';
 import { ThemeProvider } from '../context/ThemeContext';
 import { RouterProvider } from '../router/RouterContext';
 import { AuthProvider } from '../context/AuthContext';
 
 describe('Opportunities & Application Tracker (Task 4)', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
   it('renders JobFinderPage with filters, search, and save actions', () => {
     render(
       <ThemeProvider>
@@ -92,6 +100,65 @@ describe('Opportunities & Application Tracker (Task 4)', () => {
     await waitFor(() => {
       expect(screen.getByText('Anthropic')).toBeInTheDocument();
       expect(screen.getByText('Systems Engineer')).toBeInTheDocument();
+    });
+  });
+
+  it('validates and sanitizes application status enums strictly matching backend contract', () => {
+    // 5 supported backend statuses
+    expect(VALID_APPLICATION_STATUSES).toEqual(['saved', 'applied', 'interview', 'offer', 'rejected']);
+
+    // Valid checks
+    expect(isValidApplicationStatus('saved')).toBe(true);
+    expect(isValidApplicationStatus('applied')).toBe(true);
+    expect(isValidApplicationStatus('interview')).toBe(true);
+    expect(isValidApplicationStatus('offer')).toBe(true);
+    expect(isValidApplicationStatus('rejected')).toBe(true);
+
+    // Unsupported values are strictly rejected
+    expect(isValidApplicationStatus('archived')).toBe(false);
+    expect(isValidApplicationStatus('interviewing')).toBe(false);
+    expect(isValidApplicationStatus('withdrawn')).toBe(false);
+    expect(isValidApplicationStatus('')).toBe(false);
+    expect(isValidApplicationStatus(null)).toBe(false);
+    expect(isValidApplicationStatus(undefined)).toBe(false);
+
+    // Sanitization maps safely
+    expect(sanitizeApplicationStatus('archived')).toBe('rejected');
+    expect(sanitizeApplicationStatus('interviewing')).toBe('interview');
+    expect(sanitizeApplicationStatus('unknown_status')).toBe('saved');
+  });
+
+  it('persists applications in localStorage and loads sanitized data across reloads', async () => {
+    // Inject a stored application with an unnormalized legacy status
+    const testStoredApps = [
+      {
+        id: 'stored_test_1',
+        company: 'Stripe',
+        role: 'Infra Lead',
+        status: 'archived', // should be sanitized to 'rejected'
+        date: 'Nov 2026',
+      },
+    ];
+    localStorage.setItem('rolesharp_tracker_applications', JSON.stringify(testStoredApps));
+
+    render(
+      <ThemeProvider>
+        <RouterProvider>
+          <AuthProvider>
+            <TrackerPage />
+          </AuthProvider>
+        </RouterProvider>
+      </ThemeProvider>
+    );
+
+    // Should find the company under the Archived / Rejected column
+    expect(screen.getByText('Stripe')).toBeInTheDocument();
+    expect(screen.getByText('Infra Lead')).toBeInTheDocument();
+
+    // Verify localStorage has sanitized status
+    await waitFor(() => {
+      const saved = JSON.parse(localStorage.getItem('rolesharp_tracker_applications') || '[]');
+      expect(saved[0].status).toBe('rejected');
     });
   });
 });

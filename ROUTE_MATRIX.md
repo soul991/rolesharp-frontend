@@ -1,6 +1,15 @@
 # RoleSharp 2.0 — Route & Screen Matrix
 
-This matrix maps all 18 visual concept screens and parent handoff requirements to exact frontend routes, layout wrappers, accessibility requirements, and real backend API endpoints.
+This matrix maps all 25 registered URL paths, 24 unique page components, and the original 18 core visual concept requirements to exact frontend routes, layout wrappers, accessibility requirements, and real backend API endpoints.
+
+## Inventory Breakdown
+- **Registered URL Paths**: 25 routes (`/`, `/tools`, `/pricing`, `/about`, `/help`, `/login`, `/signup`, `/onboarding`, `/dashboard`, `/resumes`, `/resume-builder`, `/checker`, `/tailor`, `/jobs`, `/daily-matches`, `/tracker`, `/cover-letter`, `/cover-letter-analyzer`, `/linkedin`, `/interview`, `/auto-apply`, `/billing`, `/settings`, `/privacy`, `/terms`).
+- **Unique Page Components**: 24 components (`LandingPage`, `ToolsCataloguePage`, `PricingPage`, `AboutPage`, `HelpPage`, `LoginPage`, `SignupPage`, `OnboardingPage`, `DashboardPage`, `MyResumesPage`, `ResumeBuilderPage`, `ATSCheckerPage`, `ResumeTailorPage`, `JobFinderPage`, `DailyMatchesPage`, `TrackerPage`, `CoverLetterPage`, `CoverLetterAnalyzerPage`, `LinkedInOptimizerPage`, `InterviewStudioPage`, `AutoApplyPage`, `BillingPage`, `SettingsPage`, `LegalPage` [serving `/privacy` and `/terms`]).
+- **Core Requirements Concept Screens**: 18 primary functional screens specified in original product PRD.
+- **Superdesign Signature Patterns**: 5 interaction components (`ResumeWritingAnimation`, `AnimatedStepper`, `InteractiveCardStack`, `AnimatedList`, `PricingSection`).
+- **Lifecycle Product Stages**: 5 career velocity modules (Check, Tailor, Prepare, Apply, Track).
+
+---
 
 | # | Route | Category | Screen Title / Inventory Ref | Primary APIs | Key Components & Superdesign Patterns |
 |---|---|---|---|---|---|

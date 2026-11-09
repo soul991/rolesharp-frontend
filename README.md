@@ -30,9 +30,13 @@ RoleSharp integrates five signature Superdesign interaction patterns designed to
 
 ---
 
-## 3. Complete 18-Screen Route Matrix
+## 3. Comprehensive Route & Screen Matrix (25 Registered Routes / 24 Unique Page Components)
 
-RoleSharp organizes the entire candidate journey into five distinct stages of career velocity:
+RoleSharp organizes the entire candidate journey into five distinct stages of career velocity across 25 registered URL paths (rendered via 24 unique page components, addressing the original 18 core product concept screens):
+
+- **Registered URL Routes**: 25 routes (`/`, `/dashboard`, `/login`, `/signup`, `/onboarding`, `/checker`, `/cover-letter-analyzer`, `/tailor`, `/resume-builder`, `/resumes`, `/cover-letter`, `/linkedin`, `/interview`, `/auto-apply`, `/jobs`, `/daily-matches`, `/tracker`, `/pricing`, `/billing`, `/settings`, `/tools`, `/about`, `/help`, `/privacy`, `/terms`).
+- **Unique Page Components**: 24 components (`LandingPage`, `DashboardPage`, `LoginPage`, `SignupPage`, `OnboardingPage`, `ATSCheckerPage`, `CoverLetterAnalyzerPage`, `ResumeTailorPage`, `ResumeBuilderPage`, `MyResumesPage`, `CoverLetterPage`, `LinkedInOptimizerPage`, `InterviewStudioPage`, `AutoApplyPage`, `JobFinderPage`, `DailyMatchesPage`, `TrackerPage`, `PricingPage`, `BillingPage`, `SettingsPage`, `ToolsCataloguePage`, `AboutPage`, `HelpPage`, `LegalPage`).
+- **Core Product Screens**: 18 functional requirements screens defined in initial product PRD.
 
 ### Check (Diagnostics & Validation)
 - `/checker` — **In-Memory ATS Analyzer**: Multipart file upload (PDF/DOCX/TXT), 88/100 score ring, 4 category breakdowns (Formatting Safety, Metric Density, Keyword Coverage, Executive Voice), and anchored evidence gaps.
@@ -54,10 +58,12 @@ RoleSharp organizes the entire candidate journey into five distinct stages of ca
 ### Track (Pipeline & Workspace Management)
 - `/jobs` — **Verified Opportunities Engine**: Direct employer postings with salary ranges, freshness badges, ATS source tags (Greenhouse, Lever, Ashby), and direct outbound links.
 - `/daily-matches` — **Daily Matches Digest**: 9:00 AM curated digest with independent Role Fit and Evidence Confidence badges, verified evidence breakdown, and campaign controls.
-- `/tracker` — **5-Column Application Tracker**: Kanban pipeline (`Saved`, `Applied`, `Interviewing`, `Offer Received`, `Archived / Rejected`), count pills, and interactive stage progression.
+- `/tracker` — **5-Column Application Tracker**: Kanban pipeline (`saved`, `applied`, `interview`, `offer`, `rejected`), count pills, drag-and-drop, and stage progression.
 
-### Core Public & Governance Pages
+### Core Public, Auth & Governance Pages
 - `/` — **Editorial Landing Page**: Circular View Transition theme reveal, 4-part kinetic brand statement, interactive Evidence Review stage, and free tools catalogue.
+- `/dashboard` — **Executive Workspace Hub**: Career velocity metric rings, active pipeline cards, and one-click tool quick launch.
+- `/onboarding` — **Candidate Setup Wizard**: Superdesign Animated Stepper with continuous progress track and credit wallet activation.
 - `/pricing` — **Superdesign Pricing & Plans**: Tiered plans, student discount verification, and transparent billing FAQ.
 - `/billing` — **Workspace Subscription & Invoices**: Current plan entitlements, resource consumption quotas, credit wallet, and invoice history from `GET /api/account/billing`.
 - `/settings` — **Preferences & Conventions**: Profile identity, 7-market regional ATS convention selector (US, UK, EU, CA, AU, IN, SG), notification cadences, and theme toggle.
@@ -107,7 +113,10 @@ npm run dev
 # TypeScript strict compilation check
 npm run typecheck
 
-# Full Vitest automated test suite (31 tests across 6 suites)
+# Linter and static analysis check
+npm run lint
+
+# Full Vitest automated test suite (33 tests across 6 suites)
 npm test
 
 # Production build with chunk optimization
