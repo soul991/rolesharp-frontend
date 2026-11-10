@@ -23,7 +23,7 @@ export const Button: React.FC<ButtonProps> = ({
     alignItems: 'center',
     justifyContent: 'center',
     gap: '8px',
-    borderRadius: '8px',
+    borderRadius: 'var(--radius-sm)',
     fontWeight: 600,
     cursor: disabled || loading ? 'not-allowed' : 'pointer',
     opacity: disabled || loading ? 0.55 : 1,
@@ -45,7 +45,7 @@ export const Button: React.FC<ButtonProps> = ({
       backgroundColor: 'var(--rs-blue)',
       color: 'var(--rs-blue-ink)',
       border: '1px solid transparent',
-      boxShadow: '0 2px 6px rgba(0, 0, 0, 0.12)',
+      boxShadow: 'var(--rs-shadow-sm)',
     },
     secondary: {
       backgroundColor: 'var(--rs-surface)',

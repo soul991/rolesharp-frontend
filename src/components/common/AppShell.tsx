@@ -22,7 +22,6 @@ import {
   Menu,
   X,
   ChevronRight,
-  ShieldCheck,
 } from 'lucide-react';
 
 export const AppShell: React.FC<{ children: React.ReactNode; title?: string }> = ({
@@ -116,14 +115,16 @@ export const AppShell: React.FC<{ children: React.ReactNode; title?: string }> =
                 height: '26px',
                 display: 'grid',
                 placeItems: 'center',
-                borderRadius: '6px',
-                color: '#FFFFFF',
+                borderRadius: 'var(--radius-sm)',
+                color: 'var(--rs-ink)',
                 fontFamily: 'var(--font-serif)',
-                fontWeight: 600,
+                fontWeight: 700,
                 fontSize: '16px',
-                background: 'linear-gradient(135deg, #1E3A68 0%, #0F203C 100%)',
-                border: '1px solid rgba(255, 255, 255, 0.12)',
+                backgroundColor: 'var(--rs-surface-2)',
+                border: '1px solid var(--rs-line-strong)',
+                boxShadow: 'var(--rs-shadow-sm)',
               }}
+              aria-hidden="true"
             >
               R
             </span>
@@ -253,8 +254,7 @@ export const AppShell: React.FC<{ children: React.ReactNode; title?: string }> =
           style={{
             height: '64px',
             borderBottom: '1px solid var(--rs-line)',
-            backgroundColor: 'color-mix(in srgb, var(--rs-bg) 95%, transparent)',
-            backdropFilter: 'blur(14px)',
+            backgroundColor: 'var(--rs-bg)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -262,6 +262,7 @@ export const AppShell: React.FC<{ children: React.ReactNode; title?: string }> =
             position: 'sticky',
             top: 0,
             zIndex: 30,
+            transition: 'background-color 0.2s ease, border-color 0.2s ease',
           }}
         >
           {/* Breadcrumb Title */}
@@ -274,7 +275,7 @@ export const AppShell: React.FC<{ children: React.ReactNode; title?: string }> =
                 width: '36px',
                 height: '36px',
                 placeItems: 'center',
-                borderRadius: '6px',
+                borderRadius: 'var(--radius-sm)',
                 border: '1px solid var(--rs-line)',
                 color: 'var(--rs-ink)',
               }}
@@ -291,39 +292,20 @@ export const AppShell: React.FC<{ children: React.ReactNode; title?: string }> =
 
           {/* Right Topbar Actions */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            {/* Live Status Pill */}
-            <div
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                padding: '4px 10px',
-                borderRadius: '9999px',
-                backgroundColor: 'var(--rs-surface-2)',
-                border: '1px solid var(--rs-line)',
-                fontSize: '11px',
-                fontWeight: 600,
-                color: 'var(--rs-ink)',
-              }}
-              className="hidden-mobile"
-            >
-              <ShieldCheck size={13} color="var(--rs-green)" />
-              <span>Evidence Engine Active</span>
-            </div>
-
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
               style={{
                 width: '36px',
                 height: '36px',
-                borderRadius: '50%',
+                borderRadius: 'var(--radius-sm)',
                 display: 'grid',
                 placeItems: 'center',
                 border: '1px solid var(--rs-line)',
                 backgroundColor: 'var(--rs-surface)',
                 color: 'var(--rs-ink)',
                 cursor: 'pointer',
+                transition: 'background-color 0.15s ease, border-color 0.15s ease',
               }}
               aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
             >

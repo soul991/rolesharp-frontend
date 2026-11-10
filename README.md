@@ -77,15 +77,15 @@ RoleSharp organizes the entire candidate journey into five distinct stages of ca
 
 ## 4. Design System & Typography
 
-- **Display Typography**: `Space Grotesk` (700/800 bold, -0.03em tracking for confident modern headlines).
-- **Body & Interface**: `DM Sans` (400 regular, 500 medium, 650 semi-bold for crisp UI measures).
-- **Editorial Accent**: `Playfair Display` (Restrained italic styling for brand highlights).
-- **Data & Metadata**: `Geist Mono` (Tabular numeric values, ATS scores, timestamps, and SHA hashes).
+- **Display & Editorial Typography**: `Newsreader`, `Playfair Display`, Georgia, serif (Authoritative publication-grade headings).
+- **Body & Interface**: `Inter`, system-ui, -apple-system, sans-serif (Ergonomic UI reading measures).
+- **Data & Metadata**: `JetBrains Mono`, SFMono-Regular, Menlo, monospace (Tabular numeric values, ATS scores, timestamps, and SHA hashes).
 
 ### Color Tokens
-- **Midnight Blue Dark Canvas**: `#061426` (Surface: `#0C213A`, Raised: `#193653`, Border: `#26415F`, Text: `#EFF5FF`, Muted: `#A9BAD1`).
-- **Warm Paper Light Canvas**: `#F3F2EE` (Surface: `#FAF9F6`, Raised: `#E3E5E8`, Border: `#D5DFEA`, Text: `#10243E`, Muted: `#52647A`).
-- **Accent Palette**: RoleSharp Blue `#9FC3F2`, Strong Blue `#5B9BFF` / `#2458A6`, Executive Amber `#F2C96D` / `#A96A0B`, Success Green `#34D399` / `#047857`.
+- **Deep Midnight Slate Dark Canvas**: `#0A0F1A` (Surface: `#111827`, Raised: `#1E293B`, Border: `rgba(255, 255, 255, 0.08)`, Text: `#F8FAFC`, Muted: `#94A3B8`).
+- **Warm Archival Linen Light Canvas**: `#F8F7F4` (Surface: `#FFFFFF`, Raised: `#F1EFEA`, Border: `#E2E8F0`, Text: `#0F172A`, Muted: `#576579`).
+- **Document Paper Canvas**: `#FFFFFF` (Invariant across light and dark modes with `#0F172A` text).
+- **Accent Palette**: RoleSharp Blue `#3B82F6` / `#1D4ED8`, Executive Amber `#F59E0B` / `#B45309`, Success Emerald `#10B981` / `#059669`, Crimson `#EF4444` / `#DC2626`.
 
 ---
 

@@ -25,9 +25,7 @@ export const Navbar: React.FC = () => {
         top: 0,
         zIndex: 50,
         borderBottom: '1px solid var(--rs-line)',
-        backgroundColor: 'color-mix(in srgb, var(--rs-bg) 90%, transparent)',
-        backdropFilter: 'blur(16px)',
-        WebkitBackdropFilter: 'blur(16px)',
+        backgroundColor: 'var(--rs-bg)',
         transition: 'background-color 0.2s ease, border-color 0.2s ease',
       }}
     >
@@ -64,13 +62,14 @@ export const Navbar: React.FC = () => {
                 height: '28px',
                 display: 'grid',
                 placeItems: 'center',
-                borderRadius: '6px',
-                color: '#FFFFFF',
+                borderRadius: 'var(--radius-sm)',
+                color: 'var(--rs-ink)',
                 fontFamily: 'var(--font-serif)',
-                fontWeight: 600,
+                fontWeight: 700,
                 fontSize: '17px',
-                background: 'linear-gradient(135deg, #1E3A68 0%, #0F203C 100%)',
-                border: '1px solid rgba(255, 255, 255, 0.12)',
+                backgroundColor: 'var(--rs-surface-2)',
+                border: '1px solid var(--rs-line-strong)',
+                boxShadow: 'var(--rs-shadow-sm)',
               }}
               aria-hidden="true"
             >

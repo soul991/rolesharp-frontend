@@ -30,7 +30,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     } catch (_) {}
     const themeMeta = document.querySelector('meta[name="theme-color"]');
     if (themeMeta) {
-      themeMeta.setAttribute('content', next === 'light' ? '#F3F2EE' : '#061426');
+      themeMeta.setAttribute('content', next === 'light' ? '#F8F7F4' : '#0A0F1A');
     }
   };
 

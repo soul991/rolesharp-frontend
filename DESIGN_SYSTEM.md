@@ -40,21 +40,25 @@ The color architecture uses a 3-layer token model: **Primitives** → **Semantic
 ### 2.2 Light Theme (Warm Editorial Mode)
 - **Base Background (`--rs-bg`)**: `#F8F7F4` (Warm Archival Linen)
 - **Primary Surface (`--rs-surface`)**: `#FFFFFF` (Crisp paper panels)
-- **Elevated Surface (`--rs-surface-2`)**: `#F3F2EE` (Controls, input backgrounds)
+- **Elevated Surface (`--rs-surface-2`)**: `#F1EFEA` (Controls, input backgrounds)
 - **Subtle Surface (`--rs-surface-3`)**: `#E5E3DD` (Active pills, borders)
 - **Primary Ink (`--rs-ink`)**: `#0F172A` (Rich midnight charcoal)
-- **Secondary / Muted Ink (`--rs-muted`)**: `#64748B` (Cool slate metadata)
+- **Secondary / Muted Ink (`--rs-muted`)**: `#576579` (Cool slate metadata)
 - **Hairline Border (`--rs-line`)**: `#E2E8F0` (Quiet separation)
 - **Active Border (`--rs-line-strong`)**: `#CBD5E1` (Hovered or focused borders)
 - **Brand Accent (`--rs-blue`)**: `#1D4ED8` (Deep Royal Blue, 7:1+ contrast on light)
 - **Paper Canvas (`--rs-paper`)**: `#FFFFFF`
 - **Paper Ink (`--rs-paper-ink`)**: `#0F172A`
 
-### 2.3 Semantic Status Roles (Universal)
-- **Success / Grounded**: `#059669` (Emerald) / Tint: `rgba(5, 150, 105, 0.12)`
-- **Warning / Notice**: `#D97706` (Warm Ochre) / Tint: `rgba(217, 119, 6, 0.12)`
-- **Error / Missing**: `#DC2626` (Crimson) / Tint: `rgba(220, 38, 38, 0.12)`
-- **Info / Mode**: `#475569` (Slate) / Tint: `rgba(71, 85, 105, 0.12)`
+### 2.3 Semantic Status Roles & Background Tints
+- **Success / Grounded (`--rs-green`)**: `#10B981` (Dark) / `#059669` (Light)  
+  *Subtle Tint (`--rs-green-subtle`)*: `rgba(16, 185, 129, 0.12)` (Dark) / `rgba(5, 150, 105, 0.08)` (Light)
+- **Warning / Notice (`--rs-amber`)**: `#F59E0B` (Dark) / `#B45309` (Light)  
+  *Subtle Tint (`--rs-amber-subtle`)*: `rgba(245, 158, 11, 0.12)` (Dark) / `rgba(180, 83, 9, 0.08)` (Light)
+- **Error / Danger (`--rs-red`)**: `#EF4444` (Dark) / `#DC2626` (Light)  
+  *Subtle Tint (`--rs-red-subtle`)*: `rgba(239, 68, 68, 0.12)` (Dark) / `rgba(220, 38, 38, 0.08)` (Light)
+- **Info / Mode (`--rs-blue`)**: `#3B82F6` (Dark) / `#1D4ED8` (Light)  
+  *Subtle Tint (`--rs-blue-subtle`)*: `rgba(59, 130, 246, 0.12)` (Dark) / `rgba(29, 78, 216, 0.08)` (Light)
 
 ---
 
@@ -63,11 +67,11 @@ The color architecture uses a 3-layer token model: **Primitives** → **Semantic
 RoleSharp pairs an **authoritative editorial serif** with an **ergonomic geometric sans** and **tabular monospace**.
 
 ### 3.1 Type Families
-- **Display & Editorial (`--font-display`)**: `"Newsreader"`, `"Playfair Display"`, Georgia, serif  
+- **Display & Editorial (`--font-display`, `--font-serif`)**: `"Newsreader"`, `"Playfair Display"`, Georgia, serif  
   *Role*: Macro page titles, editorial quotes, brand statements, landing hero headlines.
-- **Interface & Body (`--font-body`)**: `"Inter"`, `-apple-system`, `BlinkMacSystemFont`, `"Segoe UI"`, sans-serif  
-  *Role*: Navigation, buttons, form inputs, table content, documentation, standard interface prose.
-- **Code & Tabular Numbers (`--font-mono`)**: `"JetBrains Mono"`, `"Geist Mono"`, monospace  
+- **Interface & Body (`--font-body`, `--font-sans`)**: `"Inter"`, system-ui, -apple-system, sans-serif  
+  *Role*: Navigation, buttons, form inputs, table content, documentation, standard interface prose. `--font-sans` is provided as an exact semantic alias to `--font-body`.
+- **Code & Tabular Numbers (`--font-mono`)**: `"JetBrains Mono"`, SFMono-Regular, Menlo, monospace  
   *Role*: ATS percentages, latency scores, line citations, credit counters, date stamps (`tabular-nums`).
 
 ### 3.2 Type Scale
@@ -93,11 +97,11 @@ RoleSharp pairs an **authoritative editorial serif** with an **ergonomic geometr
   - `p-md`: `12px` – `16px`
   - `p-lg`: `20px` – `24px`
   - `p-xl`: `32px` – `40px`
-- **Corner Radii**:
-  - Inputs & Controls: `8px`
-  - Cards & Workspace Panels: `12px`
-  - Modals & Floating Drawers: `16px`
-  - Badges & Pills: `9999px` (Full circle ends)
+- **Corner Radii Tokens**:
+  - Small / Controls (`--radius-sm`): `6px`
+  - Medium / Cards (`--radius-md`): `10px`
+  - Large / Panels (`--radius-lg`): `16px`
+  - Full / Pills (`--radius-pill`): `9999px` (Badges, pills, circular ends)
 - **Elevation & Shadows**:
   - Light mode: `0 4px 12px rgba(15, 23, 42, 0.05), 0 1px 2px rgba(15, 23, 42, 0.08)`
   - Dark mode: `0 12px 36px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.08)`

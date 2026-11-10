@@ -44,14 +44,16 @@ export const Footer: React.FC = () => {
                   height: '24px',
                   display: 'grid',
                   placeItems: 'center',
-                  borderRadius: '5px',
-                  color: '#FFFFFF',
+                  borderRadius: 'var(--radius-sm)',
+                  color: 'var(--rs-ink)',
                   fontFamily: 'var(--font-serif)',
-                  fontWeight: 600,
+                  fontWeight: 700,
                   fontSize: '15px',
-                  background: 'linear-gradient(135deg, #1E3A68 0%, #0F203C 100%)',
-                  border: '1px solid rgba(255, 255, 255, 0.12)',
+                  backgroundColor: 'var(--rs-surface-2)',
+                  border: '1px solid var(--rs-line-strong)',
+                  boxShadow: 'var(--rs-shadow-sm)',
                 }}
+                aria-hidden="true"
               >
                 R
               </span>

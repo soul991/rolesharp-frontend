@@ -22,9 +22,9 @@ RoleSharp 2.0 has undergone a complete, holistic frontend design transformation 
    - **Body & UI Controls**: Standardized on `Inter` / `DM Sans` (`fontFamily: 'var(--font-sans)'`) with calibrated line heights (`1.5` to `1.75`), comfortable line lengths (`max-width: 72ch`), and sentence-case labels.
    - **Data, Metadata & Code**: Fixed-width mono (`JetBrains Mono`, `fontFamily: 'var(--font-mono)'`) with `fontVariantNumeric: 'tabular-nums'` for currency, percentages, match scores, and timestamps.
 2. **Color System & Surface Architecture**:
-   - **Light Theme (Warm Paper)**: Natural warm paper canvas (`#F3F2EE`), crisp hairline surface cards (`#FFFFFF`), muted ink borders (`#E2DFD8`), and deep executive navy ink (`#111827`).
-   - **Dark Theme (Midnight Blue)**: Deep midnight obsidian (`#061426`), subtle slate surface cards (`#0D1F38`), hairline borders (`#1E3A5F`), and luminous readable ink (`#F0F6FC`).
-   - **Document Canvas Invariance**: All resume builders, cover letter generators, and live typewriter animation sheets strictly preserve a `#FFFFFF` paper canvas with `#172B48` ink in both light and dark modes, ensuring 100% ATS visual export parity.
+   - **Light Theme (Warm Archival Linen)**: Natural warm paper canvas (`#F8F7F4`), crisp hairline surface cards (`#FFFFFF`), muted ink borders (`#E2E8F0`), and deep executive charcoal ink (`#0F172A`).
+   - **Dark Theme (Deep Midnight Slate)**: Authoritative deep midnight slate (`#0A0F1A`), structural slate surface cards (`#111827`), hairline borders (`rgba(255, 255, 255, 0.08)`), and luminous readable ink (`#F8FAFC`).
+   - **Document Canvas Invariance**: All resume builders, cover letter generators, and live typewriter animation sheets strictly preserve a `#FFFFFF` paper canvas with `#0F172A` ink in both light and dark modes, ensuring 100% ATS visual export parity.
 3. **Unslop & Hallmark Floor Compliance**:
    - Zero glowing neon borders or generic blue-purple gradient washes.
    - Every color, border, and background is routed through design tokens in `src/styles/tokens.css`.
@@ -73,7 +73,7 @@ RoleSharp 2.0 has undergone a complete, holistic frontend design transformation 
   - Mobile Landscape / Phablet: `768px × 1024px` (Sidebar drawer, stacked form layouts).
   - Mobile Portrait: `390px × 844px` (Bottom navigation drawer, tap target minimums 44px, zero horizontal overflow).
 - **Theme Transitions**:
-  - Zero layout shifts or flashing during Dark (`#061426`) ↔ Light (`#F3F2EE`) toggling.
+  - Zero layout shifts or flashing during Dark (`#0A0F1A`) ↔ Light (`#F8F7F4`) toggling.
   - View Transitions API utilized where supported with graceful instant fallback.
   - Document canvases (`.rs-paper-sheet`) remain invariant `#FFFFFF` with `#172B48` ink across both modes.
 

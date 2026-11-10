@@ -1,8 +1,8 @@
 :root {
   color-scheme: dark;
   
-  /* Tier 1: Primitives & Base Neutrals (Dark - Midnight Slate) */
-  --rs-bg: #0A0F1D;
+  /* Tier 1: Primitives & Base Neutrals (Dark - Canonical Deep Midnight Slate) */
+  --rs-bg: #0A0F1A;
   --rs-surface: #111827;
   --rs-surface-2: #1E293B;
   --rs-surface-3: #334155;
@@ -13,7 +13,7 @@
   --rs-line: rgba(255, 255, 255, 0.08);
   --rs-line-strong: rgba(255, 255, 255, 0.16);
 
-  /* Tier 2: Semantics & Accents */
+  /* Tier 2: Semantics & Accents (Dark) */
   --rs-blue: #3B82F6;
   --rs-blue-strong: #60A5FA;
   --rs-blue-ink: #051329;
@@ -22,16 +22,29 @@
   --rs-emerald: #10B981;
   --rs-red: #EF4444;
 
-  /* Tier 3: Shadows & Depth */
+  /* Tier 2: Semantic Background Tints (Dark) */
+  --rs-blue-subtle: rgba(59, 130, 246, 0.12);
+  --rs-amber-subtle: rgba(245, 158, 11, 0.12);
+  --rs-green-subtle: rgba(16, 185, 129, 0.12);
+  --rs-red-subtle: rgba(239, 68, 68, 0.12);
+
+  /* Tier 3: Shadows & Depth (Dark) */
   --rs-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
   --rs-shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.2);
   --rs-shadow-paper: 0 16px 48px rgba(0, 0, 0, 0.28);
 
-  /* Typography Families */
+  /* Tier 3: Component Scales & Geometry */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-pill: 9999px;
+
+  /* Typography Families & Semantic Aliases */
   --font-display: "Newsreader", "Playfair Display", Georgia, serif;
-  --font-body: "Inter", "DM Sans", system-ui, -apple-system, sans-serif;
   --font-serif: "Newsreader", "Playfair Display", Georgia, serif;
-  --font-mono: "JetBrains Mono", "Geist Mono", SFMono-Regular, Menlo, monospace;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --font-sans: var(--font-body);
+  --font-mono: "JetBrains Mono", SFMono-Regular, Menlo, monospace;
 
   /* Transitions & Animation Easing */
   --rs-ease: cubic-bezier(0.16, 1, 0.3, 1);
@@ -58,7 +71,7 @@ html[data-theme="light"] {
   --rs-line: #E2E8F0;
   --rs-line-strong: #CBD5E1;
 
-  /* Tier 2: Semantics & Accents */
+  /* Tier 2: Semantics & Accents (Light) */
   --rs-blue: #1D4ED8;
   --rs-blue-strong: #2563EB;
   --rs-blue-ink: #FFFFFF;
@@ -67,7 +80,13 @@ html[data-theme="light"] {
   --rs-emerald: #059669;
   --rs-red: #DC2626;
 
-  /* Tier 3: Shadows & Depth */
+  /* Tier 2: Semantic Background Tints (Light) */
+  --rs-blue-subtle: rgba(29, 78, 216, 0.08);
+  --rs-amber-subtle: rgba(180, 83, 9, 0.08);
+  --rs-green-subtle: rgba(5, 150, 105, 0.08);
+  --rs-red-subtle: rgba(220, 38, 38, 0.08);
+
+  /* Tier 3: Shadows & Depth (Light) */
   --rs-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
   --rs-shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
   --rs-shadow-paper: 0 16px 40px rgba(15, 23, 42, 0.08);

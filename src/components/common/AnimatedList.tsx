@@ -56,7 +56,7 @@ export const AnimatedList: React.FC<AnimatedListProps> = ({
             }}
             style={{
               padding: '14px 18px',
-              borderRadius: '12px',
+              borderRadius: 'var(--radius-md)',
               border: isSelected
                 ? '1.5px solid var(--rs-blue-strong)'
                 : isHovered
@@ -71,7 +71,7 @@ export const AnimatedList: React.FC<AnimatedListProps> = ({
               justifyContent: 'space-between',
               gap: '14px',
               transform: isHovered ? 'translateX(4px)' : 'translateX(0)',
-              transition: 'all 0.2s var(--rs-ease)',
+              transition: 'transform 0.2s var(--rs-ease), border-color 0.2s ease, background-color 0.2s ease',
               outline: 'none',
               animation: `fadeInUp 0.3s ease-out ${idx * 0.05}s both`,
             }}
@@ -91,7 +91,7 @@ export const AnimatedList: React.FC<AnimatedListProps> = ({
                   placeItems: 'center',
                   color: '#FFFFFF',
                   flexShrink: 0,
-                  transition: 'all 0.18s ease',
+                  transition: 'border-color 0.18s ease, background-color 0.18s ease',
                 }}
               >
                 {isSelected && <Check size={13} strokeWidth={3} />}

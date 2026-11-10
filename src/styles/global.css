@@ -72,6 +72,10 @@ textarea:focus-visible,
   font-family: var(--font-body);
 }
 
+.font-sans {
+  font-family: var(--font-sans);
+}
+
 .font-serif {
   font-family: var(--font-serif);
 }
