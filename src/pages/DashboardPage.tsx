@@ -82,10 +82,18 @@ export const DashboardPage: React.FC = () => {
         </section>
 
         {/* Top 3 Core Metrics Grid */}
+        <style>{`
+          @media (min-width: 960px) {
+            .rs-dashboard-metrics {
+              grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+            }
+          }
+        `}</style>
         <section
+          className="rs-dashboard-metrics"
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
             gap: '20px',
           }}
         >
@@ -157,8 +165,8 @@ export const DashboardPage: React.FC = () => {
               </p>
             </div>
             <div style={{ marginTop: '16px', display: 'flex', gap: '8px' }}>
-              <Button size="sm" variant="subtle" onClick={() => navigate('/checker')}>
-                View Gap Breakdown →
+              <Button size="sm" variant="subtle" onClick={() => navigate('/checker')} icon={<ArrowRight size={14} />}>
+                View gap breakdown
               </Button>
             </div>
           </div>
@@ -202,8 +210,8 @@ export const DashboardPage: React.FC = () => {
               </p>
             </div>
             <div style={{ marginTop: '16px', display: 'flex', gap: '8px' }}>
-              <Button size="sm" variant="subtle" onClick={() => navigate('/tracker')}>
-                Open Tracker →
+              <Button size="sm" variant="subtle" onClick={() => navigate('/tracker')} icon={<ArrowRight size={14} />}>
+                Open tracker
               </Button>
             </div>
           </div>

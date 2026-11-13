@@ -248,8 +248,8 @@ export const TrackerPage: React.FC = () => {
             <form onSubmit={handleAddApplication}>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px', marginBottom: '16px' }}>
                 <div>
-                  <label htmlFor="tracker-company" style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--rs-muted)', marginBottom: '4px' }}>
-                    COMPANY NAME *
+                  <label htmlFor="tracker-company" style={{ display: 'block', fontSize: '11.5px', fontWeight: 600, color: 'var(--rs-muted)', marginBottom: '4px' }}>
+                    Company name *
                   </label>
                   <input
                     id="tracker-company"
@@ -272,8 +272,8 @@ export const TrackerPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="tracker-role" style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--rs-muted)', marginBottom: '4px' }}>
-                    ROLE TITLE *
+                  <label htmlFor="tracker-role" style={{ display: 'block', fontSize: '11.5px', fontWeight: 600, color: 'var(--rs-muted)', marginBottom: '4px' }}>
+                    Role title *
                   </label>
                   <input
                     id="tracker-role"
@@ -296,8 +296,8 @@ export const TrackerPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="tracker-salary" style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--rs-muted)', marginBottom: '4px' }}>
-                    TARGET SALARY (OPTIONAL)
+                  <label htmlFor="tracker-salary" style={{ display: 'block', fontSize: '11.5px', fontWeight: 600, color: 'var(--rs-muted)', marginBottom: '4px' }}>
+                    Target salary (optional)
                   </label>
                   <input
                     id="tracker-salary"
@@ -319,8 +319,8 @@ export const TrackerPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="tracker-stage" style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--rs-muted)', marginBottom: '4px' }}>
-                    INITIAL STAGE
+                  <label htmlFor="tracker-stage" style={{ display: 'block', fontSize: '11.5px', fontWeight: 600, color: 'var(--rs-muted)', marginBottom: '4px' }}>
+                    Initial stage
                   </label>
                   <select
                     id="tracker-stage"
@@ -358,14 +358,15 @@ export const TrackerPage: React.FC = () => {
           </div>
         )}
 
-        {/* 5-Column Kanban Board */}
+        {/* 5-Column Kanban Board with Scroll-Snap */}
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(5, minmax(220px, 1fr))',
+            gridTemplateColumns: 'repeat(5, minmax(240px, 1fr))',
             gap: '16px',
             alignItems: 'start',
             overflowX: 'auto',
+            scrollSnapType: 'x mandatory',
             paddingBottom: '24px',
           }}
         >
@@ -386,6 +387,7 @@ export const TrackerPage: React.FC = () => {
                   display: 'flex',
                   flexDirection: 'column',
                   gap: '12px',
+                  scrollSnapAlign: 'start',
                 }}
               >
                 {/* Column Header */}
@@ -448,7 +450,7 @@ export const TrackerPage: React.FC = () => {
                     >
                       <div>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '2px' }}>
-                          <span style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', color: 'var(--rs-blue-strong)' }}>
+                          <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--rs-blue-strong)' }}>
                             {app.company}
                           </span>
                           <button

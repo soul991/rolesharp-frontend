@@ -61,7 +61,7 @@ const PLANS: PricingPlan[] = [
     monthlyPrice: 24,
     annualMonthlyPrice: 19,
     popular: true,
-    badge: 'MOST POPULAR',
+    badge: 'Most popular',
     features: [
       'Unlimited Master & Custom Resumes',
       'Unlimited ATS Diagnostics & Score Rings',
@@ -286,10 +286,18 @@ export const PricingSection: React.FC<{ compact?: boolean }> = ({ compact = fals
       </div>
 
       {/* Pricing Cards Grid */}
+      <style>{`
+        @media (min-width: 960px) {
+          .rs-pricing-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+          }
+        }
+      `}</style>
       <div
+        className="rs-pricing-grid"
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
           gap: '24px',
           alignItems: 'stretch',
         }}

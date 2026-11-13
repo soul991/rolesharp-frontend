@@ -681,22 +681,21 @@ export const ATSCheckerPage: React.FC = () => {
                 style={{
                   display: 'block',
                   fontSize: '12px',
-                  fontWeight: 700,
+                  fontWeight: 600,
                   color: 'var(--rs-ink)',
-                  textTransform: 'uppercase',
                   marginBottom: '16px',
                 }}
               >
-                2. Calibration Context (Optional)
+                Calibration context (optional)
               </span>
 
               <div style={{ display: 'grid', gap: '12px' }}>
                 <div>
                   <label
                     htmlFor="ats-target-title"
-                    style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--rs-muted)', marginBottom: '4px' }}
+                    style={{ display: 'block', fontSize: '11px', fontWeight: 600, color: 'var(--rs-muted)', marginBottom: '4px' }}
                   >
-                    TARGET TITLE
+                    Target title
                   </label>
                   <input
                     id="ats-target-title"
@@ -720,9 +719,9 @@ export const ATSCheckerPage: React.FC = () => {
                 <div>
                   <label
                     htmlFor="ats-target-company"
-                    style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--rs-muted)', marginBottom: '4px' }}
+                    style={{ display: 'block', fontSize: '11px', fontWeight: 600, color: 'var(--rs-muted)', marginBottom: '4px' }}
                   >
-                    TARGET COMPANY
+                    Target company
                   </label>
                   <input
                     id="ats-target-company"
@@ -835,10 +834,18 @@ export const ATSCheckerPage: React.FC = () => {
             </div>
 
             {/* 4 Category Breakdown Cards */}
+            <style>{`
+              @media (min-width: 1024px) {
+                .rs-dimensions-grid {
+                  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+                }
+              }
+            `}</style>
             <div
+              className="rs-dimensions-grid"
               style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
                 gap: '16px',
                 marginBottom: '32px',
               }}
@@ -852,7 +859,7 @@ export const ATSCheckerPage: React.FC = () => {
                 }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                  <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--rs-muted)', textTransform: 'uppercase' }}>
+                  <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--rs-muted)' }}>
                     Formatting Safety
                   </span>
                   <span style={{ fontFamily: 'var(--font-mono)', fontSize: '14px', fontWeight: 800, color: 'var(--rs-emerald)' }}>
@@ -876,7 +883,7 @@ export const ATSCheckerPage: React.FC = () => {
                 }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                  <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--rs-muted)', textTransform: 'uppercase' }}>
+                  <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--rs-muted)' }}>
                     Metric Density
                   </span>
                   <span style={{ fontFamily: 'var(--font-mono)', fontSize: '14px', fontWeight: 800, color: 'var(--rs-blue-strong)' }}>
@@ -900,7 +907,7 @@ export const ATSCheckerPage: React.FC = () => {
                 }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                  <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--rs-muted)', textTransform: 'uppercase' }}>
+                  <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--rs-muted)' }}>
                     Keyword Coverage
                   </span>
                   <span style={{ fontFamily: 'var(--font-mono)', fontSize: '14px', fontWeight: 800, color: 'var(--rs-blue-strong)' }}>
@@ -924,7 +931,7 @@ export const ATSCheckerPage: React.FC = () => {
                 }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                  <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--rs-muted)', textTransform: 'uppercase' }}>
+                  <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--rs-muted)' }}>
                     Executive Voice
                   </span>
                   <span style={{ fontFamily: 'var(--font-mono)', fontSize: '14px', fontWeight: 800, color: 'var(--rs-amber)' }}>
@@ -977,8 +984,7 @@ export const ATSCheckerPage: React.FC = () => {
                       <span
                         style={{
                           fontSize: '11px',
-                          fontWeight: 700,
-                          textTransform: 'uppercase',
+                          fontWeight: 600,
                           padding: '2px 8px',
                           borderRadius: '4px',
                           backgroundColor: 'var(--rs-surface-2)',
@@ -1020,8 +1026,8 @@ export const ATSCheckerPage: React.FC = () => {
                           color: 'var(--rs-ink)',
                         }}
                       >
-                        <strong style={{ color: 'var(--rs-emerald)', display: 'block', fontSize: '11px', textTransform: 'uppercase', marginBottom: '2px' }}>
-                          Recommended Grounded Fix:
+                        <strong style={{ color: 'var(--rs-emerald)', display: 'block', fontSize: '11px', fontWeight: 600, marginBottom: '2px' }}>
+                          Recommended grounded fix:
                         </strong>
                         {gap.recommendedFix}
                       </div>

@@ -170,9 +170,9 @@ alex.morgan@lattice.io · +1 (555) 019-2834`
               <div style={{ marginBottom: '16px' }}>
                 <label
                   htmlFor="cl-resume-select"
-                  style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--rs-muted)', textTransform: 'uppercase', marginBottom: '6px' }}
+                  style={{ display: 'block', fontSize: '11px', fontWeight: 600, color: 'var(--rs-muted)', marginBottom: '6px' }}
                 >
-                  Grounded Resume Source *
+                  Grounded resume source *
                 </label>
                 <select
                   id="cl-resume-select"
@@ -203,9 +203,9 @@ alex.morgan@lattice.io · +1 (555) 019-2834`
                 <div>
                   <label
                     htmlFor="cl-company"
-                    style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--rs-muted)', textTransform: 'uppercase', marginBottom: '6px' }}
+                    style={{ display: 'block', fontSize: '11px', fontWeight: 600, color: 'var(--rs-muted)', marginBottom: '6px' }}
                   >
-                    Target Company *
+                    Target company *
                   </label>
                   <input
                     id="cl-company"
@@ -231,9 +231,9 @@ alex.morgan@lattice.io · +1 (555) 019-2834`
                 <div>
                   <label
                     htmlFor="cl-role"
-                    style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--rs-muted)', textTransform: 'uppercase', marginBottom: '6px' }}
+                    style={{ display: 'block', fontSize: '11px', fontWeight: 600, color: 'var(--rs-muted)', marginBottom: '6px' }}
                   >
-                    Target Role *
+                    Target role *
                   </label>
                   <input
                     id="cl-role"
@@ -264,13 +264,12 @@ alex.morgan@lattice.io · +1 (555) 019-2834`
                   style={{
                     display: 'block',
                     fontSize: '11px',
-                    fontWeight: 700,
+                    fontWeight: 600,
                     color: 'var(--rs-muted)',
-                    textTransform: 'uppercase',
                     marginBottom: '8px',
                   }}
                 >
-                  Voice & Tone (Superdesign Animated List)
+                  Voice & tone
                 </div>
                 <AnimatedList
                   items={TONE_OPTIONS}
@@ -283,9 +282,9 @@ alex.morgan@lattice.io · +1 (555) 019-2834`
               <div style={{ marginBottom: '20px' }}>
                 <label
                   htmlFor="cl-motivation"
-                  style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--rs-muted)', textTransform: 'uppercase', marginBottom: '6px' }}
+                  style={{ display: 'block', fontSize: '11px', fontWeight: 600, color: 'var(--rs-muted)', marginBottom: '6px' }}
                 >
-                  Specific Motivation / Company Alignment (Optional)
+                  Specific motivation / company alignment (optional)
                 </label>
                 <textarea
                   id="cl-motivation"
@@ -333,11 +332,11 @@ alex.morgan@lattice.io · +1 (555) 019-2834`
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div>
-                <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--rs-ink)', textTransform: 'uppercase' }}>
-                  Document Draft Preview
+                <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--rs-ink)' }}>
+                  Document draft preview
                 </span>
                 <span style={{ display: 'block', fontSize: '11px', color: 'var(--rs-muted)' }}>
-                  Calibrated for {company} · Tone: {selectedTone.toUpperCase()}
+                  Calibrated for {company} · Tone: {selectedTone.charAt(0).toUpperCase() + selectedTone.slice(1)}
                 </span>
               </div>
 

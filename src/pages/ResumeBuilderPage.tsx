@@ -420,11 +420,11 @@ export const ResumeBuilderPage: React.FC = () => {
               }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--rs-ink)', textTransform: 'uppercase' }}>
-                  Live Document Preview ({selectedTemplate.name})
+                <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--rs-ink)' }}>
+                  Live document preview ({selectedTemplate.name})
                 </span>
                 <span style={{ fontSize: '11px', color: 'var(--rs-blue-strong)', fontWeight: 600 }}>
-                  Single Column · 100% ATS Safe
+                  Single column · 100% ATS safe
                 </span>
               </div>
 
@@ -455,14 +455,14 @@ export const ResumeBuilderPage: React.FC = () => {
                 </div>
 
                 <div style={{ marginBottom: '14px' }}>
-                  <div style={{ fontWeight: 800, textTransform: 'uppercase', fontSize: '10px', letterSpacing: '0.06em', borderBottom: '1px solid #D5DFEA', paddingBottom: '2px', marginBottom: '4px' }}>
+                  <div style={{ fontWeight: 700, fontSize: '11px', letterSpacing: '-0.01em', color: '#10243E', borderBottom: '1px solid #D5DFEA', paddingBottom: '2px', marginBottom: '4px' }}>
                     Executive Summary
                   </div>
                   <p style={{ margin: 0, lineHeight: '1.4', color: '#2C3E50' }}>{summary}</p>
                 </div>
 
                 <div style={{ marginBottom: '14px' }}>
-                  <div style={{ fontWeight: 800, textTransform: 'uppercase', fontSize: '10px', letterSpacing: '0.06em', borderBottom: '1px solid #D5DFEA', paddingBottom: '2px', marginBottom: '6px' }}>
+                  <div style={{ fontWeight: 700, fontSize: '11px', letterSpacing: '-0.01em', color: '#10243E', borderBottom: '1px solid #D5DFEA', paddingBottom: '2px', marginBottom: '6px' }}>
                     Professional Experience
                   </div>
                   {experiences.map((exp) => (
@@ -481,7 +481,7 @@ export const ResumeBuilderPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <div style={{ fontWeight: 800, textTransform: 'uppercase', fontSize: '10px', letterSpacing: '0.06em', borderBottom: '1px solid #D5DFEA', paddingBottom: '2px', marginBottom: '4px' }}>
+                  <div style={{ fontWeight: 700, fontSize: '11px', letterSpacing: '-0.01em', color: '#10243E', borderBottom: '1px solid #D5DFEA', paddingBottom: '2px', marginBottom: '4px' }}>
                     Core Competencies
                   </div>
                   <div style={{ color: '#2C3E50', fontSize: '10px' }}>{skills}</div>
@@ -550,15 +550,15 @@ export const ResumeBuilderPage: React.FC = () => {
               </div>
 
               <div style={{ marginBottom: '20px' }}>
-                <div style={{ fontWeight: 800, textTransform: 'uppercase', fontSize: '11px', letterSpacing: '0.08em', borderBottom: '1px solid #D5DFEA', paddingBottom: '4px', marginBottom: '8px' }}>
-                  Executive Summary
+                <div style={{ fontWeight: 700, fontSize: '12px', letterSpacing: '-0.01em', color: '#10243E', borderBottom: '1px solid #D5DFEA', paddingBottom: '4px', marginBottom: '8px' }}>
+                  Executive summary
                 </div>
                 <p style={{ margin: 0, lineHeight: '1.6', color: '#2C3E50' }}>{summary}</p>
               </div>
 
               <div style={{ marginBottom: '20px' }}>
-                <div style={{ fontWeight: 800, textTransform: 'uppercase', fontSize: '11px', letterSpacing: '0.08em', borderBottom: '1px solid #D5DFEA', paddingBottom: '4px', marginBottom: '10px' }}>
-                  Professional Experience
+                <div style={{ fontWeight: 700, fontSize: '12px', letterSpacing: '-0.01em', color: '#10243E', borderBottom: '1px solid #D5DFEA', paddingBottom: '4px', marginBottom: '10px' }}>
+                  Professional experience
                 </div>
                 {experiences.map((exp) => (
                   <div key={exp.id} style={{ marginBottom: '14px' }}>
@@ -578,8 +578,8 @@ export const ResumeBuilderPage: React.FC = () => {
               </div>
 
               <div>
-                <div style={{ fontWeight: 800, textTransform: 'uppercase', fontSize: '11px', letterSpacing: '0.08em', borderBottom: '1px solid #D5DFEA', paddingBottom: '4px', marginBottom: '6px' }}>
-                  Core Competencies & Tools
+                <div style={{ fontWeight: 700, fontSize: '12px', letterSpacing: '-0.01em', color: '#10243E', borderBottom: '1px solid #D5DFEA', paddingBottom: '4px', marginBottom: '6px' }}>
+                  Core competencies & tools
                 </div>
                 <div style={{ color: '#2C3E50', lineHeight: '1.5' }}>{skills}</div>
               </div>

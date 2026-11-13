@@ -203,9 +203,9 @@ export const ResumeTailorPage: React.FC = () => {
                 <div>
                   <label
                     htmlFor="tailor-role"
-                    style={{ display: 'block', fontSize: '12px', fontWeight: 700, color: 'var(--rs-ink)', textTransform: 'uppercase', marginBottom: '6px' }}
+                    style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--rs-ink)', marginBottom: '6px' }}
                   >
-                    Target Role Title *
+                    Target role title *
                   </label>
                   <input
                     id="tailor-role"
@@ -231,9 +231,9 @@ export const ResumeTailorPage: React.FC = () => {
                 <div>
                   <label
                     htmlFor="tailor-country"
-                    style={{ display: 'block', fontSize: '12px', fontWeight: 700, color: 'var(--rs-ink)', textTransform: 'uppercase', marginBottom: '6px' }}
+                    style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--rs-ink)', marginBottom: '6px' }}
                   >
-                    Application Market *
+                    Application market *
                   </label>
                   <input
                     id="tailor-country"
@@ -258,9 +258,9 @@ export const ResumeTailorPage: React.FC = () => {
               <div style={{ marginBottom: '24px' }}>
                 <label
                   htmlFor="tailor-jd"
-                  style={{ display: 'block', fontSize: '12px', fontWeight: 700, color: 'var(--rs-ink)', textTransform: 'uppercase', marginBottom: '6px' }}
+                  style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--rs-ink)', marginBottom: '6px' }}
                 >
-                  Job Description Requirements *
+                  Job description requirements *
                 </label>
                 <textarea
                   id="tailor-jd"
@@ -388,7 +388,7 @@ export const ResumeTailorPage: React.FC = () => {
                     }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-                      <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--rs-muted)', textTransform: 'uppercase' }}>
+                      <span style={{ fontSize: '11px', fontWeight: 600, color: 'var(--rs-muted)' }}>
                         {diff.section}
                       </span>
                       <span
@@ -417,8 +417,8 @@ export const ResumeTailorPage: React.FC = () => {
                           color: 'var(--rs-muted)',
                         }}
                       >
-                        <strong style={{ display: 'block', fontSize: '10px', textTransform: 'uppercase', marginBottom: '4px' }}>
-                          Original Bullet
+                        <strong style={{ display: 'block', fontSize: '11px', fontWeight: 600, marginBottom: '4px' }}>
+                          Original bullet
                         </strong>
                         {diff.original}
                       </div>
@@ -435,8 +435,8 @@ export const ResumeTailorPage: React.FC = () => {
                           fontWeight: 500,
                         }}
                       >
-                        <strong style={{ display: 'block', fontSize: '10px', textTransform: 'uppercase', color: 'var(--rs-blue-strong)', marginBottom: '4px' }}>
-                          Grounded Calibration
+                        <strong style={{ display: 'block', fontSize: '11px', fontWeight: 600, color: 'var(--rs-blue-strong)', marginBottom: '4px' }}>
+                          Grounded calibration
                         </strong>
                         {diff.proposed}
                       </div>

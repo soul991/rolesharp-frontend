@@ -62,7 +62,7 @@ export const EvidenceReviewStage: React.FC = () => {
         margin: 0,
         padding: 0,
         minWidth: 0,
-        borderRadius: '16px',
+        borderRadius: '24px',
         border: '1px solid var(--rs-line)',
         backgroundColor: 'var(--rs-surface)',
         boxShadow: 'var(--rs-shadow)',
@@ -155,26 +155,26 @@ export const EvidenceReviewStage: React.FC = () => {
         })}
       </div>
 
-      {/* Stage Body Grid */}
+      {/* Stage Body Grid with concentric 16px padding */}
       <div
         style={{
           display: 'grid',
           gridTemplateColumns: 'minmax(0, 1.15fr) minmax(230px, 0.85fr)',
-          gap: '24px',
-          padding: '24px',
+          gap: '16px',
+          padding: '16px',
           alignItems: 'stretch',
         }}
         className="stage-body-grid"
       >
-        {/* Left: Authentic Invariant Paper Surface */}
+        {/* Left: Authentic Invariant Paper Surface (Concentric 8px radius: 24 - 16 = 8) */}
         <article
           className="rs-paper-sheet"
           style={{
             minHeight: '380px',
-            padding: '32px 28px',
+            padding: '28px 24px',
             backgroundColor: '#FFFFFF',
             color: '#0A0F1D',
-            borderRadius: 'var(--radius-sm)',
+            borderRadius: '8px',
             border: '1px solid rgba(0, 0, 0, 0.08)',
             boxShadow: '0 8px 24px rgba(0, 0, 0, 0.08)',
             fontFamily: 'var(--font-sans)',
@@ -254,7 +254,7 @@ export const EvidenceReviewStage: React.FC = () => {
             onClick={() => setMode('evidence')}
             style={{
               padding: '16px',
-              borderRadius: 'var(--radius-sm)',
+              borderRadius: '8px',
               border: activeMode === 'evidence' ? '1px solid var(--rs-blue-strong)' : '1px solid var(--rs-line)',
               backgroundColor:
                 activeMode === 'evidence'
@@ -281,7 +281,7 @@ export const EvidenceReviewStage: React.FC = () => {
             onClick={() => setMode('gap')}
             style={{
               padding: '16px',
-              borderRadius: 'var(--radius-sm)',
+              borderRadius: '8px',
               border: activeMode === 'gap' ? '1px solid var(--rs-amber)' : '1px solid var(--rs-line)',
               backgroundColor:
                 activeMode === 'gap'

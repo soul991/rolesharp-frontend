@@ -52,6 +52,14 @@ export const AnimatedList: React.FC<AnimatedListProps> = ({
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 onSelect(item);
+              } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                const nextItem = items[(idx + 1) % items.length];
+                onSelect(nextItem);
+              } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                const prevItem = items[(idx - 1 + items.length) % items.length];
+                onSelect(prevItem);
               }
             }}
             style={{

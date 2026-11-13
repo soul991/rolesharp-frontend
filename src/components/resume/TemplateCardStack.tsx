@@ -96,14 +96,12 @@ export const TemplateCardStack: React.FC<TemplateCardStackProps> = ({
           <Layers size={18} color="var(--rs-blue-strong)" />
           <span
             style={{
-              fontSize: '12px',
-              fontWeight: 800,
-              textTransform: 'uppercase',
-              letterSpacing: '0.1em',
-              color: 'var(--rs-blue)',
+              fontSize: '13px',
+              fontWeight: 600,
+              color: 'var(--rs-ink)',
             }}
           >
-            INTERACTIVE TEMPLATE STACK
+            Interactive template stack
           </span>
         </div>
         <span style={{ fontSize: '12px', color: 'var(--rs-muted)' }}>
@@ -147,7 +145,16 @@ export const TemplateCardStack: React.FC<TemplateCardStackProps> = ({
               aria-selected={isSelected}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
                   handleSelect(tmpl);
+                } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                  e.preventDefault();
+                  const nextIdx = (idx + 1) % TEMPLATES.length;
+                  handleSelect(TEMPLATES[nextIdx]);
+                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                  e.preventDefault();
+                  const prevIdx = (idx - 1 + TEMPLATES.length) % TEMPLATES.length;
+                  handleSelect(TEMPLATES[prevIdx]);
                 }
               }}
               style={{
@@ -221,7 +228,7 @@ export const TemplateCardStack: React.FC<TemplateCardStackProps> = ({
                       }}
                     >
                       <Check size={12} />
-                      ACTIVE TEMPLATE
+                      Active template
                     </span>
                   )}
                 </div>
@@ -243,19 +250,19 @@ export const TemplateCardStack: React.FC<TemplateCardStackProps> = ({
                 }}
               >
                 <div>
-                  <span style={{ color: 'var(--rs-muted)', display: 'block', fontSize: '10px', textTransform: 'uppercase', fontWeight: 700 }}>
-                    Best For
+                  <span style={{ color: 'var(--rs-muted)', display: 'block', fontSize: '11px', fontWeight: 500 }}>
+                    Best for
                   </span>
                   <span style={{ color: 'var(--rs-ink)', fontWeight: 600 }}>{tmpl.bestFor.split(',')[0]}</span>
                 </div>
                 <div>
-                  <span style={{ color: 'var(--rs-muted)', display: 'block', fontSize: '10px', textTransform: 'uppercase', fontWeight: 700 }}>
+                  <span style={{ color: 'var(--rs-muted)', display: 'block', fontSize: '11px', fontWeight: 500 }}>
                     Typography
                   </span>
                   <span style={{ color: 'var(--rs-ink)', fontWeight: 600 }}>{tmpl.fontPrimary}</span>
                 </div>
                 <div>
-                  <span style={{ color: 'var(--rs-muted)', display: 'block', fontSize: '10px', textTransform: 'uppercase', fontWeight: 700 }}>
+                  <span style={{ color: 'var(--rs-muted)', display: 'block', fontSize: '11px', fontWeight: 500 }}>
                     Formatting
                   </span>
                   <span style={{ color: 'var(--rs-ink)', fontWeight: 600 }}>{tmpl.columns}</span>

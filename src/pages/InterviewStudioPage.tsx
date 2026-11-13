@@ -534,14 +534,12 @@ export const InterviewStudioPage: React.FC = () => {
                 <FileText size={16} color="var(--rs-blue)" />
                 <span
                   style={{
-                    fontSize: '12.5px',
-                    fontWeight: 700,
+                    fontSize: '13px',
+                    fontWeight: 600,
                     color: 'var(--rs-ink)',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.06em',
                   }}
                 >
-                  Target Rehearsal Resume (Authenticated)
+                  Target rehearsal resume (authenticated)
                 </span>
                 <StatusBadge
                   status={serverStatus === 'connected' ? 'success' : serverStatus === 'offline_fallback' ? 'warning' : 'neutral'}
@@ -854,8 +852,8 @@ export const InterviewStudioPage: React.FC = () => {
           }}
         >
           <div>
-            <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--rs-muted)', textTransform: 'uppercase' }}>
-              Rehearsal Mastery Progress
+            <span style={{ fontSize: '11px', fontWeight: 600, color: 'var(--rs-muted)' }}>
+              Rehearsal mastery progress
             </span>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '4px' }}>
               <span style={{ fontFamily: 'var(--font-display)', fontSize: '20px', fontWeight: 700, color: 'var(--rs-ink)' }}>
@@ -882,8 +880,8 @@ export const InterviewStudioPage: React.FC = () => {
           >
             <Clock size={16} color="var(--rs-muted)" />
             <div>
-              <span style={{ fontSize: '10px', fontWeight: 700, color: 'var(--rs-muted)', textTransform: 'uppercase', display: 'block' }}>
-                Answer Timer
+              <span style={{ fontSize: '11px', fontWeight: 600, color: 'var(--rs-muted)', display: 'block' }}>
+                Answer timer
               </span>
               <span
                 style={{
@@ -964,8 +962,8 @@ export const InterviewStudioPage: React.FC = () => {
             }}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--rs-ink)', textTransform: 'uppercase' }}>
-                Curated Question Set
+              <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--rs-ink)' }}>
+                Curated question set
               </span>
               <div style={{ display: 'flex', gap: '6px' }}>
                 {['All', 'System Architecture', 'Behavioral & Leadership'].map((cat) => (
@@ -1032,12 +1030,12 @@ export const InterviewStudioPage: React.FC = () => {
 
                     <div style={{ flex: 1 }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '3px' }}>
-                        <span style={{ fontSize: '10px', fontWeight: 700, color: 'var(--rs-blue)', textTransform: 'uppercase' }}>
+                        <span style={{ fontSize: '11px', fontWeight: 600, color: 'var(--rs-blue)' }}>
                           {q.category}
                         </span>
                         {q.rehearsed && (
-                          <span style={{ fontSize: '9px', fontWeight: 700, color: 'var(--rs-green)' }}>
-                            · REHEARSED
+                          <span style={{ fontSize: '10px', fontWeight: 600, color: 'var(--rs-green)' }}>
+                            · Rehearsed
                           </span>
                         )}
                       </div>
@@ -1126,8 +1124,8 @@ export const InterviewStudioPage: React.FC = () => {
                 border: '1px solid color-mix(in srgb, var(--rs-blue-strong) 25%, transparent)',
               }}
             >
-              <span style={{ fontSize: '10px', fontWeight: 800, textTransform: 'uppercase', color: 'var(--rs-blue)', display: 'block', marginBottom: '4px' }}>
-                Calibrated To Verified Resume Anchor
+              <span style={{ fontSize: '11px', fontWeight: 600, color: 'var(--rs-blue)', display: 'block', marginBottom: '4px' }}>
+                Calibrated to verified resume anchor
               </span>
               <p style={{ margin: 0, fontSize: '12px', fontStyle: 'italic', color: 'var(--rs-ink)' }}>
                 &ldquo;{activeQuestion.resumeAnchor}&rdquo;
@@ -1140,8 +1138,8 @@ export const InterviewStudioPage: React.FC = () => {
             {/* Model Answer (Invariant Ivory/White Paper Sheet) */}
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--rs-muted)', textTransform: 'uppercase' }}>
-                  Model Executive Answer (STAR Format)
+                <span style={{ fontSize: '11px', fontWeight: 600, color: 'var(--rs-muted)' }}>
+                  Model executive answer (STAR format)
                 </span>
                 <Button
                   size="sm"
@@ -1172,8 +1170,8 @@ export const InterviewStudioPage: React.FC = () => {
 
             {/* Key Talking Points */}
             <div>
-              <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--rs-muted)', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>
-                Essential Talking Points
+              <span style={{ fontSize: '11px', fontWeight: 600, color: 'var(--rs-muted)', display: 'block', marginBottom: '8px' }}>
+                Essential talking points
               </span>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                 {activeQuestion.keyTalkingPoints.map((point, idx) => (

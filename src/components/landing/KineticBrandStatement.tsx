@@ -62,10 +62,8 @@ export const KineticBrandStatement: React.FC = () => {
           key={i}
           style={{
             display: 'inline-block',
-            overflow: 'hidden',
-            margin: '-0.08em -0.035em',
-            padding: '0.08em 0.035em',
-            verticalAlign: 'bottom',
+            margin: '0 0.15em',
+            verticalAlign: 'baseline',
           }}
         >
           <span
@@ -77,7 +75,6 @@ export const KineticBrandStatement: React.FC = () => {
           >
             {word}
           </span>
-          {i < words.length - 1 ? ' ' : ''}
         </span>
       );
     });
@@ -124,27 +121,29 @@ export const KineticBrandStatement: React.FC = () => {
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '4px',
+                gap: '2px',
                 fontFamily: 'var(--font-display)',
-                fontWeight: 750,
-                letterSpacing: '-0.05em',
+                fontWeight: 700,
+                letterSpacing: '-0.03em',
               }}
             >
-              <i
+              <span
                 style={{
-                  display: 'grid',
+                  display: 'inline-grid',
                   placeItems: 'center',
-                  width: '1em',
-                  height: '1em',
+                  width: '1.1em',
+                  height: '1.1em',
                   borderRadius: '0.22em',
-                  background: 'linear-gradient(145deg, #527DBA, #102B53 68%, #D9B65E)',
-                  color: 'white',
-                  fontStyle: 'normal',
-                  fontSize: '0.85em',
+                  backgroundColor: 'var(--rs-surface-2)',
+                  border: '1px solid var(--rs-line-strong)',
+                  color: 'var(--rs-blue-strong)',
+                  fontSize: '0.82em',
+                  fontWeight: 800,
+                  marginRight: '1px',
                 }}
               >
                 R
-              </i>
+              </span>
               <span>ole</span>
               <b style={{ color: 'var(--rs-blue-strong)' }}>Sharp</b>
             </span>{' '}
@@ -242,41 +241,41 @@ export const KineticBrandStatement: React.FC = () => {
                       key={i}
                       style={{
                         display: 'inline-block',
-                        overflow: 'hidden',
-                        margin: '-0.08em -0.035em',
-                        padding: '0.08em 0.035em',
-                        verticalAlign: 'bottom',
+                        margin: '0 0.18em',
+                        verticalAlign: 'baseline',
                       }}
                     >
                       <span
                         style={{
                           display: 'inline-flex',
                           alignItems: 'center',
-                          gap: '4px',
+                          gap: '2px',
                           fontFamily: 'var(--font-display)',
-                          fontWeight: 750,
-                          letterSpacing: '-0.05em',
+                          fontWeight: 700,
+                          letterSpacing: '-0.03em',
                           animation: playState === 'playing' ? `rs-quote-rise 480ms var(--rs-ease) ${delay}ms both` : undefined,
                         }}
                       >
-                        <i
+                        <span
                           style={{
-                            display: 'grid',
+                            display: 'inline-grid',
                             placeItems: 'center',
-                            width: '1em',
-                            height: '1em',
+                            width: '1.1em',
+                            height: '1.1em',
                             borderRadius: '0.22em',
-                            background: 'linear-gradient(145deg, #527DBA, #102B53 68%, #D9B65E)',
-                            color: 'white',
-                            fontStyle: 'normal',
-                            fontSize: '0.85em',
+                            backgroundColor: 'var(--rs-surface-2)',
+                            border: '1px solid var(--rs-line-strong)',
+                            color: 'var(--rs-blue-strong)',
+                            fontSize: '0.82em',
+                            fontWeight: 800,
+                            marginRight: '1px',
                           }}
                         >
                           R
-                        </i>
+                        </span>
                         <span>ole</span>
                         <b style={{ color: 'var(--rs-blue-strong)' }}>Sharp</b>
-                      </span>{' '}
+                      </span>
                     </span>
                   );
                 }
@@ -285,10 +284,8 @@ export const KineticBrandStatement: React.FC = () => {
                     key={i}
                     style={{
                       display: 'inline-block',
-                      overflow: 'hidden',
-                      margin: '-0.08em -0.035em',
-                      padding: '0.08em 0.035em',
-                      verticalAlign: 'bottom',
+                      margin: '0 0.16em',
+                      verticalAlign: 'baseline',
                     }}
                   >
                     <span
@@ -298,7 +295,7 @@ export const KineticBrandStatement: React.FC = () => {
                       }}
                     >
                       {word}
-                    </span>{' '}
+                    </span>
                   </span>
                 );
               })}

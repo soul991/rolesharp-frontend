@@ -264,8 +264,8 @@ export const AutoApplyPage: React.FC = () => {
             }}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
-              <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--rs-ink)', textTransform: 'uppercase' }}>
-                Pending & Recent Packages ({packages.length})
+              <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--rs-ink)' }}>
+                Pending & recent packages ({packages.length})
               </span>
               <span style={{ fontSize: '11px', color: 'var(--rs-muted)' }}>GET /api/application-packages</span>
             </div>
@@ -326,8 +326,8 @@ export const AutoApplyPage: React.FC = () => {
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <div>
-                  <span style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', color: 'var(--rs-blue)' }}>
-                    IMMUTABLE PAYLOAD REVIEW
+                  <span style={{ fontSize: '11px', fontWeight: 600, color: 'var(--rs-blue)' }}>
+                    Immutable payload review
                   </span>
                   <h2
                     style={{
@@ -356,8 +356,8 @@ export const AutoApplyPage: React.FC = () => {
                   border: '1px solid color-mix(in srgb, var(--rs-blue-strong) 25%, transparent)',
                 }}
               >
-                <span style={{ fontSize: '10.5px', fontWeight: 800, textTransform: 'uppercase', color: 'var(--rs-blue)', display: 'block', marginBottom: '4px' }}>
-                  Verified Recipient Pathway Evidence
+                <span style={{ fontSize: '11px', fontWeight: 600, color: 'var(--rs-blue)', display: 'block', marginBottom: '4px' }}>
+                  Verified recipient pathway evidence
                 </span>
                 <p style={{ margin: 0, fontSize: '12px', color: 'var(--rs-ink)', lineHeight: '1.4' }}>
                   {selectedPackage.recipientEvidence}
@@ -384,8 +384,8 @@ export const AutoApplyPage: React.FC = () => {
               {/* Payload Fields */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 <div>
-                  <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--rs-muted)', textTransform: 'uppercase', display: 'block', marginBottom: '4px' }}>
-                    Destination Address
+                  <span style={{ fontSize: '11px', fontWeight: 600, color: 'var(--rs-muted)', display: 'block', marginBottom: '4px' }}>
+                    Destination address
                   </span>
                   <div style={{ padding: '8px 12px', borderRadius: '6px', backgroundColor: 'var(--rs-bg)', border: '1px solid var(--rs-line)', fontSize: '13px', fontFamily: 'var(--font-mono)', color: 'var(--rs-ink)' }}>
                     {selectedPackage.recipientEmail}
@@ -393,8 +393,8 @@ export const AutoApplyPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--rs-muted)', textTransform: 'uppercase', display: 'block', marginBottom: '4px' }}>
-                    Subject Line
+                  <span style={{ fontSize: '11px', fontWeight: 600, color: 'var(--rs-muted)', display: 'block', marginBottom: '4px' }}>
+                    Subject line
                   </span>
                   <div style={{ padding: '8px 12px', borderRadius: '6px', backgroundColor: 'var(--rs-bg)', border: '1px solid var(--rs-line)', fontSize: '13px', color: 'var(--rs-ink)' }}>
                     {selectedPackage.subjectLine}
@@ -402,8 +402,8 @@ export const AutoApplyPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--rs-muted)', textTransform: 'uppercase', display: 'block', marginBottom: '4px' }}>
-                    Attached Resume PDF
+                  <span style={{ fontSize: '11px', fontWeight: 600, color: 'var(--rs-muted)', display: 'block', marginBottom: '4px' }}>
+                    Attached resume PDF
                   </span>
                   <div style={{ padding: '10px 12px', borderRadius: '6px', backgroundColor: 'var(--rs-bg)', border: '1px solid var(--rs-line)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -421,8 +421,8 @@ export const AutoApplyPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--rs-muted)', textTransform: 'uppercase', display: 'block', marginBottom: '4px' }}>
-                    Cover Note Content
+                  <span style={{ fontSize: '11px', fontWeight: 600, color: 'var(--rs-muted)', display: 'block', marginBottom: '4px' }}>
+                    Cover note content
                   </span>
                   <div
                     style={{

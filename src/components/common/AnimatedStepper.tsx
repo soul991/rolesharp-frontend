@@ -106,6 +106,7 @@ export const AnimatedStepper: React.FC<AnimatedStepperProps> = ({
                     ? 'var(--rs-ink)'
                     : 'var(--rs-muted)',
                   boxShadow: isCurrent ? '0 0 0 4px color-mix(in srgb, var(--rs-amber) 25%, transparent)' : 'none',
+                  animation: isCurrent ? 'rs-step-pulse 2.2s infinite ease-in-out' : 'none',
                   transition: 'all 0.3s var(--rs-ease)',
                 }}
                 aria-label={`Step ${idx + 1}: ${step.title} ${
